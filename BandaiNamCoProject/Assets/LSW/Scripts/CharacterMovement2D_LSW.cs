@@ -5,17 +5,17 @@ using UnityEngine;
 public class CharacterMovement2D_LSW : MonoBehaviour
 {
     // State를 enum으로 정리
-    private enum State
+    public enum State
     {
         Idle,
         Move,
         Fly,
     }
-    private State state;
+    public State state;
     // 각각 이동속도와 점프힘
-    private float moveSpeed = 100.0f;
-    private float flyForce = 200.0f;
-
+    public float moveSpeed = 100.0f;
+    public float flyForce = 200.0f;
+    
     private Rigidbody2D rb;
     
 
@@ -23,19 +23,25 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         state = State.Idle;
-        
+        Debug.Log(transform.up);
     }
 
     private void FixedUpdate()
     {
        if (state == State.Move)
         {
-            rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+            Debug.Log(transform.up);
+            rb.AddForce(transform.up * moveSpeed);
+            gameObject.transform.up = rb.velocity;
         }
     }
 
     void Update()
     {
+        if(state == State.Idle) 
+        {
+            rb.velocity = Vector2.zero;
+        }
         // space 바를 누르면 이제 스테이트마다 하는 행동 실시
         if (Input.GetKeyDown(KeyCode.Space))
         {
