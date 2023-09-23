@@ -30,7 +30,6 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     {
        if (state == State.Move)
         {
-            Debug.Log(transform.up);
             rb.AddForce(transform.up * moveSpeed);
             gameObject.transform.up = rb.velocity;
         }
