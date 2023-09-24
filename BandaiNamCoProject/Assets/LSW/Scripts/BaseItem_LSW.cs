@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public abstract class BaseItem : MonoBehaviour
+public abstract class BaseItem_LSW : MonoBehaviour
 {
     public string itemName;
     public GameObject dialogueBox;
