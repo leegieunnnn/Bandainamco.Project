@@ -59,7 +59,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
         }
     }
 
-    private void startTriggerEnter(Collider2D other) //이게 Collider Tag이용해서 Trigger를 노린건데 안됨 그래서 다시 해보고 있음.
+    private void OnTriggerEnter(Collider other) //이게 Collider Tag이용해서 Trigger를 노린건데 안됨 그래서 다시 해보고 있음.
     {
         if (state == State.Move && other.CompareTag("StartPoint"))
         {
