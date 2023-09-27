@@ -38,7 +38,7 @@ public abstract class BaseItem_LSW : MonoBehaviour
         }
     }
     
-    public virtual void OnTriggerEnter2D(Collision2D other)
+    public virtual void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("MakeContact");
         if (other.gameObject.CompareTag("Player"))
