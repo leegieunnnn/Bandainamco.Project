@@ -5,55 +5,50 @@ using UnityEngine;
 
 public abstract class BaseItem_LSW : MonoBehaviour
 {
-    public string itemName;
-    public GameObject dialogueBox;
-    public Text dialogueText;
-    public string[] dialogueContents;
-    protected int collisionCount = 0; // Changed to protected
+    protected string itemName;
+    protected int itemAmount;
+    
+    protected int triggerCount = 0; 
 
-    // Start is called before the first frame update
-    void Start()
+     public Transform[] spawnPoints;
+
+    public abstract void useSkill();
+    protected abstract GameObject GetItemPrefabByName(string itemName);
+    
+    public virtual void spawnPoint()
     {
+        // Get the item prefab using the itemName.
+        GameObject itemPrefab = GetItemPrefabByName(itemName);
 
+        if (itemPrefab == null)
+        {
+            Debug.LogError("Item prefab not found for item name: " + itemName);
+            return;
+        }
+
+        // Generate a random number of items to spawn within the specified amount.
+        for (int i = 0; i < itemAmount; i++)
+        {
+
+            // Generate a random index to select a spawn point.
+            int randomIndex = Random.Range(0, spawnPoints.Length);
+
+            // Instantiate the item at the selected spawn point's position.
+            Instantiate(itemPrefab, spawnPoints[randomIndex].position, Quaternion.identity);
+        }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public virtual void UseItem()
-    {
-        // By default, do nothing when using the item.
-        // You can override this method in derived classes.
-    }
-
-    public virtual void OnCollisionEnter2D(Collision2D collision)
+    
+    public virtual void OnTriggerEnter2D(Collision2D other)
     {
         Debug.Log("MakeContact");
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            collisionCount++;
-            ShowDialogue();
-            UseItem();
+            triggerCount++;
+            Debug.Log(triggerCount);
+            // Camera zoom out function
+            useSkill();
         }
     }
-
-    protected void ShowDialogue() // Changed to protected
-    {
-        Debug.Log("StartContext");
-        if (collisionCount == 1 || collisionCount == 3 || collisionCount == 5)
-        {
-            int dialogueIndex = (collisionCount - 1) / 2;
-            if (dialogueIndex < dialogueContents.Length)
-            {
-                dialogueBox.SetActive(true);
-                dialogueText.text = dialogueContents[dialogueIndex];
-            }
-        }
-    }
-
-    // Abstract method for items to appear (customize this in derived classes)
-    public abstract void Appear();
+    
+    
 }
