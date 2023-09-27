@@ -26,7 +26,10 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             rb.velocity = Vector3.zero;
             Vector2 dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             dir.Normalize();
-            rb.AddForce(dir * jumpPower,ForceMode2D.Force);
+            if(dir!= Vector2.zero)
+            {
+                rb.AddForce(dir * jumpPower,ForceMode2D.Force);
+            }
             jump = false;
         }
     }
