@@ -23,9 +23,12 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     {
         if (jump)
         {
-            rb.velocity = Vector3.zero;
-            Vector2 dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             dir.Normalize();
+            if(dir.y > 0)
+            {
+                rb.velocity = Vector3.zero;
+            }
             if(dir!= Vector2.zero)
             {
                 rb.AddForce(dir * jumpPower,ForceMode2D.Force);
