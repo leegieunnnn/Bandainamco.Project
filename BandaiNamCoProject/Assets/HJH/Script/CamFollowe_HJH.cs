@@ -10,10 +10,11 @@ public class CamFollowe_HJH : MonoBehaviour
     [SerializeField] Vector2 minCameraBoundary;
     [SerializeField] Vector2 maxCameraBoundary;
     public bool camFollow = true;
+    public float firstCamSize;
     // Start is called before the first frame update
     void Start()
     {
-
+        firstCamSize = Camera.main.orthographicSize;
     }
 
     // Update is called once per frame
