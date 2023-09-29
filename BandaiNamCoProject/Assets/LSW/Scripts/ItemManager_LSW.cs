@@ -3,10 +3,24 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using KoreanTyper;
+using System;
+using Unity.Mathematics;
+
+[Serializable]
+public class Item_HJH
+{
+    //오브젝트 프리팹
+    public GameObject prefab;
+    //오브젝트 개수
+    public int itemCount;
+    //부딪힌 수
+    public int triggerCount;
+}
 
 public class ItemManager_LSW : MonoBehaviour
 {
-    #region CameraZoomOut
+
+    public Item_HJH[] items;
     public GameObject bg;
     public CamFollowe_HJH camFollow;
     public float zoomOutSpeed;
@@ -18,11 +32,22 @@ public class ItemManager_LSW : MonoBehaviour
     public bool endText = false;
     public float typingSpeed = 0.1f;
     Vector3 firstCamPos;
-    #endregion
+    Vector3 bgSize;
     // Start is called before the first frame update
     void Start()
     {
-        
+        bgSize = GetBGSize(bg);
+        for (int i = 0; i < items.Length; i++)
+        {
+            for(int j = 0; j < items[i].itemCount; j++)
+            {
+                GameObject item = Instantiate(items[i].prefab);
+                item.transform.position = Return_RandomPosition();
+                item.transform.parent = bg.transform;
+                item.GetComponent<BaseItem_LSW>().itemNum = i;
+            }
+        }
+
     }
 
     // Update is called once per frame
@@ -47,12 +72,29 @@ public class ItemManager_LSW : MonoBehaviour
         
     }
 
+    public void TriggerCount(int su)
+    {
+        items[su].triggerCount++;
+        if (items[su].triggerCount == 1)
+        {
+            CameraZoomOutFuncStart();
+        }
+    }
+    Vector3 Return_RandomPosition()
+    {
+
+        float x = UnityEngine.Random.Range(-bgSize.x / 2, bgSize.x / 2);
+        float y = UnityEngine.Random.Range(-bgSize.y/2, bgSize.y / 2);
+        Vector3 randomPostion = new Vector3(x, y, 0);
+        return randomPostion;
+    }
+
     #region CameraZoomOut
-    public void CameraZoomOutFuncStart(Vector3 firstPos)
+    public void CameraZoomOutFuncStart()
     {
         Time.timeScale = 0f;
-        firstCamPos = firstPos;
-        Vector3 bgSize = GetBGSize(bg);
+        Camera.main.cullingMask = ~(1 << 7);
+        firstCamPos = Camera.main.transform.position;
         camFollow.camFollow = false;
         float bigSize = Mathf.Max(bgSize.x, bgSize.y);
         StartCoroutine(CameraZoomOut(bigSize / 2));
@@ -121,6 +163,7 @@ public class ItemManager_LSW : MonoBehaviour
 
             yield return null;
         }
+        Camera.main.cullingMask = -1;
         Time.timeScale = 1f;
         Camera.main.transform.position = firstCamPos;
         camFollow.camFollow = true;
