@@ -25,14 +25,14 @@ public  class AnimalItem_LSW : BaseItem_LSW
     }
 
    
-    public override void spawnPoint()
+    public override void SpawnPoint()
     {
         // Random appear , gameobject Type, count, extra
         Debug.Log(itemName + " has appeared!");
         gameObject.SetActive(true);
     }
 
-    public override void useSkill()
+    public override void UseSkill()
     {
         // Use Skill
         Debug.Log(" Item used! " + itemName);
@@ -47,7 +47,7 @@ public  class AnimalItem_LSW : BaseItem_LSW
     {
         itemName = "TestItem";
         itemAmount = 1;
-        spawnPoint();
+        SpawnPoint();
     }
 
     
