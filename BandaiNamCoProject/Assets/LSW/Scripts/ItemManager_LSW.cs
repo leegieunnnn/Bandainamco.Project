@@ -15,6 +15,8 @@ public class Item_HJH
     public int itemCount;
     //ºÎµúÈù ¼ö
     public int triggerCount;
+    //ÁÜ µÉ À§Ä¡
+    public Transform zoomPosition;
 }
 
 public class ItemManager_LSW : MonoBehaviour
@@ -77,7 +79,7 @@ public class ItemManager_LSW : MonoBehaviour
         items[su].triggerCount++;
         if (items[su].triggerCount == 1)
         {
-            CameraZoomOutFuncStart();
+            CameraZoomOutFuncStart(su);
         }
     }
     Vector3 Return_RandomPosition()
@@ -90,14 +92,14 @@ public class ItemManager_LSW : MonoBehaviour
     }
 
     #region CameraZoomOut
-    public void CameraZoomOutFuncStart()
+    public void CameraZoomOutFuncStart(int itemIdx)
     {
         Time.timeScale = 0f;
-        Camera.main.cullingMask = ~(1 << 7);
+        Camera.main.cullingMask = ~((1 << 7) | (1 << 8));
         firstCamPos = Camera.main.transform.position;
         camFollow.camFollow = false;
         float bigSize = Mathf.Max(bgSize.x, bgSize.y);
-        StartCoroutine(CameraZoomOut(bigSize / 2));
+        StartCoroutine(CameraZoomOut(items[itemIdx].zoomPosition));
     }
     public Vector3 GetBGSize(GameObject bG)
     {
@@ -108,24 +110,38 @@ public class ItemManager_LSW : MonoBehaviour
         worldbGSize.y *= bG.transform.lossyScale.y;
         return worldbGSize;
     }
-    IEnumerator CameraZoomOut(float camSize)
+    IEnumerator CameraZoomOut(Transform cameraPoint)
     {
         Camera cam = Camera.main;
-        while (cam.orthographicSize < camSize || (cam.transform.position - Vector3.zero).magnitude > 0.1f)
+        while ((cam.transform.position - cameraPoint.position).magnitude > 0.1f)
         {
-            if(cam.orthographicSize < camSize)
+            if ((cam.transform.position - cameraPoint.position).magnitude > 0.1f)
             {
-                cam.orthographicSize += zoomOutSpeed * Time.unscaledDeltaTime;
-            }
-            if((cam.transform.position - Vector3.zero).magnitude > 0.1f)
-            {
-                cam.transform.position = Vector3.Lerp(cam.transform.position, Vector3.zero, Time.fixedDeltaTime * 0.15f);
+                cam.transform.position = Vector3.Lerp(cam.transform.position, cameraPoint.position, Time.fixedDeltaTime * 0.15f);
             }
             yield return null;
         }
         StartCoroutine(TextAni(whatText));
 
     }
+    //IEnumerator CameraZoomOut(float camSize) ±¸¹öÀü
+    //{
+    //    Camera cam = Camera.main;
+    //    while (cam.orthographicSize < camSize || (cam.transform.position - Vector3.zero).magnitude > 0.1f)
+    //    {
+    //        if(cam.orthographicSize < camSize)
+    //        {
+    //            cam.orthographicSize += zoomOutSpeed * Time.unscaledDeltaTime;
+    //        }
+    //        if((cam.transform.position - Vector3.zero).magnitude > 0.1f)
+    //        {
+    //            cam.transform.position = Vector3.Lerp(cam.transform.position, Vector3.zero, Time.fixedDeltaTime * 0.15f);
+    //        }
+    //        yield return null;
+    //    }
+    //    StartCoroutine(TextAni(whatText));
+
+    //}
     IEnumerator TextAni(string text)
     {
         subText.gameObject.SetActive(true);
@@ -146,27 +162,42 @@ public class ItemManager_LSW : MonoBehaviour
         nowText = false;
         endText = true;
     }
-
     IEnumerator CameraZoomIn(float camSize)
     {
         Camera cam = Camera.main;
-        while (cam.orthographicSize > camSize || (cam.transform.position - firstCamPos).magnitude < 0.1f)
+        Camera.main.cullingMask = -1;
+        while ((cam.transform.position - firstCamPos).magnitude > 0.1f)
         {
-            if (cam.orthographicSize > camSize)
-            {
-                cam.orthographicSize -= zoomInSpeed * Time.unscaledDeltaTime;
-            }
             if ((cam.transform.position - firstCamPos).magnitude > 0.1f)
             {
                 cam.transform.position = Vector3.Lerp(cam.transform.position, firstCamPos, Time.fixedDeltaTime * 0.15f);
             }
-
             yield return null;
         }
-        Camera.main.cullingMask = -1;
         Time.timeScale = 1f;
         Camera.main.transform.position = firstCamPos;
         camFollow.camFollow = true;
     }
+    //IEnumerator CameraZoomIn(float camSize) ±¸¹öÀü
+    //{
+    //    Camera cam = Camera.main;
+    //    while (cam.orthographicSize > camSize || (cam.transform.position - firstCamPos).magnitude < 0.1f)
+    //    {
+    //        if (cam.orthographicSize > camSize)
+    //        {
+    //            cam.orthographicSize -= zoomInSpeed * Time.unscaledDeltaTime;
+    //        }
+    //        if ((cam.transform.position - firstCamPos).magnitude > 0.1f)
+    //        {
+    //            cam.transform.position = Vector3.Lerp(cam.transform.position, firstCamPos, Time.fixedDeltaTime * 0.15f);
+    //        }
+
+    //        yield return null;
+    //    }
+    //    Camera.main.cullingMask = -1;
+    //    Time.timeScale = 1f;
+    //    Camera.main.transform.position = firstCamPos;
+    //    camFollow.camFollow = true;
+    //}
     #endregion
 }
