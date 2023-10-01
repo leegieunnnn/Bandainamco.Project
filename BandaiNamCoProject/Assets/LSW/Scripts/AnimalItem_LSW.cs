@@ -4,20 +4,14 @@ using UnityEngine;
 
 public  class AnimalItem_LSW : BaseItem_LSW
 {
-    public override void UseSkill()
-    {
-        // Use Skill
+    public override void ItemActivate()
+    {      
 
-        // After used
-        gameObject.SetActive(false);
-        //Destroy(gameObject);
-       
     }
 
-   
-    public void Start()
+    public override void ItemDeactivate()
     {
-
+     
     }
 
     

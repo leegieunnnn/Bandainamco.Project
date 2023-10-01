@@ -12,7 +12,9 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     bool jumpReady = true;
     bool jump = false;
     private Rigidbody2D rb;
-    
+    // 마지막 아이템 확인용
+    public BaseItem_LSW lastUsedItem;
+
 
     private void Start()
     {
@@ -55,10 +57,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
         jumpReady = true;
     }
 
-    private void OnTriggerEnter(Collider other) //이게 Collider Tag이용해서 Trigger를 노린건데 안됨 그래서 다시 해보고 있음.
-    {
-
-    }
+    
 
     
 

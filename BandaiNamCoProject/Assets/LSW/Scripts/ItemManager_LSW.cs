@@ -34,7 +34,7 @@ public class ItemManager_LSW : MonoBehaviour
     public bool endText = false;
     public float typingSpeed = 0.1f;
     Vector3 firstCamPos;
-    Vector3 bgSize;
+    public Vector3 bgSize;
     // Start is called before the first frame update
     void Start()
     {
