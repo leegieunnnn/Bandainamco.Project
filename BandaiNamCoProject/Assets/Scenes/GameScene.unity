@@ -430,6 +430,10 @@ MonoBehaviour:
     itemCount: 10
     triggerCount: 0
     zoomPosition: {fileID: 1356172121}
+  - prefab: {fileID: 1886797856406526305, guid: 6abe8bf0adc3f3a4ca153aa010cde49d, type: 3}
+    itemCount: 5
+    triggerCount: 0
+    zoomPosition: {fileID: 1356172121}
   bg: {fileID: 2016071353}
   camFollow: {fileID: 963194229}
   zoomOutSpeed: 50
@@ -977,6 +981,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 704695465817711212, guid: 23dc811a41488ed4786aef4acde0e3cb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 704695465817711212, guid: 23dc811a41488ed4786aef4acde0e3cb, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
@@ -1032,9 +1040,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5152896613174875821, guid: 23dc811a41488ed4786aef4acde0e3cb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5152896613174875822, guid: 23dc811a41488ed4786aef4acde0e3cb, type: 3}
       propertyPath: m_Name
       value: TestItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 5152896613174875822, guid: 23dc811a41488ed4786aef4acde0e3cb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5152896613174875822, guid: 23dc811a41488ed4786aef4acde0e3cb, type: 3}
       propertyPath: m_TagString
