@@ -6,20 +6,34 @@ public class CamFollowe_HJH : MonoBehaviour
 {
     public float cameraSpeed = 5.0f;
     public GameObject player;
+    public float smoothing = 0.2f;
+    [SerializeField] Vector2 minCameraBoundary;
+    [SerializeField] Vector2 maxCameraBoundary;
+    public bool camFollow = true;
+    public float firstCamSize;
     // Start is called before the first frame update
     void Start()
     {
-
+        firstCamSize = Camera.main.orthographicSize;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 dir = player.transform.position - this.transform.position;
-        Vector3 moveVector = new Vector3(0, dir.y * cameraSpeed * Time.deltaTime, 0.0f);
-        if (dir.y > 0)
+
+
+
+    }
+    private void LateUpdate()
+    {
+        if (camFollow)
         {
-            transform.Translate(moveVector);
+            Vector3 targetPos = new Vector3(player.transform.position.x, player.transform.position.y, this.transform.position.z);
+
+            targetPos.x = Mathf.Clamp(targetPos.x, minCameraBoundary.x, maxCameraBoundary.x);
+            targetPos.y = Mathf.Clamp(targetPos.y, minCameraBoundary.y, maxCameraBoundary.y);
+
+            transform.position = Vector3.Lerp(transform.position, targetPos, smoothing);
         }
 
     }
