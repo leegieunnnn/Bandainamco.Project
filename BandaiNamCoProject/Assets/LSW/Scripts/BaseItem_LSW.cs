@@ -18,8 +18,6 @@ public abstract class BaseItem_LSW : MonoBehaviour
         itemManager = GameObject.Find("ItemManager").GetComponent<ItemManager_LSW>();
         character = GameObject.Find("Player").GetComponent<CharacterMovement2D_LSW>();
     }
-
-    
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -34,9 +32,5 @@ public abstract class BaseItem_LSW : MonoBehaviour
             
         }
     }
-
-   
-
-
 }
 
