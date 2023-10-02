@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterMovement2D_LSW : MonoBehaviour
 {
     //점프힘
     public float jumpPower = 100.0f;
+    //점프 아이콘
+    public Image jumpIcon;
+    public TMP_Text jumpCoolText;
     //점프 쿨타임
     public float coolTime = 1f;
     //점프가 가능한지에 대한 불값
@@ -35,6 +40,8 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             {
                 rb.AddForce(dir * jumpPower,ForceMode2D.Force);
             }
+            jumpIcon.fillAmount = 0;
+            jumpCoolText.gameObject.SetActive(true);
             jump = false;
         }
     }
@@ -53,7 +60,20 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     }
     IEnumerator JumpCoolTime()
     {
-        yield return new WaitForSeconds(coolTime);
+        float currentTime = 0;
+        while (true)
+        {
+            yield return null;
+            currentTime += Time.deltaTime;
+            jumpIcon.fillAmount = currentTime/coolTime;
+            jumpCoolText.text = string.Format("{0:N1}",coolTime - currentTime);
+            if(currentTime > coolTime)
+            {
+                break;
+            }
+
+        }
+        jumpCoolText.gameObject.SetActive(false);
         jumpReady = true;
     }
 
