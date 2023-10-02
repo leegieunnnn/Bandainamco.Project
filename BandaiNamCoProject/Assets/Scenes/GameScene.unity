@@ -330,7 +330,7 @@ MonoBehaviour:
   jumpIcon: {fileID: 513643427}
   jumpCoolText: {fileID: 1023990147}
   coolTime: 1
-  lastUsedItem: {fileID: 0}
+  itemManager: {fileID: 465046009}
 --- !u!212 &328588136
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -435,6 +435,10 @@ MonoBehaviour:
     zoomPosition: {fileID: 1356172121}
   - prefab: {fileID: 1886797856406526305, guid: 6abe8bf0adc3f3a4ca153aa010cde49d, type: 3}
     itemCount: 5
+    triggerCount: 0
+    zoomPosition: {fileID: 1356172121}
+  - prefab: {fileID: 5659503068840668637, guid: 48cda0f0a1adb47498cec96f7e55f662, type: 3}
+    itemCount: 3
     triggerCount: 0
     zoomPosition: {fileID: 1356172121}
   bg: {fileID: 2016071353}

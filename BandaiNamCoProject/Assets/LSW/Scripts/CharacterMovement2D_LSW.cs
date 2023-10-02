@@ -64,14 +64,14 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             StartCoroutine(JumpCoolTime());
         }
         
-        if (lastUsedItem == 2)
+        if (lastUsedItem.HasValue && lastUsedItem.Value == 2)
         {
             if (player != null)
             {
                 // Get the player's position
                 Vector3 playerPosition = player.transform.position;
                 Debug.Log(playerPosition);
-
+                Debug.Log(itemManager.bgSize);
                 if (playerPosition.x > itemManager.bgSize.x / 2 || playerPosition.x < -itemManager.bgSize.x / 2)
                 {
                     if (playerPosition.y > itemManager.bgSize.y / 2 || playerPosition.y < -itemManager.bgSize.y / 2)
