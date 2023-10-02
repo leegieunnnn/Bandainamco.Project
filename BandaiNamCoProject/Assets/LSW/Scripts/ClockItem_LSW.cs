@@ -4,27 +4,21 @@ using UnityEngine;
 
 public class ClockItem_LSW : BaseItem_LSW
 { 
-    void Update()
-    {
 
-    }
 
     public override void ItemActivate()
-    {  
-        // Use Skill
+    {
+        character.lastUsedItem = 1;
         character.coolTime -= 0.5f;
         Debug.Log("Cool Time Down");
+        Debug.Log(character.coolTime);
+        Debug.Log("Animaiton");
+        gameObject.SetActive(false);
+
         // animation
-
-       
+        
+    
+        
     }
-
-    public override void ItemDeactivate()
-    {
-        character.coolTime += 0.5f;
-
-    }
-
-
 
 }

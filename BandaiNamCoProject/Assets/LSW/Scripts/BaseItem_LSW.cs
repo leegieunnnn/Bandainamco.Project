@@ -12,7 +12,6 @@ public abstract class BaseItem_LSW : MonoBehaviour
     public CharacterMovement2D_LSW character;
 
     public abstract void ItemActivate();
-    public abstract void ItemDeactivate();
     private void Awake()
     {
         itemManager = GameObject.Find("ItemManager").GetComponent<ItemManager_LSW>();
@@ -26,7 +25,10 @@ public abstract class BaseItem_LSW : MonoBehaviour
 
             if(character != null)
             {
-                character.lastUsedItem.ItemDeactivate();
+                character.lastUsedItem = itemNum;
+                Debug.Log("Item Changed");
+                Debug.Log(character.coolTime);
+                
             }
             ItemActivate();
             

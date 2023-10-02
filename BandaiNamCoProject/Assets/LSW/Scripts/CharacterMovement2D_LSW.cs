@@ -17,13 +17,20 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     bool jumpReady = true;
     bool jump = false;
     private Rigidbody2D rb;
-    // 마지막 아이템 확인용
-    public BaseItem_LSW lastUsedItem;
+    public ItemManager_LSW itemManager;
+    GameObject player;
 
+    // 마지막 아이템 확인용
+    public int? lastUsedItem;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        lastUsedItem = null;
+            
+        
     }
 
     private void FixedUpdate()
@@ -56,7 +63,27 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             jumpReady = false;
             StartCoroutine(JumpCoolTime());
         }
+        
+        if (lastUsedItem == 2)
+        {
+            if (player != null)
+            {
+                // Get the player's position
+                Vector3 playerPosition = player.transform.position;
+                Debug.Log(playerPosition);
 
+                if (playerPosition.x > itemManager.bgSize.x / 2 || playerPosition.x < -itemManager.bgSize.x / 2)
+                {
+                    if (playerPosition.y > itemManager.bgSize.y / 2 || playerPosition.y < -itemManager.bgSize.y / 2)
+                    {
+                        player.transform.position = new Vector3(0, 0, 0);
+                    }
+                }
+            }
+            Debug.Log("it Worked!");
+        }
+
+        
     }
     IEnumerator JumpCoolTime()
     {

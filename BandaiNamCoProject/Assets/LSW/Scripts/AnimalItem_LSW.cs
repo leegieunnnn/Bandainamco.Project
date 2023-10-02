@@ -5,14 +5,9 @@ using UnityEngine;
 public  class AnimalItem_LSW : BaseItem_LSW
 {
     public override void ItemActivate()
-    {      
-
-    }
-
-    public override void ItemDeactivate()
     {
-     
+        
+        gameObject.SetActive(false);
     }
-
     
 }
