@@ -11,10 +11,13 @@ public abstract class BaseItem_LSW : MonoBehaviour
     public ItemManager_LSW itemManager;
     public CharacterMovement2D_LSW character;
 
-    public abstract void ItemActivate();
+    public virtual void ItemActivate()
+    {
+        character.lastUsedItem = itemNum;
+        gameObject.SetActive(false);
+    }
     private void Awake()
     {
-        itemManager = GameObject.Find("ItemManager").GetComponent<ItemManager_LSW>();
         character = GameObject.Find("Player").GetComponent<CharacterMovement2D_LSW>();
     }
     public virtual void OnTriggerEnter2D(Collider2D other)
@@ -26,9 +29,6 @@ public abstract class BaseItem_LSW : MonoBehaviour
             if(character != null)
             {
                 character.lastUsedItem = itemNum;
-                Debug.Log("Item Changed");
-                Debug.Log(character.coolTime);
-                
             }
             ItemActivate();
             
