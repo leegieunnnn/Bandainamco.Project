@@ -8,8 +8,8 @@ public class CamFollowe_HJH : MonoBehaviour
     public GameObject player;
     public float smoothing = 0.2f;
     public GameObject bg;
-    Vector2 minCameraBoundary;
-    Vector2 maxCameraBoundary;
+    public Vector2 minCameraBoundary;
+    public Vector2 maxCameraBoundary;
     public bool camFollow = true;
     public float firstCamSize;
     // Start is called before the first frame update

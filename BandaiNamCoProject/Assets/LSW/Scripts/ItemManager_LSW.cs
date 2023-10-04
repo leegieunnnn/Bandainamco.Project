@@ -50,6 +50,7 @@ public class ItemManager_LSW : MonoBehaviour
                 GameObject item = Instantiate(items[i].prefab);
                 item.transform.position = Return_RandomPosition();
                 item.transform.parent = bg.transform;
+                item.transform.position = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.parent.position.z-5);
                 item.GetComponent<BaseItem_LSW>().itemNum = i;
                 item.GetComponent<BaseItem_LSW>().itemManager = this;
             }
@@ -84,14 +85,7 @@ public class ItemManager_LSW : MonoBehaviour
         items[su].triggerCount++;
         if (items[su].triggerCount == 1)
         {
-            if(su == 2)
-            {
-
-            }
-            else
-            {
-                CameraZoomOutFuncStart(su);
-            }
+            CameraZoomOutFuncStart(su);
         }
     }
     Vector3 Return_RandomPosition()
@@ -129,19 +123,39 @@ public class ItemManager_LSW : MonoBehaviour
     IEnumerator CameraZoomOut(int itemIdx)
     {
         Camera cam = Camera.main;
-        int i = 0;
-        while (cam.orthographicSize < items[itemIdx].camSize || (cam.transform.position - items[itemIdx].zoomPosition.position).magnitude > 1f)
+        if (itemIdx == 2)
         {
-            if ((cam.transform.position - items[itemIdx].zoomPosition.position).magnitude > 0.1f)
+            Camera.main.cullingMask = -1;
+            float camSize = Mathf.Min(bgSize.x,bgSize.y)/ 2;
+            while (cam.orthographicSize < camSize || (cam.transform.position - Vector3.zero).magnitude > 0.1f)
             {
-                cam.transform.position = Vector3.Lerp(cam.transform.position, items[itemIdx].zoomPosition.position, Time.fixedDeltaTime * 0.15f);
+                if (cam.orthographicSize < camSize)
+                {
+                    cam.orthographicSize += zoomOutSpeed * Time.unscaledDeltaTime;
+                }
+                if ((cam.transform.position - Vector3.zero).magnitude > 0.1f)
+                {
+                    cam.transform.position = Vector3.Lerp(cam.transform.position, Vector3.zero, Time.fixedDeltaTime * 0.15f);
+                }
+                yield return null;
             }
-            if (cam.orthographicSize < items[itemIdx].camSize)
-            {
-                cam.orthographicSize += zoomOutSpeed * Time.unscaledDeltaTime;
-            }
-            yield return null;
         }
+        else
+        {
+            while (cam.orthographicSize < items[itemIdx].camSize || (cam.transform.position - items[itemIdx].zoomPosition.position).magnitude > 1f)
+            {
+                if ((cam.transform.position - items[itemIdx].zoomPosition.position).magnitude > 0.1f)
+                {
+                    cam.transform.position = Vector3.Lerp(cam.transform.position, items[itemIdx].zoomPosition.position, Time.fixedDeltaTime * 0.15f);
+                }
+                if (cam.orthographicSize < items[itemIdx].camSize)
+                {
+                    cam.orthographicSize += zoomOutSpeed * Time.unscaledDeltaTime;
+                }
+                yield return null;
+            }
+        }
+
         StartCoroutine(TextAni(items[itemIdx].zoomText));
 
     }
@@ -188,7 +202,7 @@ public class ItemManager_LSW : MonoBehaviour
     {
         Camera cam = Camera.main;
         Camera.main.cullingMask = ~((1 << 7));
-        while ((cam.transform.position - firstCamPos).magnitude > 1f || (cam.transform.position - firstCamPos).magnitude < 0.1f)
+        while (cam.orthographicSize > camSize || (cam.transform.position - firstCamPos).magnitude < 0.1f)
         {
             if ((cam.transform.position - firstCamPos).magnitude > 1f)
             {

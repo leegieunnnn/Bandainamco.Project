@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1886797856406526307}
   - component: {fileID: 1886797856406526309}
   - component: {fileID: 1886797856406526306}
-  - component: {fileID: 1886797856406526308}
+  - component: {fileID: -7607074889488745867}
   m_Layer: 7
   m_Name: Eye
   m_TagString: Untagged
@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1886797856406526305}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 39.305367, y: 0.07430124, z: -3.343876}
-  m_LocalScale: {x: 5, y: 5, z: 0.3}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &1886797856406526308
+--- !u!114 &-7607074889488745867
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,10 +121,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1886797856406526305}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed7ea50b6d93420419851293ab661d71, type: 3}
+  m_Script: {fileID: 11500000, guid: ff4804797b7108c439954261eb92295d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemNum: 0
   itemManager: {fileID: 0}
   character: {fileID: 0}
-  coolTimeReduce: 0.5
+  zoomOutSpeed: 50
+  zoomInSpeed: 50
+  eyeTime: 1

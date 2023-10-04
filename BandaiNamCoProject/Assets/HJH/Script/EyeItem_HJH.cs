@@ -10,8 +10,24 @@ public class EyeItem_HJH : BaseItem_LSW
     public override void ItemActivate()
     {
         base.ItemActivate();
-        float size = Mathf.Max(itemManager.bgSize.x,itemManager.bgSize.y) /2;
-        StartCoroutine(CameraZoomOut(size));
+        if (itemManager.items[2].triggerCount != 1)
+        {
+            gameObject.SetActive(true);
+            float size = Mathf.Min(itemManager.bgSize.x,itemManager.bgSize.y) /2;
+            Time.timeScale = 0f;
+            Camera.main.cullingMask = ~((1 << 8));
+            Camera.main.GetComponent<CamFollowe_HJH>().camFollow = false;
+            for (int i = 0; i < itemManager.zoomInOffObject.Length; i++)
+            {
+                itemManager.zoomInOffObject[i].SetActive(false);
+            }
+            StartCoroutine(CameraZoomOut(size));
+        }
+
+    }
+    public override void OnTriggerEnter2D(Collider2D other)
+    {
+        base.OnTriggerEnter2D(other);
     }
     IEnumerator CameraZoomOut(float camSize)
     {
@@ -45,12 +61,12 @@ public class EyeItem_HJH : BaseItem_LSW
             {
                 cam.transform.position = Vector3.Lerp(cam.transform.position, firstCamPos, Time.fixedDeltaTime * 0.15f);
             }
-
             yield return null;
         }
         Camera.main.cullingMask = -1;
         Time.timeScale = 1f;
         Camera.main.transform.position = firstCamPos;
         cam.GetComponent<CamFollowe_HJH>().camFollow = true;
+        gameObject.SetActive(false);
     }
 }
