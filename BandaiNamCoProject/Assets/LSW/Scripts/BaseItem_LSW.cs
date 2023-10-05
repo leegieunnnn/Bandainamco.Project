@@ -18,7 +18,7 @@ public abstract class BaseItem_LSW : MonoBehaviour
     }
     private void Awake()
     {
-        character = GameObject.Find("Player").GetComponent<CharacterMovement2D_LSW>();
+        character = GameObject.Find("Player2").GetComponent<CharacterMovement2D_LSW>();
     }
     public virtual void OnTriggerEnter2D(Collider2D other)
     {

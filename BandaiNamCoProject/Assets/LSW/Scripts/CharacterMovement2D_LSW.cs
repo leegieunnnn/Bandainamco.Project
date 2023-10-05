@@ -19,6 +19,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     bool jumpReady = true;
     bool jump = false;
     private Rigidbody2D rb;
+    Animator ani;
     public ItemManager_LSW itemManager;
     // 마지막 아이템 확인용
     public int? lastUsedItem;
@@ -31,6 +32,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        ani =GetComponentInChildren<Animator>();
         minBoundary = new Vector2(-(itemManager.bgSize.x / 2) , -(itemManager.bgSize.y / 2));
         maxBoundary = new Vector2((itemManager.bgSize.x / 2), (itemManager.bgSize.y / 2));
         lastUsedItem = null;
@@ -46,15 +48,22 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             if(dir.y > 0)
             {
                 rb.velocity = Vector3.zero;
+                
+                
             }
             if(dir!= Vector2.zero)
             {
                 rb.AddForce(dir * jumpPower,ForceMode2D.Force);
+                Debug.Log("moving");
+                                
             }
             jumpIcon.fillAmount = 0;
             jumpCoolText.gameObject.SetActive(true);
             jump = false;
+            ani.SetBool("jump",false);
+            //ani.CrossFade("Idle", 0.8f);
         }
+        
     }
 
     void Update()
@@ -65,6 +74,8 @@ public class CharacterMovement2D_LSW : MonoBehaviour
         {
             jump = true;
             jumpReady = false;
+            ani.SetBool("jump",true);
+            //ani.CrossFade("Jump", 1.5f);
             StartCoroutine(JumpCoolTime());
         }
         
