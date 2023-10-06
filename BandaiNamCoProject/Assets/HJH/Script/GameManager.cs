@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public class UserData_HJH
+{
+
+}
+
 public class GameManager : MonoBehaviour
 {
+    public UserData_HJH userData;
     public static GameManager instance = null;
     private void Awake()
     {
