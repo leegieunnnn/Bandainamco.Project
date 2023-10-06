@@ -1073,6 +1073,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quitPopUp: {fileID: 0}
   audio: {fileID: 0}
+  mouseOverImage: []
+  fadeSpeed: 0
+  optionCanvas: {fileID: 0}
+  volumeSlider: {fileID: 0}
 --- !u!114 &1304391154
 MonoBehaviour:
   m_ObjectHideFlags: 0

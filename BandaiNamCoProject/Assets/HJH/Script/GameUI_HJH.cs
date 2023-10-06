@@ -1,83 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class StartUI_HJH : MonoBehaviour
+public class GameUI_HJH : MonoBehaviour
 {
-    public GameObject quitPopUp;
-    public AudioSource audio;
-    public GameObject[] mouseOverImage;
     public float fadeSpeed;
+    public GameObject[] mouseOverImage;
+    public GameObject pauseCanvas;
     public GameObject optionCanvas;
     public Slider volumeSlider;
-
-
     // Start is called before the first frame update
     void Start()
     {
         volumeSlider.onValueChanged.AddListener(VolumeChange);
     }
-    void VolumeChange(float value)
-    {
-        GameManager.instance.Volume = value;
-    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)&& Time.timeScale != 0f)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (optionCanvas.activeInHierarchy)
             {
                 OptionOffButton();
             }
-            else if(quitPopUp != null)
+            else if (!pauseCanvas.activeInHierarchy && Time.timeScale != 0f)
             {
-                quitPopUp.SetActive(true);
+                PauseOnButton();
+            }
+            else if (pauseCanvas.activeInHierarchy)
+            {
+                PauseOffButton();
             }
         }
     }
-
-    public void StartButton()
+    public void PauseOnButton()
     {
-        if(audio != null)
-        {
-            audio.Play();
-        }
-        Invoke("MoveScene", 0.01f);
-    }
-    public void MoveScene()
-    {
-        LoadingManager_HJH.LoadScene("GameScene");
-    }
-    public void QuitApp()
-    {
-        Application.Quit();
-    }
-    public void OptionButton()
-    {
-        if (!optionCanvas.activeInHierarchy)
-        {
-            optionCanvas.SetActive(true);
-        }
+        Time.timeScale = 0f;
+        pauseCanvas.SetActive(true);
     }
 
-    public void OptionOffButton()
+    public void PauseOffButton()
     {
-        if(optionCanvas.activeInHierarchy)
-        {
-            optionCanvas.SetActive(false);
-        }
+        Time.timeScale = 1f;
+        pauseCanvas.SetActive(false);
     }
 
     public void PointOver(int a)
     {
         StopAllCoroutines();
-        for(int i =0; i<mouseOverImage.Length; i++)
+        for (int i = 0; i < mouseOverImage.Length; i++)
         {
-            if(i == a)
+            if (i == a)
             {
                 StartCoroutine(FadeIn(mouseOverImage[i]));
             }
@@ -87,7 +62,6 @@ public class StartUI_HJH : MonoBehaviour
             }
         }
     }
-
     IEnumerator FadeIn(GameObject img)
     {
         Image image = img.GetComponent<Image>();
@@ -116,5 +90,26 @@ public class StartUI_HJH : MonoBehaviour
         }
     }
 
+    public void OptionOnButton()
+    {
+        optionCanvas.SetActive(true);
+        pauseCanvas.SetActive(false);
+    }
 
+    public void OptionOffButton()
+    {
+        optionCanvas.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    void VolumeChange(float value)
+    {
+        GameManager.instance.Volume = value;
+    }
+
+    public void QuitButton()
+    {
+        Time.timeScale = 1f;
+        LoadingManager_HJH.LoadScene("StartScene");
+    }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -317,6 +317,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quitPopUp: {fileID: 0}
   audio: {fileID: 0}
+  mouseOverImage: []
+  fadeSpeed: 0
+  optionCanvas: {fileID: 0}
+  volumeSlider: {fileID: 0}
 --- !u!114 &1304391154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,7 +537,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -458.91428, y: 348.44843}
+  m_AnchoredPosition: {x: -370, y: 348.44843}
   m_SizeDelta: {x: 1002.1671, y: 383.1069}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1528614630
@@ -1042,7 +1046,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 409.14, y: 305.68}
+  m_AnchoredPosition: {x: 346, y: 305.68}
   m_SizeDelta: {x: 1101.7104, y: 468.6498}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2091103914

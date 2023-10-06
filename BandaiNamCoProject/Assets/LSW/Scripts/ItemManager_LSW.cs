@@ -5,6 +5,7 @@ using UnityEngine;
 using KoreanTyper;
 using System;
 using Unity.Mathematics;
+using UnityEngine.UI;
 
 [Serializable]
 public class Item_HJH
@@ -39,7 +40,15 @@ public class ItemManager_LSW : MonoBehaviour
     Vector3 firstCamPos;
     public Vector3 bgSize;
     public GameObject[] zoomInOffObject;// 카메라 줌인줌아웃할때 꺼지는 오브젝트들
-    // Start is called before the first frame update
+                                        // Start is called before the first frame update
+    #region 일단 구름 테스트
+    public GameObject zoomCanvas;
+    public float fadeSpeed;
+    public GameObject[] clouds;
+    public GameObject cloudParent;
+    public float moveSpeed;
+    #endregion
+
     void Awake()
     {
         bgSize = GetBGSize(bg);
@@ -155,10 +164,16 @@ public class ItemManager_LSW : MonoBehaviour
                 yield return null;
             }
         }
-
+        zoomCanvas.SetActive(true);
         StartCoroutine(TextAni(items[itemIdx].zoomText));
-
+        for(int i =0; i< clouds.Length; i++)
+        {
+            StartCoroutine(FadeIn(clouds[i]));
+        }
+        StartCoroutine(CloudMove());
     }
+
+
     //IEnumerator CameraZoomOut(float camSize) 구버전
     //{
     //    Camera cam = Camera.main;
@@ -176,6 +191,33 @@ public class ItemManager_LSW : MonoBehaviour
     //    }
     //    StartCoroutine(TextAni(whatText));
     //}
+    IEnumerator CloudMove()
+    {
+        RectTransform rect = cloudParent.GetComponent<RectTransform>();
+        rect.anchoredPosition = new Vector3(-Screen.width, 0, 0);
+        float move = 0;
+        while(rect.anchoredPosition.x < 0)
+        {
+            move += moveSpeed * Time.unscaledDeltaTime;
+            rect.anchoredPosition = new Vector3(-Screen.width + move, 0, 0);
+            yield return null;
+        }
+    }
+    IEnumerator FadeIn(GameObject img)
+    {
+        Image image = img.GetComponent<Image>();
+        float alpha = 0;
+        Color color = image.color;
+        color.a = 0;
+        image.color = color;
+        while (alpha < 1f)
+        {
+            alpha += 0.001f;
+            yield return new WaitForSecondsRealtime(fadeSpeed);
+            color.a = alpha;
+            image.color = color;
+        }
+    }
 
 
     IEnumerator TextAni(string text)
@@ -202,6 +244,7 @@ public class ItemManager_LSW : MonoBehaviour
     {
         Camera cam = Camera.main;
         Camera.main.cullingMask = ~((1 << 7));
+        zoomCanvas.SetActive(false);
         while (cam.orthographicSize > camSize || (cam.transform.position - firstCamPos).magnitude < 0.1f)
         {
             if ((cam.transform.position - firstCamPos).magnitude > 1f)
