@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class StartUI_HJH : MonoBehaviour
 {
-    public GameObject quitPopUp;
+    public GameObject quitPopUp;           
     public AudioSource audio;
     public GameObject[] mouseOverImage;
     public float fadeSpeed;
@@ -33,9 +33,13 @@ public class StartUI_HJH : MonoBehaviour
             {
                 OptionOffButton();
             }
-            else if(quitPopUp != null)
+            //else if(quitPopUp != null)
+            //{
+            //    quitPopUp.SetActive(true);
+            //}
+            else if (quitPopUp.activeInHierarchy)
             {
-                quitPopUp.SetActive(true);
+                QuitOffButton();
             }
         }
     }
@@ -56,6 +60,22 @@ public class StartUI_HJH : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void QuitButton()
+    {
+        if (!quitPopUp.activeInHierarchy) {
+            quitPopUp.SetActive(true);
+        }
+    }
+
+    public void QuitOffButton()
+    {
+        if (quitPopUp.activeInHierarchy)
+        {
+            quitPopUp.SetActive(false);
+        }
+    }
+
     public void OptionButton()
     {
         if (!optionCanvas.activeInHierarchy)
