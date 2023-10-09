@@ -4,9 +4,16 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
 public class UserData_HJH
 {
-
+    public int stage;
+    public float volume = 1f;
+    public UserData_HJH()
+    {
+        stage = 0;
+        volume = 1f;
+    }
 }
 
 public class GameManager : MonoBehaviour
@@ -49,6 +56,8 @@ public class GameManager : MonoBehaviour
                     i--;
                 }
             }
+            userData.volume = volume;
+            SaveUserData();
         }
     }
     private void FindAudioSource()
@@ -84,10 +93,25 @@ public class GameManager : MonoBehaviour
             return;
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
+        string data = PlayerPrefs.GetString("UserData");
+        if (data.Length > 1)
+        {
+            userData = JsonUtility.FromJson<UserData_HJH>(data);
+        }
+        else
+        {
+            userData = new UserData_HJH();
+        }
+        Volume = userData.volume;
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         FindAudioSource();
+    }
+    public void SaveUserData()
+    {
+        string data = JsonUtility.ToJson(userData);
+        PlayerPrefs.SetString("UserData", data);
     }
     // Start is called before the first frame update
     void Start()

@@ -18,6 +18,7 @@ public class StartUI_HJH : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        volumeSlider.value = GameManager.instance.userData.volume;
         volumeSlider.onValueChanged.AddListener(VolumeChange);
     }
     void VolumeChange(float value)
@@ -47,6 +48,16 @@ public class StartUI_HJH : MonoBehaviour
     public void StartButton()
     {
         if(audio != null)
+        {
+            audio.Play();
+        }
+        Invoke("MoveScene", 0.01f);
+    }
+
+    public void NewGameButton()
+    {
+        GameManager.instance.userData = new UserData_HJH();
+        if (audio != null)
         {
             audio.Play();
         }

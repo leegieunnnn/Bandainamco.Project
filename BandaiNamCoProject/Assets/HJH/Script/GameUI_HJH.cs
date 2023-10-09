@@ -13,6 +13,7 @@ public class GameUI_HJH : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        volumeSlider.value = GameManager.instance.userData.volume;
         volumeSlider.onValueChanged.AddListener(VolumeChange);
     }
 
