@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mashroom_yd : MonoBehaviour
+public class Mashroom_yd : BaseItem_LSW
 {
     //Å©±â
     public float scale = 2;
