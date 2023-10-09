@@ -124,6 +124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3611a7fc9fae2734b976d077252caeed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 5
+  itemNum: 0
+  itemManager: {fileID: 0}
+  character: {fileID: 0}
+  scale: 2
   resetTime: 1
   originalScale: {x: 0, y: 0, z: 0}
+  mashroomTrigger: 0
