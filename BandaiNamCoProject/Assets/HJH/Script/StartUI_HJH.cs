@@ -65,7 +65,7 @@ public class StartUI_HJH : MonoBehaviour
     }
     public void MoveScene()
     {
-        LoadingManager_HJH.LoadScene("GameScene");
+        LoadingManager_HJH.LoadScene("StageScene");
     }
     public void QuitApp()
     {
