@@ -12,7 +12,7 @@ public class Mashroom_yd : BaseItem_LSW
     [SerializeField] private Vector3 originalScale;
     private bool isScale = false;
     [SerializeField] private int mashroomTrigger = 0; 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && !isScale)
         {
@@ -24,6 +24,7 @@ public class Mashroom_yd : BaseItem_LSW
                 StartCoroutine(PlayerScale(collision.transform));
             }
         }
+        base.OnTriggerEnter2D(collision);
        
     }
 

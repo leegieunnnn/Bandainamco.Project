@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 87654395}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 164.6, y: -46.5, z: 0}
+  m_LocalPosition: {x: -135, y: -100, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1213,26 +1213,26 @@ MonoBehaviour:
     triggerCount: 0
     zoomPosition: {fileID: 1356172121}
     zoomText: Time is Gold.
-    camSize: 100
+    camSize: 90
   - prefab: {fileID: 5659503068840668637, guid: 48cda0f0a1adb47498cec96f7e55f662, type: 3}
     itemCount: 5
     triggerCount: 0
     zoomPosition: {fileID: 1127503968}
     zoomText: Just as a lotus flower does not get wet in dirty water, the mind transcends
       everything. - Buddha
-    camSize: 40
+    camSize: 75
   - prefab: {fileID: 1886797856406526305, guid: 5f6126bfbc7d52c4fa6c9d4d12d78f6f, type: 3}
     itemCount: 7
     triggerCount: 0
     zoomPosition: {fileID: 971282238}
     zoomText: Eyes that see the future
-    camSize: 30
+    camSize: 100
   - prefab: {fileID: 5337970322375770073, guid: dd94b6016f523fd43b8cfc7b0bebfaf9, type: 3}
     itemCount: 7
     triggerCount: 0
     zoomPosition: {fileID: 87654396}
     zoomText: Hmm.. I think I should wear a Hat.
-    camSize: 30
+    camSize: 40
   bg: {fileID: 2016071353}
   camFollow: {fileID: 963194229}
   zoomOutSpeed: 50
@@ -3313,7 +3313,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -50}
+  m_LocalPosition: {x: -135, y: -100, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3364,7 +3364,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 971282237}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -170, y: 165, z: 0}
+  m_LocalPosition: {x: -57, y: 148, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3665,7 +3665,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127503967}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 100, y: 110, z: 0}
+  m_LocalPosition: {x: 142, y: -145, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4467,7 +4467,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356172120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -38, y: -84, z: 0}
+  m_LocalPosition: {x: -57, y: -40, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
