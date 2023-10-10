@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class StartUI_HJH : MonoBehaviour
 {
-    public GameObject quitPopUp;
+    public GameObject quitPopUp;           
     public AudioSource audio;
     public GameObject[] mouseOverImage;
     public float fadeSpeed;
@@ -18,6 +18,7 @@ public class StartUI_HJH : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        volumeSlider.value = GameManager.instance.userData.volume;
         volumeSlider.onValueChanged.AddListener(VolumeChange);
     }
     void VolumeChange(float value)
@@ -33,9 +34,13 @@ public class StartUI_HJH : MonoBehaviour
             {
                 OptionOffButton();
             }
-            else if(quitPopUp != null)
+            //else if(quitPopUp != null)
+            //{
+            //    quitPopUp.SetActive(true);
+            //}
+            else if (quitPopUp.activeInHierarchy)
             {
-                quitPopUp.SetActive(true);
+                QuitOffButton();
             }
         }
     }
@@ -48,14 +53,40 @@ public class StartUI_HJH : MonoBehaviour
         }
         Invoke("MoveScene", 0.01f);
     }
+
+    public void NewGameButton()
+    {
+        GameManager.instance.userData = new UserData_HJH();
+        if (audio != null)
+        {
+            audio.Play();
+        }
+        Invoke("MoveScene", 0.01f);
+    }
     public void MoveScene()
     {
-        LoadingManager_HJH.LoadScene("GameScene");
+        LoadingManager_HJH.LoadScene("StageScene");
     }
     public void QuitApp()
     {
         Application.Quit();
     }
+
+    public void QuitButton()
+    {
+        if (!quitPopUp.activeInHierarchy) {
+            quitPopUp.SetActive(true);
+        }
+    }
+
+    public void QuitOffButton()
+    {
+        if (quitPopUp.activeInHierarchy)
+        {
+            quitPopUp.SetActive(false);
+        }
+    }
+
     public void OptionButton()
     {
         if (!optionCanvas.activeInHierarchy)
