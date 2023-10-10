@@ -7,14 +7,18 @@ public class CamFollowe_HJH : MonoBehaviour
     public float cameraSpeed = 5.0f;
     public GameObject player;
     public float smoothing = 0.2f;
-    [SerializeField] Vector2 minCameraBoundary;
-    [SerializeField] Vector2 maxCameraBoundary;
+    public GameObject bg;
+    public Vector2 minCameraBoundary;
+    public Vector2 maxCameraBoundary;
     public bool camFollow = true;
     public float firstCamSize;
     // Start is called before the first frame update
     void Start()
     {
         firstCamSize = Camera.main.orthographicSize;
+        Vector3 bgSize = GetBGSize(bg);
+        minCameraBoundary = new Vector2(-(bgSize.x/2) + Camera.main.orthographicSize* Screen.width/Screen.height, -(bgSize.y/2) + Camera.main.orthographicSize);
+        maxCameraBoundary = new Vector2((bgSize.x / 2) - (Camera.main.orthographicSize * Screen.width / Screen.height), (bgSize.y / 2) - Camera.main.orthographicSize);
     }
 
     // Update is called once per frame
@@ -36,5 +40,14 @@ public class CamFollowe_HJH : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, targetPos, smoothing);
         }
 
+    }
+    public Vector3 GetBGSize(GameObject bG)
+    {
+        Vector2 bGSpriteSize = bG.GetComponent<SpriteRenderer>().sprite.rect.size;
+        Vector2 localbGSize = bGSpriteSize / bG.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        Vector3 worldbGSize = localbGSize;
+        worldbGSize.x *= bG.transform.lossyScale.x;
+        worldbGSize.y *= bG.transform.lossyScale.y;
+        return worldbGSize;
     }
 }

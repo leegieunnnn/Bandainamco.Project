@@ -5,6 +5,7 @@ using UnityEngine;
 using KoreanTyper;
 using System;
 using Unity.Mathematics;
+using UnityEngine.UI;
 
 [Serializable]
 public class Item_HJH
@@ -17,6 +18,10 @@ public class Item_HJH
     public int triggerCount;
     //줌 될 위치
     public Transform zoomPosition;
+    //줌 될때 나올 텍스트
+    public string zoomText;
+    //줌 될때 카메라 사이즈
+    public int camSize;
 }
 
 public class ItemManager_LSW : MonoBehaviour
@@ -28,15 +33,23 @@ public class ItemManager_LSW : MonoBehaviour
     public float zoomOutSpeed;
     public float zoomInSpeed;
     public TMP_Text subText;
-    public string whatText;
     public bool nowText = false;
     public bool skip = false;
     public bool endText = false;
     public float typingSpeed = 0.1f;
     Vector3 firstCamPos;
     public Vector3 bgSize;
-    // Start is called before the first frame update
-    void Start()
+    public GameObject[] zoomInOffObject;// 카메라 줌인줌아웃할때 꺼지는 오브젝트들
+                                        // Start is called before the first frame update
+    #region 일단 구름 테스트
+    public GameObject zoomCanvas;
+    public float fadeSpeed;
+    public GameObject[] clouds;
+    public GameObject cloudParent;
+    public float moveSpeed;
+    #endregion
+
+    void Awake()
     {
         bgSize = GetBGSize(bg);
         for (int i = 0; i < items.Length; i++)
@@ -46,7 +59,9 @@ public class ItemManager_LSW : MonoBehaviour
                 GameObject item = Instantiate(items[i].prefab);
                 item.transform.position = Return_RandomPosition();
                 item.transform.parent = bg.transform;
+                item.transform.position = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.parent.position.z-5);
                 item.GetComponent<BaseItem_LSW>().itemNum = i;
+                item.GetComponent<BaseItem_LSW>().itemManager = this;
             }
         }
 
@@ -99,7 +114,11 @@ public class ItemManager_LSW : MonoBehaviour
         firstCamPos = Camera.main.transform.position;
         camFollow.camFollow = false;
         float bigSize = Mathf.Max(bgSize.x, bgSize.y);
-        StartCoroutine(CameraZoomOut(items[itemIdx].zoomPosition));
+        for(int i =0; i<zoomInOffObject.Length; i++)
+        {
+            zoomInOffObject[i].SetActive(false);
+        }
+        StartCoroutine(CameraZoomOut(itemIdx));
     }
     public Vector3 GetBGSize(GameObject bG)
     {
@@ -110,20 +129,51 @@ public class ItemManager_LSW : MonoBehaviour
         worldbGSize.y *= bG.transform.lossyScale.y;
         return worldbGSize;
     }
-    IEnumerator CameraZoomOut(Transform cameraPoint)
+    IEnumerator CameraZoomOut(int itemIdx)
     {
         Camera cam = Camera.main;
-        while ((cam.transform.position - cameraPoint.position).magnitude > 0.1f)
+        if (itemIdx == 2)
         {
-            if ((cam.transform.position - cameraPoint.position).magnitude > 0.1f)
+            Camera.main.cullingMask = -1;
+            float camSize = Mathf.Min(bgSize.x,bgSize.y)/ 2;
+            while (cam.orthographicSize < camSize || (cam.transform.position - Vector3.zero).magnitude > 0.1f)
             {
-                cam.transform.position = Vector3.Lerp(cam.transform.position, cameraPoint.position, Time.fixedDeltaTime * 0.15f);
+                if (cam.orthographicSize < camSize)
+                {
+                    cam.orthographicSize += zoomOutSpeed * Time.unscaledDeltaTime;
+                }
+                if ((cam.transform.position - Vector3.zero).magnitude > 0.1f)
+                {
+                    cam.transform.position = Vector3.Lerp(cam.transform.position, Vector3.zero, Time.fixedDeltaTime * 0.15f);
+                }
+                yield return null;
             }
-            yield return null;
         }
-        StartCoroutine(TextAni(whatText));
-
+        else
+        {
+            while (cam.orthographicSize < items[itemIdx].camSize || (cam.transform.position - items[itemIdx].zoomPosition.position).magnitude > 1f)
+            {
+                if ((cam.transform.position - items[itemIdx].zoomPosition.position).magnitude > 0.1f)
+                {
+                    cam.transform.position = Vector3.Lerp(cam.transform.position, items[itemIdx].zoomPosition.position, Time.fixedDeltaTime * 0.15f);
+                }
+                if (cam.orthographicSize < items[itemIdx].camSize)
+                {
+                    cam.orthographicSize += zoomOutSpeed * Time.unscaledDeltaTime;
+                }
+                yield return null;
+            }
+        }
+        zoomCanvas.SetActive(true);
+        StartCoroutine(TextAni(items[itemIdx].zoomText));
+        for(int i =0; i< clouds.Length; i++)
+        {
+            StartCoroutine(FadeIn(clouds[i]));
+        }
+        StartCoroutine(CloudMove());
     }
+
+
     //IEnumerator CameraZoomOut(float camSize) 구버전
     //{
     //    Camera cam = Camera.main;
@@ -140,8 +190,36 @@ public class ItemManager_LSW : MonoBehaviour
     //        yield return null;
     //    }
     //    StartCoroutine(TextAni(whatText));
-
     //}
+    IEnumerator CloudMove()
+    {
+        RectTransform rect = cloudParent.GetComponent<RectTransform>();
+        rect.anchoredPosition = new Vector3(-Screen.width, 0, 0);
+        float move = 0;
+        while(rect.anchoredPosition.x < 0)
+        {
+            move += moveSpeed * Time.unscaledDeltaTime;
+            rect.anchoredPosition = new Vector3(-Screen.width + move, 0, 0);
+            yield return null;
+        }
+    }
+    IEnumerator FadeIn(GameObject img)
+    {
+        Image image = img.GetComponent<Image>();
+        float alpha = 0;
+        Color color = image.color;
+        color.a = 0;
+        image.color = color;
+        while (alpha < 1f)
+        {
+            alpha += 0.001f;
+            yield return new WaitForSecondsRealtime(fadeSpeed);
+            color.a = alpha;
+            image.color = color;
+        }
+    }
+
+
     IEnumerator TextAni(string text)
     {
         subText.gameObject.SetActive(true);
@@ -165,14 +243,24 @@ public class ItemManager_LSW : MonoBehaviour
     IEnumerator CameraZoomIn(float camSize)
     {
         Camera cam = Camera.main;
-        Camera.main.cullingMask = -1;
-        while ((cam.transform.position - firstCamPos).magnitude > 0.1f)
+        Camera.main.cullingMask = ~((1 << 7));
+        zoomCanvas.SetActive(false);
+        while (cam.orthographicSize > camSize || (cam.transform.position - firstCamPos).magnitude < 0.1f)
         {
-            if ((cam.transform.position - firstCamPos).magnitude > 0.1f)
+            if ((cam.transform.position - firstCamPos).magnitude > 1f)
             {
                 cam.transform.position = Vector3.Lerp(cam.transform.position, firstCamPos, Time.fixedDeltaTime * 0.15f);
             }
+            if (cam.orthographicSize > camSize)
+            {
+                cam.orthographicSize -= zoomInSpeed * Time.unscaledDeltaTime;
+            }
             yield return null;
+        }
+        Camera.main.cullingMask = -1;
+        for (int i = 0; i < zoomInOffObject.Length; i++)
+        {
+            zoomInOffObject[i].SetActive(true);
         }
         Time.timeScale = 1f;
         Camera.main.transform.position = firstCamPos;

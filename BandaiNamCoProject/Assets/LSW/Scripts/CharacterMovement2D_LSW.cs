@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,24 +14,29 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     public TMP_Text jumpCoolText;
     //점프 쿨타임
     public float coolTime = 1f;
+    float firstCoolTime = 0;
     //점프가 가능한지에 대한 불값
     bool jumpReady = true;
     bool jump = false;
     private Rigidbody2D rb;
+    Animator ani;
     public ItemManager_LSW itemManager;
-    GameObject player;
-
     // 마지막 아이템 확인용
     public int? lastUsedItem;
+
+    #region 연꽃용
+    public Vector2 minBoundary;
+    public Vector2 maxBoundary;
+    #endregion
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player");
-
+        ani =GetComponentInChildren<Animator>();
+        minBoundary = new Vector2(-(itemManager.bgSize.x / 2) , -(itemManager.bgSize.y / 2));
+        maxBoundary = new Vector2((itemManager.bgSize.x / 2), (itemManager.bgSize.y / 2));
         lastUsedItem = null;
-            
-        
+        firstCoolTime = coolTime;
     }
 
     private void FixedUpdate()
@@ -42,15 +48,22 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             if(dir.y > 0)
             {
                 rb.velocity = Vector3.zero;
+                
+                
             }
             if(dir!= Vector2.zero)
             {
                 rb.AddForce(dir * jumpPower,ForceMode2D.Force);
+                Debug.Log("moving");
+                                
             }
             jumpIcon.fillAmount = 0;
             jumpCoolText.gameObject.SetActive(true);
             jump = false;
+            ani.SetBool("jump",false);
+            //ani.CrossFade("Fly", 0.1f);
         }
+        
     }
 
     void Update()
@@ -61,29 +74,30 @@ public class CharacterMovement2D_LSW : MonoBehaviour
         {
             jump = true;
             jumpReady = false;
+            ani.SetBool("jump",true);
+            //ani.CrossFade("Jump", 0.1f);
             StartCoroutine(JumpCoolTime());
         }
         
-        if (lastUsedItem.HasValue && lastUsedItem.Value == 2)
+        if (lastUsedItem.HasValue && lastUsedItem.Value == 1)
         {
-            if (player != null)
-            {
-                // Get the player's position
-                Vector3 playerPosition = player.transform.position;
-                Debug.Log(playerPosition);
-                Debug.Log(itemManager.bgSize);
-                if (playerPosition.x > itemManager.bgSize.x / 2 || playerPosition.x < -itemManager.bgSize.x / 2)
-                {
-                    if (playerPosition.y > itemManager.bgSize.y / 2 || playerPosition.y < -itemManager.bgSize.y / 2)
-                    {
-                        player.transform.position = new Vector3(0, 0, 0);
-                    }
-                }
-            }
-            Debug.Log("it Worked!");
+            Lotus();
         }
+        if (lastUsedItem.HasValue && lastUsedItem.Value != 0)
+        {
+            coolTime = firstCoolTime;
+        }
+    }
 
-        
+    void Lotus()//연꽃 기능
+    {
+        // Get the player's position
+        if (transform.position.x < minBoundary.x || transform.position.x > maxBoundary.x || transform.position.y < minBoundary.y || transform.position.y > maxBoundary.y)
+        {
+            transform.position = Vector3.zero;
+            rb.velocity = Vector3.zero;
+            //연꽃 애니메이션 추가해야됨.
+        }
     }
     IEnumerator JumpCoolTime()
     {
