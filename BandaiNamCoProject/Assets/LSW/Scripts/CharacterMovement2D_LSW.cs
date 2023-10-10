@@ -61,7 +61,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             jumpCoolText.gameObject.SetActive(true);
             jump = false;
             ani.SetBool("jump",false);
-            //ani.CrossFade("Idle", 0.8f);
+            //ani.CrossFade("Fly", 0.1f);
         }
         
     }
@@ -75,7 +75,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             jump = true;
             jumpReady = false;
             ani.SetBool("jump",true);
-            //ani.CrossFade("Jump", 1.5f);
+            //ani.CrossFade("Jump", 0.1f);
             StartCoroutine(JumpCoolTime());
         }
         
