@@ -49,6 +49,10 @@ public class ItemManager_LSW : MonoBehaviour
     public float moveSpeed;
     #endregion
 
+    //yd
+    Mashroom_yd[] mashroomArray;
+
+    public
     void Awake()
     {
         bgSize = GetBGSize(bg);
@@ -65,6 +69,8 @@ public class ItemManager_LSW : MonoBehaviour
             }
         }
 
+        //yd
+        mashroomArray = bg.GetComponentsInChildren<Mashroom_yd>();
     }
 
     // Update is called once per frame
@@ -86,7 +92,15 @@ public class ItemManager_LSW : MonoBehaviour
                 StartCoroutine(CameraZoomIn(camFollow.firstCamSize));
             }
         }
-        
+        //yd
+     /*   foreach (Mashroom_yd mashroom in mashroomArray)
+        {
+            if (mashroom.isScale)
+            {
+                Debug.Log("µÅ¶ó¶ó¶ó¶ó");
+                mashroom.Scale();
+            }
+        }*/
     }
 
     public void TriggerCount(int su)
