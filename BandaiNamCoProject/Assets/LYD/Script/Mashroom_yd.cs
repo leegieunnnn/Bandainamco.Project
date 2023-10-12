@@ -10,42 +10,41 @@ public class Mashroom_yd : BaseItem_LSW
     public float resetTime = 2f;
 
     [SerializeField] private Vector3 originalScale;
-    private bool isScale = false;
-    [SerializeField] private int mashroomTrigger = 0; 
+    public bool isScale = false;
+    [SerializeField] private int mashroomTrigger = 0;
+    Transform tr;
     public override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !isScale)
-        {
-            if (mashroomTrigger == 0)
-            {
-                mashroomTrigger = 1;
-                originalScale = collision.transform.localScale;
-                isScale = true;
-                StartCoroutine(PlayerScale(collision.transform));
-            }
-        }
+        //if (collision.CompareTag("Player") && !isScale)
+        //{
+        //    if (mashroomTrigger == 0)
+        //    {
+        //        mashroomTrigger = 1;
+        //        originalScale = collision.transform.localScale;
+        //        isScale = true;
+        //        tr = collision.transform;
+        //       StartCoroutine(PlayerScale(collision.transform));
+        //    }
+        //}
+        itemManager.StartCoroutine(itemManager.PlayerScale(collision.transform,scale,resetTime));
         base.OnTriggerEnter2D(collision);
        
     }
-
-    private IEnumerator PlayerScale(Transform targetTr)
+   public void Scale()
     {
-        Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
-        targetTr.localScale = targetScale;
+        //StartCoroutine(PlayerScale(tr));
 
-        /* float currentTime = 0f;
-         while(currentTime < resetTime)
-         {
-
-         }*/
-
-        yield return new WaitForSeconds(resetTime);
-        targetTr.localScale = originalScale;
-        Debug.Log("µÆ´Ù");
-        isScale = false;
-
-        yield return null;
     }
+    //public IEnumerator PlayerScale(Transform targetTr)
+    //{
+    //    Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
+    //    targetTr.localScale = targetScale;
+    //    yield return new WaitForSeconds(resetTime);
+    //    targetTr.localScale = originalScale;
+    //    yield return null;
+    //    isScale = false;
+
+    //}
     // Start is called before the first frame update
     void Start()
     {

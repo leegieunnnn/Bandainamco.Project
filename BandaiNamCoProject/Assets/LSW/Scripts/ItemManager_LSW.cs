@@ -49,6 +49,10 @@ public class ItemManager_LSW : MonoBehaviour
     public float moveSpeed;
     #endregion
 
+    //yd
+    Mashroom_yd[] mashroomArray;
+
+    public
     void Awake()
     {
         bgSize = GetBGSize(bg);
@@ -65,6 +69,8 @@ public class ItemManager_LSW : MonoBehaviour
             }
         }
 
+        //yd
+        mashroomArray = bg.GetComponentsInChildren<Mashroom_yd>();
     }
 
     // Update is called once per frame
@@ -86,7 +92,15 @@ public class ItemManager_LSW : MonoBehaviour
                 StartCoroutine(CameraZoomIn(camFollow.firstCamSize));
             }
         }
-        
+        //yd
+     /*   foreach (Mashroom_yd mashroom in mashroomArray)
+        {
+            if (mashroom.isScale)
+            {
+                Debug.Log("돼라라라라");
+                mashroom.Scale();
+            }
+        }*/
     }
 
     public void TriggerCount(int su)
@@ -287,5 +301,18 @@ public class ItemManager_LSW : MonoBehaviour
     //    Camera.main.transform.position = firstCamPos;
     //    camFollow.camFollow = true;
     //}
+    #endregion
+
+    #region 버섯 오브젝트
+
+    public IEnumerator PlayerScale(Transform targetTr,float scale ,float resetTime)
+    {
+        Vector3 originalScale = targetTr.localScale;
+        Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
+        targetTr.localScale = targetScale;
+        yield return new WaitForSeconds(resetTime);
+        targetTr.localScale = originalScale;
+        yield return null;
+    }
     #endregion
 }
