@@ -223,6 +223,10 @@ MonoBehaviour:
   cameraMoverSpeed: 0.01
   startPoint: 0
   endPoint: 0
+  upPower: 0.001
+  walk: 0
+  walkTime: 0.5
+  walkWaitTime: 0.5
   background: {fileID: 994428534}
   backgroundSize: {x: 0, y: 0, z: 0}
 --- !u!1 &994428534
