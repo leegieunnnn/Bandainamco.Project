@@ -302,4 +302,17 @@ public class ItemManager_LSW : MonoBehaviour
     //    camFollow.camFollow = true;
     //}
     #endregion
+
+    #region 버섯 오브젝트
+
+    public IEnumerator PlayerScale(Transform targetTr,float scale ,float resetTime)
+    {
+        Vector3 originalScale = targetTr.localScale;
+        Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
+        targetTr.localScale = targetScale;
+        yield return new WaitForSeconds(resetTime);
+        targetTr.localScale = originalScale;
+        yield return null;
+    }
+    #endregion
 }
