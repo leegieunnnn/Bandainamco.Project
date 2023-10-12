@@ -26,7 +26,7 @@ public class Item_HJH
 
 public class ItemManager_LSW : MonoBehaviour
 {
-
+    public int itemCount;
     public Item_HJH[] items;
     public GameObject bg;
     public CamFollowe_HJH camFollow;
@@ -109,6 +109,7 @@ public class ItemManager_LSW : MonoBehaviour
         if (items[su].triggerCount == 1)
         {
             CameraZoomOutFuncStart(su);
+            itemCount++;
         }
     }
     Vector3 Return_RandomPosition()
@@ -149,8 +150,8 @@ public class ItemManager_LSW : MonoBehaviour
         if (itemIdx == 2)
         {
             Camera.main.cullingMask = -1;
-            float camSize = Mathf.Min(bgSize.x,bgSize.y)/ 2;
-            while (cam.orthographicSize < camSize || (cam.transform.position - Vector3.zero).magnitude > 0.1f)
+            float camSize = Mathf.Max(bgSize.x,bgSize.y)/ 2;
+            while (cam.orthographicSize < camSize || (cam.transform.position - Vector3.zero).magnitude > 1f)
             {
                 if (cam.orthographicSize < camSize)
                 {
@@ -259,7 +260,7 @@ public class ItemManager_LSW : MonoBehaviour
         Camera cam = Camera.main;
         Camera.main.cullingMask = ~((1 << 7));
         zoomCanvas.SetActive(false);
-        while (cam.orthographicSize > camSize || (cam.transform.position - firstCamPos).magnitude < 0.1f)
+        while (cam.orthographicSize > camSize || (cam.transform.position - firstCamPos).magnitude > 1f)
         {
             if ((cam.transform.position - firstCamPos).magnitude > 1f)
             {

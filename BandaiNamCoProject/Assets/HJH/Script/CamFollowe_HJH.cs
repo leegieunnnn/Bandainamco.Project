@@ -19,6 +19,10 @@ public class CamFollowe_HJH : MonoBehaviour
         Vector3 bgSize = GetBGSize(bg);
         minCameraBoundary = new Vector2(-(bgSize.x/2) + Camera.main.orthographicSize* Screen.width/Screen.height, -(bgSize.y/2) + Camera.main.orthographicSize);
         maxCameraBoundary = new Vector2((bgSize.x / 2) - (Camera.main.orthographicSize * Screen.width / Screen.height), (bgSize.y / 2) - Camera.main.orthographicSize);
+        Vector3 targetPos = new Vector3(player.transform.position.x, player.transform.position.y, this.transform.position.z);
+        targetPos.x = Mathf.Clamp(targetPos.x, minCameraBoundary.x, maxCameraBoundary.x);
+        targetPos.y = Mathf.Clamp(targetPos.y, minCameraBoundary.y, maxCameraBoundary.y);
+        transform.position = Vector3.Lerp(transform.position, targetPos, smoothing);
     }
 
     // Update is called once per frame
