@@ -44,6 +44,7 @@ public class CamFollowe_HJH : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, targetPos, smoothing);
         }
 
+
     }
     public Vector3 GetBGSize(GameObject bG)
     {
