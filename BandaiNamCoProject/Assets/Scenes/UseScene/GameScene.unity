@@ -1610,7 +1610,7 @@ MonoBehaviour:
   bg: {fileID: 2016071353}
   camFollow: {fileID: 963194229}
   zoomOutSpeed: 50
-  zoomInSpeed: 10
+  zoomInSpeed: 50
   subText: {fileID: 1834648929}
   nowText: 0
   skip: 0
