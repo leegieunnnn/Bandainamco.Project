@@ -26,8 +26,11 @@ public class Item_HJH
 
 public class ItemManager_LSW : MonoBehaviour
 {
+    public GameObject player;
     public int itemCount;
     public Item_HJH[] items;
+    public List<GameObject> spawnItems;
+    public float itemsDistance;
     public GameObject bg;
     public CamFollowe_HJH camFollow;
     public float zoomOutSpeed;
@@ -61,11 +64,34 @@ public class ItemManager_LSW : MonoBehaviour
             for(int j = 0; j < items[i].itemCount; j++)
             {
                 GameObject item = Instantiate(items[i].prefab);
-                item.transform.position = Return_RandomPosition();
+                Vector3 pos;
+                while (true)
+                {
+                    pos = Return_RandomPosition();
+                    bool restart = false;
+                    for (int k = 0; k < spawnItems.Count; k++)
+                    {
+                        if ((pos - spawnItems[k].transform.position).magnitude < itemsDistance)
+                        {
+                            restart = true;
+                            break;
+                        }
+                    }
+                    if ((pos - player.transform.position).magnitude < itemsDistance)
+                    {
+                        restart = true;
+                    }
+                    if (!restart)
+                    {
+                        break;
+                    }
+                }
+                item.transform.position = pos;
                 item.transform.parent = bg.transform;
                 item.transform.position = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.parent.position.z-5);
                 item.GetComponent<BaseItem_LSW>().itemNum = i;
                 item.GetComponent<BaseItem_LSW>().itemManager = this;
+                spawnItems.Add(item);
             }
         }
 

@@ -1580,6 +1580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b308ea2fd03eb94f88a2c958573168a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1949789408}
   itemCount: 0
   items:
   - prefab: {fileID: 1886797856406526305, guid: 6abe8bf0adc3f3a4ca153aa010cde49d, type: 3}
@@ -1607,6 +1608,8 @@ MonoBehaviour:
     zoomPosition: {fileID: 87654396}
     zoomText: Hmm.. I think I should wear a Hat.
     camSize: 40
+  spawnItems: []
+  itemsDistance: 30
   bg: {fileID: 2016071353}
   camFollow: {fileID: 963194229}
   zoomOutSpeed: 50

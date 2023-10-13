@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class StageCamera_HJH : MonoBehaviour
 {
+    public AudioSource[] walkAudio;
+    int walkCount = 0;
     public float cameraMoverSpeed;
     public float startPoint;
     public float endPoint;
@@ -51,11 +53,17 @@ public class StageCamera_HJH : MonoBehaviour
         if (!walk && stageMove != 0)
         {
             StartCoroutine(Walk(stageMove));
+            walkCount++;
+            if(walkCount > 1)
+            {
+                walkCount = 0;
+            }
         }
     }
     IEnumerator Walk(float stageMove)
     {
         walk = true;
+        walkAudio[walkCount].Play();
         while (true)
         {
             currentTime += Time.deltaTime;
