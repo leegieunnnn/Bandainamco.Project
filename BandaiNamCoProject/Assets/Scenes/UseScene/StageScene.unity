@@ -357,7 +357,7 @@ MonoBehaviour:
   upPower: 0.001
   walk: 0
   walkTime: 0.5
-  walkWaitTime: 0.1
+  walkWaitTime: 0.08
   background: {fileID: 994428534}
   backgroundSize: {x: 0, y: 0, z: 0}
 --- !u!1 &679643035
