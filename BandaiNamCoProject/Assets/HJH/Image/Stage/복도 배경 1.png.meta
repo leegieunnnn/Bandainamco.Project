@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 37be06edd26c33b4eb26b4237c88e797
+guid: 85e07977059c4a942bff1960141fb8c0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uBCF5\uB3C4 \uBC30\uACBD_0"
+      name: "\uBCF5\uB3C4 \uBC30\uACBD 1_0"
       rect:
         serializedVersion: 2
-        x: 0
+        x: 390
         y: 0
-        width: 3043
-        height: 1080
+        width: 403
+        height: 1313
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25787ccd206a9b441989f3c2604b625a
-      internalID: 1649697603
+      spriteID: fb39f913ef06441469b7138d401f579b
+      internalID: -2029395209
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uBCF5\uB3C4 \uBC30\uACBD_1"
+      name: "\uBCF5\uB3C4 \uBC30\uACBD 1_1"
       rect:
         serializedVersion: 2
-        x: 484
+        x: 0
         y: 0
-        width: 397
-        height: 1080
+        width: 3043
+        height: 1313
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eddb760319770c84e8473bc737cd7360
-      internalID: 1059052114
+      spriteID: 93303b1ca14a0964ba6a4343feae24fa
+      internalID: -1900977257
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 10b618270fcb79342b0d036781275b9f
     internalID: 0
     vertices: []
     indices: 
@@ -169,8 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "\uBCF5\uB3C4 \uBC30\uACBD_0": 1649697603
-      "\uBCF5\uB3C4 \uBC30\uACBD_1": 1059052114
+      "\uBCF5\uB3C4 \uBC30\uACBD 1_0": -2029395209
+      "\uBCF5\uB3C4 \uBC30\uACBD 1_1": -1900977257
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -18,30 +18,58 @@ public class StageCamera_HJH : MonoBehaviour
     public GameObject background;
     public Vector3 backgroundSize;
 
-    #region ÄÆ¾À ÆÄ¶ó¹ÌÅÍ
-    [Header("ÄÆ¾À ÆÄ¶ó¹ÌÅÍ")]
-    public float cutSceneTime;
+    #region ÄÆ¾À
+    [Header("ÄÆ¾À")]
+    public float cutSceneSpeed;
     public float cameraSize;
     public GameObject leftDoor;
     public GameObject rightDoor;
+    public float doorSpeed;
+    public GameObject elevator;
+    public enum ElevatorStage
+    {
+        OpenStart,
+        Opening,
+        Opened,
+        Up,
+        Down,
+        CloseStart,
+        Closing,
+        Closed,
+    }
+    public ElevatorStage elevatorStage;
+    public Sprite[] elevatorNum;
+    public Sprite[] elevatorUpDown;
+    public SpriteRenderer elevatorNumSprite;
+    public SpriteRenderer elevatorUpDownSprite;
+    public int eleNum;
+    float elevatorTime;
+    public GameObject quitPopUp;
     #endregion
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(StartCutScene());
+        eleNum = 8;
+        elevatorTime = 0;
     }
     IEnumerator StartCutScene()
     {
         Time.timeScale = 0f;
         Camera cam = Camera.main;
         float x = cameraSize - cam.orthographicSize; 
+        elevatorStage = ElevatorStage.Opened;
         while (true)
         {
-            cam.orthographicSize += x*(cutSceneTime *0.01f) ;
+            cam.orthographicSize += x*(cutSceneSpeed *0.01f) ;
+            leftDoor.transform.position -= new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
+            rightDoor.transform.position += new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
             yield return new WaitForSecondsRealtime(0.01f);
             if(cam.orthographicSize >= cameraSize)
             {
                 cam.orthographicSize = cameraSize;
+                leftDoor.transform.position = new Vector3(-2.6f, leftDoor.transform.position.y, 0);
+                rightDoor.transform.position = new Vector3(2.6f, rightDoor.transform.position.y, 0);
                 break;
             }
         }
@@ -58,7 +86,6 @@ public class StageCamera_HJH : MonoBehaviour
         float cameraWidth = Camera.main.orthographicSize * Screen.width / Screen.height;
         startPoint = background.transform.position.x - backgroundSize.x / 2.0f + cameraWidth;
         endPoint = background.transform.position.x + backgroundSize.x / 2.0f - cameraWidth;
-
         transform.position = new Vector3(0, 0, -10);
     }
 
@@ -86,6 +113,69 @@ public class StageCamera_HJH : MonoBehaviour
                 walkCount = 0;
             }
         }
+        if(elevatorStage == ElevatorStage.OpenStart)
+        {
+            StartCoroutine(ElevatorOpen());
+        }
+        else if(elevatorStage == ElevatorStage.Opened)
+        {
+            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) > 2f)
+            {
+                elevatorStage = ElevatorStage.CloseStart;
+            }
+        }
+        else if(elevatorStage == ElevatorStage.CloseStart)
+        {
+            StartCoroutine(ElevatorClose());
+        }
+        else if(elevatorStage == ElevatorStage.Closed)
+        {
+            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) > 2f)
+            {
+                elevatorStage = ElevatorStage.Down;
+            }
+            else
+            {
+                elevatorStage = ElevatorStage.OpenStart;
+            }
+        }
+        else if(elevatorStage == ElevatorStage.Down)
+        {
+            elevatorTime += Time.deltaTime;
+            elevatorUpDownSprite.sprite = elevatorUpDown[1];
+            if(elevatorTime > 1f && eleNum >0)
+            {
+                elevatorTime = 0;
+                eleNum--;
+                elevatorNumSprite.sprite = elevatorNum[eleNum];
+            }
+            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) < 2f)
+            {
+                elevatorTime = 0;
+                elevatorStage = ElevatorStage.Up;
+            }
+        }
+        else if(elevatorStage == ElevatorStage.Up)
+        {
+            elevatorTime += Time.deltaTime;
+            elevatorUpDownSprite.sprite = elevatorUpDown[0];
+            if(elevatorTime > 1f && eleNum < 8)
+            {
+                elevatorTime = 0;
+                eleNum++;
+                elevatorNumSprite.sprite= elevatorNum[eleNum];
+            }
+            if(eleNum == 8)
+            {
+                elevatorTime = 0;
+                elevatorStage = ElevatorStage.OpenStart;
+            }
+        }
+
+        if(quitPopUp.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape))
+        {
+            QuitNo();
+        }
     }
     IEnumerator Walk(float stageMove)
     {
@@ -93,12 +183,12 @@ public class StageCamera_HJH : MonoBehaviour
         walkAudio[walkCount].Play();
         while (true)
         {
-            currentTime += Time.deltaTime;
+            currentTime += 0.01f;
             if(currentTime > walkTime)
             {
                 break;
             }
-            yield return null;
+            yield return new WaitForSeconds(0.01f);
             if(currentTime < walkTime / 2)
             {
                 gameObject.transform.position += new Vector3(stageMove * cameraMoverSpeed, upPower, -10);
@@ -115,5 +205,53 @@ public class StageCamera_HJH : MonoBehaviour
         walk = false;
 
     }
+    #region ¿¤¸®º£ÀÌÅÍ °ü·Ã ÇÔ¼ö
+    IEnumerator ElevatorOpen()
+    {
+        elevatorStage = ElevatorStage.Opening;
+        while (true)
+        {
+            leftDoor.transform.position -= new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
+            rightDoor.transform.position += new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
+            yield return new WaitForSecondsRealtime(0.01f);
+            if (leftDoor.transform.position.x < -2.6f)
+            {
+                leftDoor.transform.position = new Vector3(-2.6f, leftDoor.transform.position.y, 0);
+                rightDoor.transform.position = new Vector3(2.6f, rightDoor.transform.position.y, 0);
+                break;
+            }
+        }
+        elevatorStage = ElevatorStage.Opened;
+        quitPopUp.SetActive(true);
+        Time.timeScale = 0f;
+    }
 
+    public void QuitYes()
+    {
+        LoadingManager_HJH.LoadScene("StartScene");
+    }
+    public void QuitNo()
+    {
+        quitPopUp.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    IEnumerator ElevatorClose()
+    {
+        elevatorStage = ElevatorStage.Closing;
+        while (true)
+        {
+            leftDoor.transform.position += new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
+            rightDoor.transform.position -= new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
+            yield return new WaitForSecondsRealtime(0.01f);
+            if (leftDoor.transform.position.x > -0.9f)
+            {
+                leftDoor.transform.position = new Vector3(-0.89f, leftDoor.transform.position.y, 0);
+                rightDoor.transform.position = new Vector3(0.89f, rightDoor.transform.position.y, 0);
+                break;
+            }
+        }
+        elevatorStage = ElevatorStage.Closed;
+    }
+    #endregion
 }
