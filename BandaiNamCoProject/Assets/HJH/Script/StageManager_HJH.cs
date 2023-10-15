@@ -37,7 +37,7 @@ public class StageManager_HJH : MonoBehaviour
                 }
                 else
                 {
-                    newDoor.GetComponent<SpriteRenderer>().sprite = doorsSprite[0];
+                    //newDoor.GetComponent<SpriteRenderer>().sprite = doorsSprite[0];
                 }
             }
         }
@@ -49,7 +49,7 @@ public class StageManager_HJH : MonoBehaviour
     {
        for(int i =0; i<doorCount; i++)
         {
-            if (Mathf.Abs( doors[i].transform.position.x - Camera.main.transform.position.x )< 1f)
+            if (Mathf.Abs( doors[i].transform.position.x - Camera.main.transform.position.x )< 2f)
             {
                 doors[i].transform.GetChild(0).gameObject.SetActive(true);
                 doorNum = i;
@@ -66,7 +66,7 @@ public class StageManager_HJH : MonoBehaviour
                 if(doorNum <= GameManager.instance.userData.stage)
                 {
                     doors[doorNum].GetComponent<Animator>().SetTrigger("Open");
-                    Invoke("MoveScene", 1f);
+                    Invoke("MoveScene", 2f);
                 }
             }
         }

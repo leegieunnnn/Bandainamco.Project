@@ -65,10 +65,20 @@ public class StageCamera_HJH : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float stageMove = Input.GetAxisRaw("Horizontal");
+        float stageMove = Input.GetAxis("Horizontal");
+        if (Mathf.Abs(stageMove) < 0.5)
+        {
+            if (stageMove < 0)
+            {
+                stageMove = -0.5f;
+            }
+            else if (stageMove > 0)
+            {
+                stageMove = 0.5f;
+            }
+        }
         if (!walk && stageMove != 0 && Time.timeScale != 0)
         {
-            Debug.Log("?");
             StartCoroutine(Walk(stageMove));
             walkCount++;
             if(walkCount > 1)
