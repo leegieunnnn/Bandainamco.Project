@@ -12,9 +12,16 @@ public class StageManager_HJH : MonoBehaviour
     public Transform startPoint; //문이 생기는 시작점
     public GameObject bg;
     int doorNum;
+
+    #region 컷씬 파라미터
+    [Header("컷씬 파라미터")]
+    public float cutSceneTime;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
+        
+
         for(int i =0; i< doorCount; i++)
         {
             GameObject newDoor = GameObject.Instantiate(doorPrefab);
@@ -35,6 +42,7 @@ public class StageManager_HJH : MonoBehaviour
             }
         }
     }
+
 
     // Update is called once per frame
     void Update()
@@ -57,9 +65,14 @@ public class StageManager_HJH : MonoBehaviour
             {
                 if(doorNum <= GameManager.instance.userData.stage)
                 {
-                    LoadingManager_HJH.LoadScene("GameScene");
+                    doors[doorNum].GetComponent<Animator>().SetTrigger("Open");
+                    Invoke("MoveScene", 1f);
                 }
             }
         }
+    }
+    public void MoveScene()
+    {
+        LoadingManager_HJH.LoadScene("GameScene");
     }
 }
