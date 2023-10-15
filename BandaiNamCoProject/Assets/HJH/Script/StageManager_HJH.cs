@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class StageManager_HJH : MonoBehaviour
 {
-    public GameObject doorPrefab; //문 프리팹
     public List<GameObject> doors; // 생성된 문들
-    public int doorCount; // 문 개수
-    public float doorInterval; // 문 사이의 간격
+    public GameObject optionDoor;
     public Sprite[] doorsSprite; //열린문 , 닫힌문
-    public Transform startPoint; //문이 생기는 시작점
     public GameObject bg;
     int doorNum;
 
@@ -20,36 +17,34 @@ public class StageManager_HJH : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-
-        for(int i =0; i< doorCount; i++)
-        {
-            GameObject newDoor = GameObject.Instantiate(doorPrefab);
-            doors.Add(newDoor);
-            newDoor.transform.position = startPoint.position;
-            newDoor.transform.parent = bg.transform;
-            newDoor.transform.position = new Vector3(newDoor.transform.position.x + (i*doorInterval),newDoor.transform.position.y,newDoor.transform.position.z);
-            if(GameManager.instance != null )
-            {
-                if(GameManager.instance.userData.stage < i)
-                {
-                    newDoor.GetComponent<SpriteRenderer>().sprite = doorsSprite[1];
-                }
-                else
-                {
-                    //newDoor.GetComponent<SpriteRenderer>().sprite = doorsSprite[0];
-                }
-            }
-        }
+        //for(int i =0; i< doorCount; i++)
+        //{
+        //    GameObject newDoor = GameObject.Instantiate(doorPrefab);
+        //    doors.Add(newDoor);
+        //    newDoor.transform.position = startPoint.position;
+        //    newDoor.transform.parent = bg.transform;
+        //    newDoor.transform.position = new Vector3(newDoor.transform.position.x + (i*doorInterval),newDoor.transform.position.y,newDoor.transform.position.z);
+        //    if(GameManager.instance != null )
+        //    {
+        //        if(GameManager.instance.userData.stage < i)
+        //        {
+        //            newDoor.GetComponent<SpriteRenderer>().sprite = doorsSprite[1];
+        //        }
+        //        else
+        //        {
+        //            //newDoor.GetComponent<SpriteRenderer>().sprite = doorsSprite[0];
+        //        }
+        //    }
+        //}
     }
 
 
     // Update is called once per frame
     void Update()
     {
-       for(int i =0; i<doorCount; i++)
+       for(int i =0; i<doors.Count; i++)
         {
-            if (Mathf.Abs( doors[i].transform.position.x - Camera.main.transform.position.x )< 2f)
+            if (Mathf.Abs(doors[i].transform.position.x - Camera.main.transform.position.x )< 2f)
             {
                 doors[i].transform.GetChild(0).gameObject.SetActive(true);
                 doorNum = i;
@@ -58,6 +53,10 @@ public class StageManager_HJH : MonoBehaviour
             {
                 doors[i].transform.GetChild(0).gameObject.SetActive(false);
             }
+        }
+       if(Mathf.Abs(optionDoor.transform.position.x - Camera.main.transform.position.x) < 2f)
+        {
+
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {

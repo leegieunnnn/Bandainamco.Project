@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -627,6 +627,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 888abe1ecb1026f4fbb174314bb665d5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed6185ca78992e4db4335d85dddff3a, type: 3}
+--- !u!1 &277478770 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4852880229253557809, guid: aed6185ca78992e4db4335d85dddff3a, type: 3}
+  m_PrefabInstance: {fileID: 277478769}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &309223166
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -700,6 +705,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 888abe1ecb1026f4fbb174314bb665d5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed6185ca78992e4db4335d85dddff3a, type: 3}
+--- !u!1 &309223167 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4852880229253557809, guid: aed6185ca78992e4db4335d85dddff3a, type: 3}
+  m_PrefabInstance: {fileID: 309223166}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &379199839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1614,7 +1624,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 6f6c55f6bb8346c4782dceb5223283a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2530,6 +2540,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 888abe1ecb1026f4fbb174314bb665d5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed6185ca78992e4db4335d85dddff3a, type: 3}
+--- !u!1 &971967393 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4852880229253557809, guid: aed6185ca78992e4db4335d85dddff3a, type: 3}
+  m_PrefabInstance: {fileID: 971967392}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &994428534
 GameObject:
   m_ObjectHideFlags: 0
@@ -2821,7 +2836,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 1fbc173dad7028340abc8b0152ebed03, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3723,7 +3738,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 1fbc173dad7028340abc8b0152ebed03, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3976,14 +3991,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 077d39c88a7ffee4d84f3e721939697f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorPrefab: {fileID: 4852880229253557809, guid: aed6185ca78992e4db4335d85dddff3a, type: 3}
-  doors: []
-  doorCount: 10
-  doorInterval: 10
+  doors:
+  - {fileID: 309223167}
+  - {fileID: 2079198234}
+  - {fileID: 277478770}
+  - {fileID: 2068169982}
+  optionDoor: {fileID: 971967393}
   doorsSprite:
   - {fileID: 21300000, guid: 6e538cc462702d44496c753d87b52291, type: 3}
   - {fileID: 21300000, guid: 036f9e79982f25348aa46e8f8b95886b, type: 3}
-  startPoint: {fileID: 1929647301}
   bg: {fileID: 994428534}
   cutSceneTime: 0
 --- !u!4 &1535771683
@@ -4752,6 +4768,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 888abe1ecb1026f4fbb174314bb665d5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed6185ca78992e4db4335d85dddff3a, type: 3}
+--- !u!1 &2068169982 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4852880229253557809, guid: aed6185ca78992e4db4335d85dddff3a, type: 3}
+  m_PrefabInstance: {fileID: 2068169981}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2069213069
 GameObject:
   m_ObjectHideFlags: 0
@@ -4913,6 +4934,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 888abe1ecb1026f4fbb174314bb665d5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed6185ca78992e4db4335d85dddff3a, type: 3}
+--- !u!1 &2079198234 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4852880229253557809, guid: aed6185ca78992e4db4335d85dddff3a, type: 3}
+  m_PrefabInstance: {fileID: 2079198233}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2096230045
 GameObject:
   m_ObjectHideFlags: 0
