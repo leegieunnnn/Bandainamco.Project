@@ -1833,7 +1833,7 @@ MonoBehaviour:
     zoomText: Hmm.. I think I should wear a Hat.
     camSize: 40
   spawnItems: []
-  itemsDistance: 30
+  itemsDistance: 100
   bg: {fileID: 2016071353}
   camFollow: {fileID: 963194229}
   zoomOutSpeed: 50

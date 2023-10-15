@@ -65,8 +65,10 @@ public class ItemManager_LSW : MonoBehaviour
             {
                 GameObject item = Instantiate(items[i].prefab);
                 Vector3 pos;
+                int su = 0; //무한루프 방지용
                 while (true)
                 {
+                    su++;
                     pos = Return_RandomPosition();
                     bool restart = false;
                     for (int k = 0; k < spawnItems.Count; k++)
@@ -80,6 +82,10 @@ public class ItemManager_LSW : MonoBehaviour
                     if ((pos - player.transform.position).magnitude < itemsDistance)
                     {
                         restart = true;
+                    }
+                    if(su > 100)
+                    {
+                        restart = false;
                     }
                     if (!restart)
                     {
