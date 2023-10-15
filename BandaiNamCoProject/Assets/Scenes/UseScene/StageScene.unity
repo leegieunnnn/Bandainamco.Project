@@ -1468,6 +1468,7 @@ MonoBehaviour:
   elevatorUpDownSprite: {fileID: 799142754}
   eleNum: 0
   quitPopUp: {fileID: 1776663903}
+  elevatorLight: {fileID: 2069213069}
 --- !u!1 &637462169
 GameObject:
   m_ObjectHideFlags: 0
@@ -2447,9 +2448,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: StartUI_HJH, Assembly-CSharp
-        m_MethodName: OptionOffButton
+      - m_Target: {fileID: 1535771682}
+        m_TargetAssemblyTypeName: StageManager_HJH, Assembly-CSharp
+        m_MethodName: OptionOff
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2622,8 +2623,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 994428534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.7605, y: 0, z: 0}
-  m_LocalScale: {x: 1.9642, y: 1, z: 1}
+  m_LocalPosition: {x: 11.5358, y: 0, z: 0}
+  m_LocalScale: {x: 2.0447323, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4001,7 +4002,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6e538cc462702d44496c753d87b52291, type: 3}
   - {fileID: 21300000, guid: 036f9e79982f25348aa46e8f8b95886b, type: 3}
   bg: {fileID: 994428534}
-  cutSceneTime: 0
+  optionCanvas: {fileID: 1304391152}
+  volumeSlider: {fileID: 256072204}
+  cameraZoomInSpeed: 0.025
 --- !u!4 &1535771683
 Transform:
   m_ObjectHideFlags: 0
@@ -4849,13 +4852,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2069213069}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.61, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.6099997, z: 0}
   m_LocalScale: {x: 0.87626, y: 0.87626, z: 0.87626}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_Father: {fileID: 2096230046}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2079198233
 PrefabInstance:
@@ -4975,6 +4978,7 @@ Transform:
   - {fileID: 1145479633}
   - {fileID: 1246625907}
   - {fileID: 2118354912}
+  - {fileID: 2069213071}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

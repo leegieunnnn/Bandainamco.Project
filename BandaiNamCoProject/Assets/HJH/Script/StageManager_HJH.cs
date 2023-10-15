@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StageManager_HJH : MonoBehaviour
 {
@@ -10,13 +11,17 @@ public class StageManager_HJH : MonoBehaviour
     public GameObject bg;
     int doorNum;
 
-    #region ÄÆ¾À ÆÄ¶ó¹ÌÅÍ
-    [Header("ÄÆ¾À ÆÄ¶ó¹ÌÅÍ")]
-    public float cutSceneTime;
-    #endregion
+    public GameObject optionCanvas;
+    public Slider volumeSlider;
+    public float cameraZoomInSpeed;
     // Start is called before the first frame update
     void Start()
     {
+        if (GameManager.instance != null)
+        {
+            volumeSlider.value = GameManager.instance.userData.volume;
+        }
+        volumeSlider.onValueChanged.AddListener(VolumeChange);
         //for(int i =0; i< doorCount; i++)
         //{
         //    GameObject newDoor = GameObject.Instantiate(doorPrefab);
@@ -37,7 +42,10 @@ public class StageManager_HJH : MonoBehaviour
         //    }
         //}
     }
-
+    void VolumeChange(float value)
+    {
+        GameManager.instance.Volume = value;
+    }
 
     // Update is called once per frame
     void Update()
@@ -55,8 +63,13 @@ public class StageManager_HJH : MonoBehaviour
             }
         }
        if(Mathf.Abs(optionDoor.transform.position.x - Camera.main.transform.position.x) < 2f)
+       {
+            doorNum = -1;
+            optionDoor.transform.GetChild(0).gameObject.SetActive(true);
+        }
+        else
         {
-
+            optionDoor.transform.GetChild(0).gameObject.SetActive(false);
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -64,11 +77,53 @@ public class StageManager_HJH : MonoBehaviour
             {
                 if(doorNum <= GameManager.instance.userData.stage)
                 {
-                    doors[doorNum].GetComponent<Animator>().SetTrigger("Open");
-                    Invoke("MoveScene", 2f);
+                    if(doorNum < 0)
+                    {
+                        optionDoor.GetComponent<Animator>().SetTrigger("Open");
+                        Invoke("OptionOn", 2f);
+                    }
+                    else
+                    {
+                        doors[doorNum].GetComponent<Animator>().SetTrigger("Open");
+                        StartCoroutine(CameraZoomIn());
+                        Invoke("MoveScene", 2f);
+                    }
                 }
             }
         }
+
+        if(optionDoor.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape))
+        {
+            OptionOff();
+        }
+    }
+
+    IEnumerator CameraZoomIn()
+    {
+        Camera cam = Camera.main;
+        while (true)
+        {
+            if(cam.orthographicSize > 0)
+            {
+                cam.orthographicSize -= cameraZoomInSpeed;
+            }
+            if(Mathf.Abs(cam.transform.position.x - doors[doorNum].transform.position.x) > 0.5f)
+            {
+                cam.transform.position += new Vector3((doors[doorNum].transform.position.x - cam.transform.position.x) * 0.005f, 0, 0);
+            }
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+    public void OptionOn() 
+    {
+        optionCanvas.SetActive(true);
+        Time.timeScale = 0;
+    }
+    public void OptionOff()
+    {
+        Time.timeScale = 1f;
+        optionCanvas.SetActive(false);
+        optionDoor.GetComponent<Animator>().SetTrigger("Close");
     }
     public void MoveScene()
     {

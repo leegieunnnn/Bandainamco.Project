@@ -45,6 +45,7 @@ public class StageCamera_HJH : MonoBehaviour
     public int eleNum;
     float elevatorTime;
     public GameObject quitPopUp;
+    public GameObject elevatorLight;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -115,6 +116,7 @@ public class StageCamera_HJH : MonoBehaviour
         }
         if(elevatorStage == ElevatorStage.OpenStart)
         {
+            elevatorLight.SetActive(true);
             StartCoroutine(ElevatorOpen());
         }
         else if(elevatorStage == ElevatorStage.Opened)
@@ -126,6 +128,7 @@ public class StageCamera_HJH : MonoBehaviour
         }
         else if(elevatorStage == ElevatorStage.CloseStart)
         {
+            elevatorLight.SetActive(false);
             StartCoroutine(ElevatorClose());
         }
         else if(elevatorStage == ElevatorStage.Closed)
@@ -143,6 +146,7 @@ public class StageCamera_HJH : MonoBehaviour
         {
             elevatorTime += Time.deltaTime;
             elevatorUpDownSprite.sprite = elevatorUpDown[1];
+            elevatorLight.SetActive(false);
             if(elevatorTime > 1f && eleNum >0)
             {
                 elevatorTime = 0;
@@ -157,6 +161,7 @@ public class StageCamera_HJH : MonoBehaviour
         }
         else if(elevatorStage == ElevatorStage.Up)
         {
+            elevatorLight.SetActive(true);
             elevatorTime += Time.deltaTime;
             elevatorUpDownSprite.sprite = elevatorUpDown[0];
             if(elevatorTime > 1f && eleNum < 8)
@@ -214,6 +219,10 @@ public class StageCamera_HJH : MonoBehaviour
             leftDoor.transform.position -= new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
             rightDoor.transform.position += new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
             yield return new WaitForSecondsRealtime(0.01f);
+            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) > 2f)
+            {
+                elevatorStage = ElevatorStage.CloseStart;
+            }
             if (leftDoor.transform.position.x < -2.6f)
             {
                 leftDoor.transform.position = new Vector3(-2.6f, leftDoor.transform.position.y, 0);
