@@ -26,8 +26,11 @@ public class Item_HJH
 
 public class ItemManager_LSW : MonoBehaviour
 {
-
+    public GameObject player;
+    public int itemCount;
     public Item_HJH[] items;
+    public List<GameObject> spawnItems;
+    public float itemsDistance;
     public GameObject bg;
     public CamFollowe_HJH camFollow;
     public float zoomOutSpeed;
@@ -49,6 +52,10 @@ public class ItemManager_LSW : MonoBehaviour
     public float moveSpeed;
     #endregion
 
+    //yd
+    Mashroom_yd[] mashroomArray;
+
+    public
     void Awake()
     {
         bgSize = GetBGSize(bg);
@@ -57,14 +64,45 @@ public class ItemManager_LSW : MonoBehaviour
             for(int j = 0; j < items[i].itemCount; j++)
             {
                 GameObject item = Instantiate(items[i].prefab);
-                item.transform.position = Return_RandomPosition();
+                Vector3 pos;
+                int su = 0; //무한루프 방지용
+                while (true)
+                {
+                    su++;
+                    pos = Return_RandomPosition();
+                    bool restart = false;
+                    for (int k = 0; k < spawnItems.Count; k++)
+                    {
+                        if ((pos - spawnItems[k].transform.position).magnitude < itemsDistance)
+                        {
+                            restart = true;
+                            break;
+                        }
+                    }
+                    if ((pos - player.transform.position).magnitude < itemsDistance)
+                    {
+                        restart = true;
+                    }
+                    if(su > 100)
+                    {
+                        restart = false;
+                    }
+                    if (!restart)
+                    {
+                        break;
+                    }
+                }
+                item.transform.position = pos;
                 item.transform.parent = bg.transform;
                 item.transform.position = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.parent.position.z-5);
                 item.GetComponent<BaseItem_LSW>().itemNum = i;
                 item.GetComponent<BaseItem_LSW>().itemManager = this;
+                spawnItems.Add(item);
             }
         }
 
+        //yd
+        mashroomArray = bg.GetComponentsInChildren<Mashroom_yd>();
     }
 
     // Update is called once per frame
@@ -86,7 +124,15 @@ public class ItemManager_LSW : MonoBehaviour
                 StartCoroutine(CameraZoomIn(camFollow.firstCamSize));
             }
         }
-        
+        //yd
+     /*   foreach (Mashroom_yd mashroom in mashroomArray)
+        {
+            if (mashroom.isScale)
+            {
+                Debug.Log("돼라라라라");
+                mashroom.Scale();
+            }
+        }*/
     }
 
     public void TriggerCount(int su)
@@ -95,6 +141,7 @@ public class ItemManager_LSW : MonoBehaviour
         if (items[su].triggerCount == 1)
         {
             CameraZoomOutFuncStart(su);
+            itemCount++;
         }
     }
     Vector3 Return_RandomPosition()
@@ -135,8 +182,8 @@ public class ItemManager_LSW : MonoBehaviour
         if (itemIdx == 2)
         {
             Camera.main.cullingMask = -1;
-            float camSize = Mathf.Min(bgSize.x,bgSize.y)/ 2;
-            while (cam.orthographicSize < camSize || (cam.transform.position - Vector3.zero).magnitude > 0.1f)
+            float camSize = Mathf.Max(bgSize.x,bgSize.y)/ 2;
+            while (cam.orthographicSize < camSize || (cam.transform.position - Vector3.zero).magnitude > 1f)
             {
                 if (cam.orthographicSize < camSize)
                 {
@@ -245,7 +292,7 @@ public class ItemManager_LSW : MonoBehaviour
         Camera cam = Camera.main;
         Camera.main.cullingMask = ~((1 << 7));
         zoomCanvas.SetActive(false);
-        while (cam.orthographicSize > camSize || (cam.transform.position - firstCamPos).magnitude < 0.1f)
+        while (cam.orthographicSize > camSize || (cam.transform.position - firstCamPos).magnitude > 1f)
         {
             if ((cam.transform.position - firstCamPos).magnitude > 1f)
             {
@@ -287,5 +334,18 @@ public class ItemManager_LSW : MonoBehaviour
     //    Camera.main.transform.position = firstCamPos;
     //    camFollow.camFollow = true;
     //}
+    #endregion
+
+    #region 버섯 오브젝트
+
+    public IEnumerator PlayerScale(Transform targetTr,float scale ,float resetTime)
+    {
+        Vector3 originalScale = targetTr.localScale;
+        Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
+        targetTr.localScale = targetScale;
+        yield return new WaitForSeconds(resetTime);
+        targetTr.localScale = originalScale;
+        yield return null;
+    }
     #endregion
 }

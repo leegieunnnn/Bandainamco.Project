@@ -54,7 +54,6 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             if(dir!= Vector2.zero)
             {
                 rb.AddForce(dir * jumpPower,ForceMode2D.Force);
-                Debug.Log("moving");
                                 
             }
             jumpIcon.fillAmount = 0;
