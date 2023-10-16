@@ -7,7 +7,7 @@ public class StageManager_HJH : MonoBehaviour
 {
     public List<GameObject> doors; // »ý¼ºµÈ ¹®µé
     public GameObject optionDoor;
-    public Sprite[] doorsSprite; //¿­¸°¹® , ´ÝÈù¹®
+    public Sprite closeDoorSprite; //¿­¸°¹® , ´ÝÈù¹®
     public GameObject bg;
     int doorNum;
 
@@ -22,6 +22,16 @@ public class StageManager_HJH : MonoBehaviour
             volumeSlider.value = GameManager.instance.userData.volume;
         }
         volumeSlider.onValueChanged.AddListener(VolumeChange);
+        for(int i =0; i< doors.Count; i++)
+        {
+            if(GameManager.instance != null)
+            {
+                if(GameManager.instance.userData.stage < i)
+                {
+                    doors[i].transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = closeDoorSprite;
+                }
+            }
+        }
         //for(int i =0; i< doorCount; i++)
         //{
         //    GameObject newDoor = GameObject.Instantiate(doorPrefab);
