@@ -52,9 +52,9 @@ public class ItemManager_LSW : MonoBehaviour
     public float moveSpeed;
     #endregion
 
-    //yd
-    Mashroom_yd[] mashroomArray;
-
+    [Header("버섯")]
+    public float mashroomTime = 1;  //버섯 커지거나 작아지는 시간
+    
     public
     void Awake()
     {
@@ -101,8 +101,6 @@ public class ItemManager_LSW : MonoBehaviour
             }
         }
 
-        //yd
-        mashroomArray = bg.GetComponentsInChildren<Mashroom_yd>();
     }
 
     // Update is called once per frame
@@ -124,15 +122,7 @@ public class ItemManager_LSW : MonoBehaviour
                 StartCoroutine(CameraZoomIn(camFollow.firstCamSize));
             }
         }
-        //yd
-     /*   foreach (Mashroom_yd mashroom in mashroomArray)
-        {
-            if (mashroom.isScale)
-            {
-                Debug.Log("돼라라라라");
-                mashroom.Scale();
-            }
-        }*/
+     
     }
 
     public void TriggerCount(int su)
@@ -342,9 +332,30 @@ public class ItemManager_LSW : MonoBehaviour
     {
         Vector3 originalScale = targetTr.localScale;
         Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
+        float currentTime = 0;
         targetTr.localScale = targetScale;
+        while(currentTime < mashroomTime)
+        {
+            targetTr.localScale = Vector3.Lerp(originalScale, targetScale, currentTime / mashroomTime);
+            currentTime += Time.deltaTime;
+            Debug.Log("커짐");
+            yield return null;
+        }
         yield return new WaitForSeconds(resetTime);
+            Debug.Log("유지시간");
+            currentTime = 0;
+
+       // currentTime = 0;
+        while (currentTime < mashroomTime)
+        {
+            targetTr.localScale = Vector3.Lerp(targetScale, originalScale, currentTime / mashroomTime);
+            currentTime += Time.deltaTime;
+            yield return null;
+            Debug.Log("작아짐");
+
+        }
         targetTr.localScale = originalScale;
+
         yield return null;
     }
     #endregion
