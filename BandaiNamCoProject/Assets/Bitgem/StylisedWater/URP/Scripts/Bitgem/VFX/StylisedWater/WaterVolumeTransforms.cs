@@ -19,6 +19,11 @@ namespace Bitgem.VFX.StylisedWater
             LerpRebuild(addHeight, lerpTime);
         }
 
+        public void StartWave()
+        {
+            LerpRebuild(addHeight, lerpTime);
+        }
+
         #region MonoBehaviour events
 
         private void OnDrawGizmos()

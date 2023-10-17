@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class GamePlayManager_HJH : MonoBehaviour
 {
+    public static GamePlayManager_HJH Instance;
+
+    public CharacterMovement2D_LSW characterMovement2D;
     public GameObject player;
     public ItemManager_LSW itemManager;
     public float currentTime;
@@ -16,10 +19,9 @@ public class GamePlayManager_HJH : MonoBehaviour
 
     public GameObject[] endings; //임시 나중에 지울것
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        Instance = this;
     }
 
     // Update is called once per frame

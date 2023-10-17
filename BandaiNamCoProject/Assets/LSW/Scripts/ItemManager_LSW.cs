@@ -6,6 +6,7 @@ using KoreanTyper;
 using System;
 using Unity.Mathematics;
 using UnityEngine.UI;
+using Bitgem.VFX.StylisedWater;
 
 [Serializable]
 public class Item_HJH
@@ -54,8 +55,11 @@ public class ItemManager_LSW : MonoBehaviour
 
     [Header("버섯")]
     public float mashroomTime = 1;  //버섯 커지거나 작아지는 시간
-    
-    public
+
+    [Header("파도")]
+    public WaterVolumeTransforms water;
+
+
     void Awake()
     {
         bgSize = GetBGSize(bg);
@@ -124,6 +128,13 @@ public class ItemManager_LSW : MonoBehaviour
         }
      
     }
+    #region WAVE
+    public void StartWave()
+    {
+        water.StartWave();
+    }
+
+    #endregion
 
     public void TriggerCount(int su)
     {
@@ -169,7 +180,7 @@ public class ItemManager_LSW : MonoBehaviour
     IEnumerator CameraZoomOut(int itemIdx)
     {
         Camera cam = Camera.main;
-        if (itemIdx == 2)
+        if (itemIdx == 2 || itemIdx == 4)
         {
             Camera.main.cullingMask = -1;
             float camSize = Mathf.Max(bgSize.x,bgSize.y)/ 2;

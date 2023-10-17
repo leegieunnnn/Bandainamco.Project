@@ -136,7 +136,7 @@ namespace Bitgem.VFX.StylisedWater
 
             while(elapsedTime < lerpTime)
             {
-                elapsedTime += Time.deltaTime;
+                elapsedTime += Time.fixedDeltaTime;
                 float lerpedHeight = Mathf.Lerp(0f, addHeight, elapsedTime / lerpTime);
                 Rebuild(lerpedHeight);
                 await UniTask.Yield();
