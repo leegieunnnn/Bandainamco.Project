@@ -16,7 +16,7 @@ namespace Bitgem.VFX.StylisedWater
 
         private void Start()
         {
-            LerpRebuild(addHeight, lerpTime);
+            //LerpRebuild(addHeight, lerpTime);
         }
 
         public void StartWave()
