@@ -1887,8 +1887,15 @@ MonoBehaviour:
     zoomText: Then one day, the girl's father became a shining star in the night      
       sky due to an unfortunate accident.
     camSize: 40
+  - prefab: {fileID: 1084897196651440658, guid: 8b6fa87c60597224286e1343420484d5, type: 3}
+    itemCount: 5
+    triggerCount: 0
+    zoomPosition: {fileID: 620052499}
+    zoomText: Then one day, the girl's father became a shining star in the night      
+      sky due to an unfortunate accident.
+    camSize: 100
   spawnItems: []
-  itemsDistance: 100
+  itemsDistance: 30
   bg: {fileID: 2016071353}
   camFollow: {fileID: 963194229}
   zoomOutSpeed: 50
@@ -1930,6 +1937,7 @@ Transform:
   - {fileID: 971282238}
   - {fileID: 87654396}
   - {fileID: 438441598}
+  - {fileID: 620052499}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3305,8 +3313,43 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water
       objectReference: {fileID: 0}
+    - target: {fileID: 1785835655606385647, guid: 7f178722cc3d63846a2d9a1af7baf064, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f178722cc3d63846a2d9a1af7baf064, type: 3}
+--- !u!1 &620052498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 620052499}
+  m_Layer: 0
+  m_Name: CloudPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &620052499
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620052498}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 140, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 465046010}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &692727430
 GameObject:
   m_ObjectHideFlags: 0

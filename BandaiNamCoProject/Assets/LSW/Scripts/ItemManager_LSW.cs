@@ -15,8 +15,8 @@ public class Item_HJH
     public GameObject prefab;
     //오브젝트 개수
     public int itemCount;
-    //부딪힌 수
-    public int triggerCount;
+    //부딪혔는지
+    public bool triggerCount;
     //줌 될 위치
     public Transform zoomPosition;
     //줌 될때 나올 텍스트
@@ -138,12 +138,12 @@ public class ItemManager_LSW : MonoBehaviour
 
     public void TriggerCount(int su)
     {
-        items[su].triggerCount++;
-        if (items[su].triggerCount == 1)
+        if (items[su].triggerCount == false)
         {
             CameraZoomOutFuncStart(su);
             itemCount++;
         }
+        items[su].triggerCount = true;
     }
     Vector3 Return_RandomPosition()
     {
