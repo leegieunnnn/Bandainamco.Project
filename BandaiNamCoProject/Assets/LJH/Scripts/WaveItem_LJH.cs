@@ -22,7 +22,7 @@ public class WaveItem_LJH : BaseItem_LSW
         base.ItemActivate();
         itemManager.StartWave();
 
-        if (itemManager.items[4].triggerCount != 1)
+        if (itemManager.items[4].triggerCount == true)
         {
             gameObject.SetActive(true);
             float size = Mathf.Min(itemManager.bgSize.x, itemManager.bgSize.y) / 2;

@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2379845838379434323}
   - component: {fileID: 2710518671614391685}
-  - component: {fileID: 7276266028735561331}
   - component: {fileID: 1603607676445632639}
+  - component: {fileID: 3018516867491200970}
   m_Layer: 7
-  m_Name: Cloud
+  m_Name: SmallCloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1084897196651440658}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -86,23 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7276266028735561331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1084897196651440658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffdc8ad83064828419bd2fa368773cb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemNum: 0
-  itemManager: {fileID: 0}
-  smallCloud: {fileID: 1084897196651440658, guid: ae598d68a579ab545919eb2e98972de2, type: 3}
-  cloudNum: 5
-  jumpPower: 30
 --- !u!61 &1603607676445632639
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -129,3 +112,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 9.77, y: 5.59}
   m_EdgeRadius: 0
+--- !u!114 &3018516867491200970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084897196651440658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0880c053ee68f9f40a77bff4985675e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpPower: 15
+  moveRange: 50
+  moveTime: 1
+  remainTime: 10

@@ -10,7 +10,7 @@ public class EyeItem_HJH : BaseItem_LSW
     public override void ItemActivate()
     {
         base.ItemActivate();
-        if (itemManager.items[2].triggerCount != 1)
+        if (itemManager.items[2].triggerCount ==true)
         {
             gameObject.SetActive(true);
             float size = Mathf.Min(itemManager.bgSize.x,itemManager.bgSize.y) /2;
