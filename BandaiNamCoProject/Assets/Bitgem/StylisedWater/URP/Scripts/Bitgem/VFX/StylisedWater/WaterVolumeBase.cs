@@ -130,20 +130,20 @@ namespace Bitgem.VFX.StylisedWater
             return null;
         }
 
-        public async void LerpRebuild(float addHeight, float lerpTime)
-        {
-            float elapsedTime = 0f;
+        //public async void LerpRebuild(float addHeight, float lerpTime)
+        //{
+        //    float elapsedTime = 0f;
 
-            while(elapsedTime < lerpTime)
-            {
-                elapsedTime += Time.fixedDeltaTime;
-                float lerpedHeight = Mathf.Lerp(0f, addHeight, elapsedTime / lerpTime);
-                Rebuild(lerpedHeight);
-                await UniTask.Yield();
-            }
-        }
+        //    while(elapsedTime < lerpTime)
+        //    {
+        //        elapsedTime += Time.fixedDeltaTime;
+        //        float lerpedHeight = Mathf.Lerp(0f, addHeight, elapsedTime / lerpTime);
+        //        Rebuild(lerpedHeight);
+        //        await UniTask.Yield();
+        //    }
+        //}
 
-        public void Rebuild(float addHeight)
+        public void Rebuild(float height, float width)
         {
             Debug.Log("rebuilding water volume \"" + gameObject.name + "\"");
 
@@ -178,12 +178,17 @@ namespace Bitgem.VFX.StylisedWater
                         //}
 
                         // calculate tile position
-                        var x0 = x * TileSize - 0.5f;
-                        var x1 = x0 + TileSize;
+                        
+                        var x0 = x * width/2;
+                        //var x0 = x * TileSize - 0.5f;
+                        //var x1 = x0 + TileSize;
+                        var x1 = x0 + width/2;
                         //var y0 = y * (TileSize/2) - 0.5f;
-                        var y0 = y * addHeight - 1;
+                        var y0 = y * height - 1;
                         //var y1 = y0 + (TileSize/2);
-                        var y1 = y0 + addHeight;
+                        var y1 = y0 + height;
+                        //var z0 = z * width/2;
+                        //var z1 = z0 + width/2;
                         var z0 = z * TileSize - 0.5f;
                         var z1 = z0 + TileSize;
                         var ux0 = x0 + transform.position.x;

@@ -1,5 +1,6 @@
 ﻿#region Using statements
 
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,17 +12,44 @@ namespace Bitgem.VFX.StylisedWater
     [AddComponentMenu("Bitgem/Water  Volume (Transforms)")]
     public class WaterVolumeTransforms : WaterVolumeBase
     {
-        [SerializeField] private float addHeight;
-        [SerializeField] private float lerpTime;
+        [SerializeField] private float height;
+        [SerializeField] private float width;
+        [SerializeField] private float upPosY = 380f;
+        [SerializeField] private float upTime = 120f;
+
+        private float currTime;
+        //[SerializeField] private float lerpTime;
+
+        private Material myMaterial;
 
         private void Start()
         {
+            myMaterial = GetComponent<MeshRenderer>().sharedMaterial;
             //LerpRebuild(addHeight, lerpTime);
+            //Rebuild(height,width);
         }
 
-        public void StartWave()
+
+        private void Update()
         {
-            LerpRebuild(addHeight, lerpTime);
+            currTime += Time.unscaledDeltaTime;
+            myMaterial.SetFloat("_FixedDeltaTime", currTime);
+        }
+
+
+        public async void StartWave()
+        {
+            float elapsedTime = 0f;
+            float originY = transform.position.y;
+            while(elapsedTime < upTime)
+            {
+                float lerpY = Mathf.Lerp(originY, upPosY, elapsedTime / upTime);
+                transform.position = new Vector3(transform.position.x, lerpY, transform.position.z);
+                elapsedTime += Time.fixedDeltaTime;
+                await UniTask.Yield();
+            }
+
+            //LerpRebuild(addHeight, lerpTime);
         }
 
         #region MonoBehaviour events
