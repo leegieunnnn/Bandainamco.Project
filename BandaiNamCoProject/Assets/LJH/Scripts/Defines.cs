@@ -1,6 +1,6 @@
 public enum ItemType
 {
-    Clock, Lotus, Eye, Mushroom, Star, Wave
+    Clock, Lotus, Eye, Mushroom, Star, Wave, Cloud
 }
 
 public class TagStrings

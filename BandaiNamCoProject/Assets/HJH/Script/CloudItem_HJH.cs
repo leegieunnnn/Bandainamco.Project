@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CloudItem_HJH : BaseItem_LSW
+public class CloudItem_HJH : BaseItem_LJH
 {
     public GameObject smallCloud;
     public int cloudNum;
@@ -10,18 +10,8 @@ public class CloudItem_HJH : BaseItem_LSW
 
     public override void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            itemManager.TriggerCount(itemNum);
-
-            if (character != null)
-            {
-                character.lastUsedItem = itemNum;
-            }
-            CloudItemActivate(other.transform.parent.gameObject);
-            ItemActivate();
-
-        }
+        CloudItemActivate(other.gameObject);
+        base.OnTriggerEnter2D(other);
     }
 
     public void CloudItemActivate(GameObject player)

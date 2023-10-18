@@ -98,11 +98,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffdc8ad83064828419bd2fa368773cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemNum: 0
-  itemManager: {fileID: 0}
+  myItem:
+    prefab: {fileID: 0}
+    itemCount: 0
+    isVisited: 0
+    zoomText: 
+    itemType: 0
+    needWholeCam: 0
   smallCloud: {fileID: 1084897196651440658, guid: ae598d68a579ab545919eb2e98972de2, type: 3}
   cloudNum: 5
-  jumpPower: 30
+  jumpPower: 10
 --- !u!61 &1603607676445632639
 BoxCollider2D:
   m_ObjectHideFlags: 0
