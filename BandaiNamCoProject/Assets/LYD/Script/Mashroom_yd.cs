@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mashroom_yd : BaseItem_LSW
+public class Mashroom_yd : BaseItem_LJH
 {
     //크기
     public float scale = 2;
@@ -12,6 +12,7 @@ public class Mashroom_yd : BaseItem_LSW
     [SerializeField] private Vector3 originalScale;
     public bool isScale = false;
     [SerializeField] private int mashroomTrigger = 0;
+    [SerializeField] private float mashroomTime = 0f;
     Transform tr;
     public override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -26,11 +27,42 @@ public class Mashroom_yd : BaseItem_LSW
         //       StartCoroutine(PlayerScale(collision.transform));
         //    }
         //}
-        itemManager.StartCoroutine(itemManager.PlayerScale(collision.transform,scale,resetTime));
+        StartCoroutine(PlayerScale(collision.transform,scale,resetTime));
         base.OnTriggerEnter2D(collision);
        
     }
-   public void Scale()
+
+    public IEnumerator PlayerScale(Transform targetTr, float scale, float resetTime)
+    {
+        Vector3 originalScale = targetTr.localScale;
+        Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
+        float currentTime = 0;
+        targetTr.localScale = targetScale;
+        while (currentTime < mashroomTime)
+        {
+            targetTr.localScale = Vector3.Lerp(originalScale, targetScale, currentTime / mashroomTime);
+            currentTime += Time.deltaTime;
+            Debug.Log("커짐");
+            yield return null;
+        }
+        yield return new WaitForSeconds(resetTime);
+        Debug.Log("유지시간");
+        currentTime = 0;
+
+        // currentTime = 0;
+        while (currentTime < mashroomTime)
+        {
+            targetTr.localScale = Vector3.Lerp(targetScale, originalScale, currentTime / mashroomTime);
+            currentTime += Time.deltaTime;
+            yield return null;
+            Debug.Log("작아짐");
+
+        }
+        targetTr.localScale = originalScale;
+
+        yield return null;
+    }
+    public void Scale()
     {
         //StartCoroutine(PlayerScale(tr));
 
@@ -46,14 +78,4 @@ public class Mashroom_yd : BaseItem_LSW
 
     //}
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

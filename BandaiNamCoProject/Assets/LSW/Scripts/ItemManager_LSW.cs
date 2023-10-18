@@ -16,17 +16,22 @@ public class Item_HJH
     //오브젝트 개수
     public int itemCount;
     //부딪혔는지
-    public bool triggerCount;
+    public bool isVisited;
     //줌 될 위치
-    public Transform zoomPosition;
+    //public Transform zoomPosition;
     //줌 될때 나올 텍스트
     public string zoomText;
     //줌 될때 카메라 사이즈
-    public int camSize;
+    //public int camSize;
+    public ItemType itemType;
+    public bool needWholeCam;
 }
 
 public class ItemManager_LSW : MonoBehaviour
 {
+    public static ItemManager_LSW Instance;
+    public Item_HJH currItem;
+
     public GameObject player;
     public int itemCount;
     public Item_HJH[] items;
@@ -62,10 +67,12 @@ public class ItemManager_LSW : MonoBehaviour
 
     void Awake()
     {
+        Instance = this;
+
         bgSize = GetBGSize(bg);
         for (int i = 0; i < items.Length; i++)
         {
-            for(int j = 0; j < items[i].itemCount; j++)
+            for (int j = 0; j < items[i].itemCount; j++)
             {
                 GameObject item = Instantiate(items[i].prefab);
                 Vector3 pos;
@@ -87,7 +94,7 @@ public class ItemManager_LSW : MonoBehaviour
                     {
                         restart = true;
                     }
-                    if(su > 100)
+                    if (su > 100)
                     {
                         restart = false;
                     }
@@ -98,9 +105,10 @@ public class ItemManager_LSW : MonoBehaviour
                 }
                 item.transform.position = pos;
                 item.transform.parent = bg.transform;
-                item.transform.position = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.parent.position.z-5);
+                item.transform.position = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.parent.position.z - 5);
                 item.GetComponent<BaseItem_LSW>().itemNum = i;
                 item.GetComponent<BaseItem_LSW>().itemManager = this;
+
                 spawnItems.Add(item);
             }
         }
@@ -112,44 +120,49 @@ public class ItemManager_LSW : MonoBehaviour
     {
         if (nowText)
         {
-            if(Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 skip = true;
             }
         }
-        if(endText)
+        if (endText)
         {
-            if(Input.GetMouseButtonDown (0))
+            if (Input.GetMouseButtonDown(0))
             {
                 endText = false;
                 subText.gameObject.SetActive(false);
                 StartCoroutine(CameraZoomIn(camFollow.firstCamSize));
             }
         }
-     
+
     }
     #region WAVE
-    public void StartWave()
+    public void SetWave(bool isStart)
     {
-        water.StartWave();
+        //if (isStart)
+        //    water.StartWave();
+        //else
+        //    water.FinishWave();
+
+        //GamePlayManager_HJH.Instance.SetGravity(isStart);
     }
 
     #endregion
 
     public void TriggerCount(int su)
     {
-        if (items[su].triggerCount == false)
+        if (items[su].isVisited == false)
         {
             CameraZoomOutFuncStart(su);
             itemCount++;
         }
-        items[su].triggerCount = true;
+        items[su].isVisited = true;
     }
     Vector3 Return_RandomPosition()
     {
 
         float x = UnityEngine.Random.Range(-bgSize.x / 2, bgSize.x / 2);
-        float y = UnityEngine.Random.Range(-bgSize.y/2, bgSize.y / 2);
+        float y = UnityEngine.Random.Range(-bgSize.y / 2, bgSize.y / 2);
         Vector3 randomPostion = new Vector3(x, y, 0);
         return randomPostion;
     }
@@ -162,19 +175,21 @@ public class ItemManager_LSW : MonoBehaviour
         firstCamPos = Camera.main.transform.position;
         camFollow.camFollow = false;
         float bigSize = Mathf.Max(bgSize.x, bgSize.y);
-        for(int i =0; i<zoomInOffObject.Length; i++)
+        for (int i = 0; i < zoomInOffObject.Length; i++)
         {
             zoomInOffObject[i].SetActive(false);
         }
         StartCoroutine(CameraZoomOut(itemIdx));
     }
-    public Vector3 GetBGSize(GameObject bG)
+    public Vector3 GetBGSize(GameObject bg)
     {
-        Vector2 bGSpriteSize = bG.GetComponent<SpriteRenderer>().sprite.rect.size;
-        Vector2 localbGSize = bGSpriteSize / bG.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        Vector2 bgSpriteSize = bg.GetComponent<SpriteRenderer>().sprite.rect.size;
+        Vector2 localbGSize = bgSpriteSize / bg.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
+        Debug.Log("bgSpriteSize : " + bgSpriteSize);
+        Debug.Log("bgSpriteSize / pixelsPerUnit : " + localbGSize);
         Vector3 worldbGSize = localbGSize;
-        worldbGSize.x *= bG.transform.lossyScale.x;
-        worldbGSize.y *= bG.transform.lossyScale.y;
+        worldbGSize.x *= bg.transform.lossyScale.x;
+        worldbGSize.y *= bg.transform.lossyScale.y;
         return worldbGSize;
     }
     IEnumerator CameraZoomOut(int itemIdx)
@@ -183,7 +198,7 @@ public class ItemManager_LSW : MonoBehaviour
         if (itemIdx == 2 || itemIdx == 4)
         {
             Camera.main.cullingMask = -1;
-            float camSize = Mathf.Max(bgSize.x,bgSize.y)/ 2;
+            float camSize = Mathf.Max(bgSize.x, bgSize.y) / 2;
             while (cam.orthographicSize < camSize || (cam.transform.position - Vector3.zero).magnitude > 1f)
             {
                 if (cam.orthographicSize < camSize)
@@ -199,22 +214,22 @@ public class ItemManager_LSW : MonoBehaviour
         }
         else
         {
-            while (cam.orthographicSize < items[itemIdx].camSize || (cam.transform.position - items[itemIdx].zoomPosition.position).magnitude > 1f)
-            {
-                if ((cam.transform.position - items[itemIdx].zoomPosition.position).magnitude > 0.1f)
-                {
-                    cam.transform.position = Vector3.Lerp(cam.transform.position, items[itemIdx].zoomPosition.position, Time.fixedDeltaTime * 0.15f);
-                }
-                if (cam.orthographicSize < items[itemIdx].camSize)
-                {
-                    cam.orthographicSize += zoomOutSpeed * Time.unscaledDeltaTime;
-                }
-                yield return null;
-            }
+            //while (cam.orthographicSize < items[itemIdx].camSize || (cam.transform.position - items[itemIdx].zoomPosition.position).magnitude > 1f)
+            //{
+            //    if ((cam.transform.position - items[itemIdx].zoomPosition.position).magnitude > 0.1f)
+            //    {
+            //        cam.transform.position = Vector3.Lerp(cam.transform.position, items[itemIdx].zoomPosition.position, Time.fixedDeltaTime * 0.15f);
+            //    }
+            //    if (cam.orthographicSize < items[itemIdx].camSize)
+            //    {
+            //        cam.orthographicSize += zoomOutSpeed * Time.unscaledDeltaTime;
+            //    }
+            //    yield return null;
+            //}
         }
         zoomCanvas.SetActive(true);
         StartCoroutine(TextAni(items[itemIdx].zoomText));
-        for(int i =0; i< clouds.Length; i++)
+        for (int i = 0; i < clouds.Length; i++)
         {
             StartCoroutine(FadeIn(clouds[i]));
         }
@@ -244,7 +259,7 @@ public class ItemManager_LSW : MonoBehaviour
         RectTransform rect = cloudParent.GetComponent<RectTransform>();
         rect.anchoredPosition = new Vector3(-Screen.width, 0, 0);
         float move = 0;
-        while(rect.anchoredPosition.x < 0)
+        while (rect.anchoredPosition.x < 0)
         {
             move += moveSpeed * Time.unscaledDeltaTime;
             rect.anchoredPosition = new Vector3(-Screen.width + move, 0, 0);
@@ -339,35 +354,35 @@ public class ItemManager_LSW : MonoBehaviour
 
     #region 버섯 오브젝트
 
-    public IEnumerator PlayerScale(Transform targetTr,float scale ,float resetTime)
-    {
-        Vector3 originalScale = targetTr.localScale;
-        Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
-        float currentTime = 0;
-        targetTr.localScale = targetScale;
-        while(currentTime < mashroomTime)
-        {
-            targetTr.localScale = Vector3.Lerp(originalScale, targetScale, currentTime / mashroomTime);
-            currentTime += Time.deltaTime;
-            Debug.Log("커짐");
-            yield return null;
-        }
-        yield return new WaitForSeconds(resetTime);
-            Debug.Log("유지시간");
-            currentTime = 0;
+    //public IEnumerator PlayerScale(Transform targetTr, float scale, float resetTime)
+    //{
+    //    Vector3 originalScale = targetTr.localScale;
+    //    Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
+    //    float currentTime = 0;
+    //    targetTr.localScale = targetScale;
+    //    while (currentTime < mashroomTime)
+    //    {
+    //        targetTr.localScale = Vector3.Lerp(originalScale, targetScale, currentTime / mashroomTime);
+    //        currentTime += Time.deltaTime;
+    //        Debug.Log("커짐");
+    //        yield return null;
+    //    }
+    //    yield return new WaitForSeconds(resetTime);
+    //    Debug.Log("유지시간");
+    //    currentTime = 0;
 
-       // currentTime = 0;
-        while (currentTime < mashroomTime)
-        {
-            targetTr.localScale = Vector3.Lerp(targetScale, originalScale, currentTime / mashroomTime);
-            currentTime += Time.deltaTime;
-            yield return null;
-            Debug.Log("작아짐");
+    //    // currentTime = 0;
+    //    while (currentTime < mashroomTime)
+    //    {
+    //        targetTr.localScale = Vector3.Lerp(targetScale, originalScale, currentTime / mashroomTime);
+    //        currentTime += Time.deltaTime;
+    //        yield return null;
+    //        Debug.Log("작아짐");
 
-        }
-        targetTr.localScale = originalScale;
+    //    }
+    //    targetTr.localScale = originalScale;
 
-        yield return null;
-    }
+    //    yield return null;
+    //}
     #endregion
 }

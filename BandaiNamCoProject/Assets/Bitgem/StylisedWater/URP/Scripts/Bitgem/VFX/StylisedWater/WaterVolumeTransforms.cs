@@ -3,12 +3,14 @@
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.Sprites;
 using UnityEngine;
 
 #endregion
 
 namespace Bitgem.VFX.StylisedWater
 {
+
     [AddComponentMenu("Bitgem/Water  Volume (Transforms)")]
     public class WaterVolumeTransforms : WaterVolumeBase
     {
@@ -16,15 +18,19 @@ namespace Bitgem.VFX.StylisedWater
         [SerializeField] private float width;
         [SerializeField] private float upPosY = 380f;
         [SerializeField] private float upTime = 120f;
+        [SerializeField] private ItemManager_LSW itemManager;
 
         private float currTime;
+        public bool isFinished = false;
         //[SerializeField] private float lerpTime;
 
         private Material myMaterial;
+        private float originY;
 
         private void Start()
         {
             myMaterial = GetComponent<MeshRenderer>().sharedMaterial;
+            originY = transform.position.y;
             //LerpRebuild(addHeight, lerpTime);
             //Rebuild(height,width);
         }
@@ -40,9 +46,10 @@ namespace Bitgem.VFX.StylisedWater
         public async void StartWave()
         {
             float elapsedTime = 0f;
-            float originY = transform.position.y;
             while(elapsedTime < upTime)
             {
+                if (isFinished) break;
+
                 float lerpY = Mathf.Lerp(originY, upPosY, elapsedTime / upTime);
                 transform.position = new Vector3(transform.position.x, lerpY, transform.position.z);
                 elapsedTime += Time.fixedDeltaTime;
@@ -50,6 +57,29 @@ namespace Bitgem.VFX.StylisedWater
             }
 
             //LerpRebuild(addHeight, lerpTime);
+        }
+
+        public async void FinishWave()
+        {
+            isFinished = true;
+
+            float elapsedTime = 0f;
+            float currY = transform.position.y;
+            while (elapsedTime < upTime)
+            {
+                float lerpY = Mathf.Lerp(currY, originY, elapsedTime / upTime);
+                transform.position = new Vector3(transform.position.x, lerpY, transform.position.z);
+                elapsedTime += Time.fixedDeltaTime;
+                await UniTask.Yield();
+            }
+
+            isFinished = false;
+            //LerpRebuild(addHeight, lerpTime);
+        }
+
+        public void SendFinishWave()
+        {
+            itemManager.SetWave(false);
         }
 
         #region MonoBehaviour events
@@ -129,5 +159,7 @@ namespace Bitgem.VFX.StylisedWater
         }
 
         #endregion
+
+       
     }
 }

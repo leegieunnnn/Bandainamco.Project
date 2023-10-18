@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1785835655606385647}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.96, y: -3.829472, z: -0.54}
-  m_LocalScale: {x: 82, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,16 +97,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1bc949ada500e40a47e0e6f07b2d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MAX_TILES_X: 5
+  MAX_TILES_X: 80
   MAX_TILES_Y: 1
-  MAX_TILES_Z: 5
+  MAX_TILES_Z: 1
   IncludeFaces: 15
   IncludeFoam: 15
   TileSize: 1
   ShowDebug: 0
   RealtimeUpdates: 0
-  addHeight: 500
-  lerpTime: 3
+  height: 600
+  width: 10
+  upPosY: 380
+  upTime: 300
+  itemManager: {fileID: 0}
 --- !u!64 &1785835655606385642
 MeshCollider:
   m_ObjectHideFlags: 0
