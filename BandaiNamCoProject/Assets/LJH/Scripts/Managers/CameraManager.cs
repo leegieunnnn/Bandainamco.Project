@@ -23,7 +23,7 @@ public class CameraManager : ManagerBase
     private Dictionary<string, CinemachineVirtualCamera> virtualCamDic;
     public CinemachineVirtualCamera virtualCamera;
     public float orthographicSizeWhole;
-    public string currCamera;
+    public string currCamera = CamValues.Character;
 
     public override void Init()
     {
@@ -52,20 +52,30 @@ public class CameraManager : ManagerBase
     public async void CameraControlAfterItem(string cameraName, bool isFirst = false)
     {
         if (isFirst)
+        {
             SetCamera(CamValues.Whole);
+        }
         else
+        {
             SetCamera(cameraName);
-
+            Camera.main.cullingMask = ~((1 << 7) | (1 << 8));
+        }
         await UniTask.Delay(1000,true);
         UIManager.Instance.ControlCloud(async () =>
         {
             await UniTask.Delay(1000,true);
             SetCamera(CamValues.Character);
-            WorldManager.Instance.MainState = MainState.Play;
+            StartCoroutine(AfterCameraChange());
         });
         //문구 보여주기
     }
 
+    IEnumerator AfterCameraChange()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        Camera.main.cullingMask = -1;
+        WorldManager.Instance.MainState = MainState.Play;
+    }
 
     private void SetOrthographicSizeWhole()
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class BaseItem_LJH : MonoBehaviour
         myItem = item;
     }
 
+
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -21,10 +23,7 @@ public class BaseItem_LJH : MonoBehaviour
 
             if (myItem.needWholeCam)
             {
-                if (myItem.isVisited)
-                    CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), false);
-                else
-                    CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), true);
+                CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), true);
             }
             else
             {

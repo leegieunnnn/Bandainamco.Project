@@ -20,7 +20,7 @@ public class SmallCloud_HJH : MonoBehaviour
         { 
             if(collision.transform.position.y > transform.position.y)
             {
-                Rigidbody2D rigid = collision.transform.parent.gameObject.GetComponent<Rigidbody2D>();
+                Rigidbody2D rigid = collision.transform.gameObject.GetComponent<Rigidbody2D>();
                 rigid.velocity = Vector3.zero;
                 rigid.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
                 gameObject.SetActive(false);

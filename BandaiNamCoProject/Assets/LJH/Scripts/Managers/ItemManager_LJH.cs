@@ -1,3 +1,4 @@
+using Bitgem.VFX.StylisedWater;
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,9 @@ public class ItemManager_LJH : ManagerBase
     public static ItemManager_LJH Instance;
 
     public BaseItem_LJH currItem;
+
+    [Header("Wave Related")]
+    public WaterVolumeTransforms waveObject;
 
     private void Awake()
     {

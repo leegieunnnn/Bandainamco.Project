@@ -13,12 +13,8 @@ public class WaveItem_LJH : BaseItem_LJH
         if (other.gameObject.CompareTag("Player"))
         {
             base.OnTriggerEnter2D(other);
-            //if (myItem.isVisited)
-            //    CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), false);
-            //else
-            //    CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), true);
-
-            
+            ItemManager_LJH.Instance.waveObject.StartWave();
+            WorldManager.Instance.NotifyItemEffect(myItem.itemType, true);
         }
     }
 }

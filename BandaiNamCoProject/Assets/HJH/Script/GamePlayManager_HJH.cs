@@ -23,7 +23,7 @@ public class GamePlayManager_HJH : ManagerBase
 
     public GameObject[] endings; //임시 나중에 지울것
     private EndingType endingType;
-    private bool gameEnd;
+    private bool gameEnd = false;
 
     private void Awake()
     {
@@ -55,8 +55,10 @@ public class GamePlayManager_HJH : ManagerBase
     // Update is called once per frame
     void LateUpdate()
     {
-        if (gameEnd || CameraManager.Instance.currCamera != CamValues.Character) return;
-
+        if (WorldManager.Instance.MainState != MainState.Play)
+        {
+            return;
+        }
         Vector3 pos = Camera.main.WorldToViewportPoint(player.transform.position);
         if (pos.x > Screen.width || pos.x < 0 || pos.y > Screen.height || pos.y < 0)
         {
@@ -89,6 +91,32 @@ public class GamePlayManager_HJH : ManagerBase
         }
 
 
+    }
+
+    //아이템 먹은 후, 플레이어에게 나타날 효과를 switch문으로 정리
+    //아이템 먹었을 때 : start = true
+    //아이템 효과 끝날 때 : start = false
+    public override void ItemEffect(ItemType itemType, bool start)
+    {
+        switch (itemType)
+        {
+            case ItemType.Wave:
+                SetPlayerGravity(!start);
+                break;
+        }
+
+        base.ItemEffect(itemType, start);
+    }
+
+    private void SetPlayerGravity(bool hasGravity)
+    {
+        characterMovement2D.SetGravity(hasGravity);
+    }
+    
+
+    public override void BackgroundEffect(ItemType itemType, bool start)
+    {
+        base.BackgroundEffect(itemType, start);
     }
 
 
