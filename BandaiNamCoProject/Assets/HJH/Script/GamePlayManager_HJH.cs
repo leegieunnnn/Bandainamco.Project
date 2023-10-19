@@ -55,7 +55,7 @@ public class GamePlayManager_HJH : ManagerBase
     // Update is called once per frame
     void LateUpdate()
     {
-        if (gameEnd || CameraManager.Instance.currCamera != CamValues.Character)
+        if (WorldManager.Instance.MainState != MainState.Play)
         {
             return;
         }
