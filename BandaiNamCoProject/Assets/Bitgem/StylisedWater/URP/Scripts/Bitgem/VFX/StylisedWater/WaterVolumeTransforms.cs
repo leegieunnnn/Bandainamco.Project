@@ -18,7 +18,6 @@ namespace Bitgem.VFX.StylisedWater
         [SerializeField] private float width;
         [SerializeField] private float upPosY = 380f;
         [SerializeField] private float upTime = 120f;
-        [SerializeField] private ItemManager_LSW itemManager;
 
         private float currTime;
         public bool isFinished = false;
@@ -46,13 +45,13 @@ namespace Bitgem.VFX.StylisedWater
         public async void StartWave()
         {
             float elapsedTime = 0f;
-            while(elapsedTime < upTime)
+            while (elapsedTime < upTime)
             {
                 if (isFinished) break;
 
                 float lerpY = Mathf.Lerp(originY, upPosY, elapsedTime / upTime);
                 transform.position = new Vector3(transform.position.x, lerpY, transform.position.z);
-                elapsedTime += Time.fixedDeltaTime;
+                elapsedTime += Time.deltaTime;
                 await UniTask.Yield();
             }
 
@@ -69,18 +68,17 @@ namespace Bitgem.VFX.StylisedWater
             {
                 float lerpY = Mathf.Lerp(currY, originY, elapsedTime / upTime);
                 transform.position = new Vector3(transform.position.x, lerpY, transform.position.z);
-                elapsedTime += Time.fixedDeltaTime;
+                elapsedTime += Time.deltaTime;
                 await UniTask.Yield();
             }
 
             isFinished = false;
-            //LerpRebuild(addHeight, lerpTime);
         }
-
-        public void SendFinishWave()
-        {
-            itemManager.SetWave(false);
-        }
+        /*
+                public void SendFinishWave()
+                {
+                    itemManager.SetWave(false);
+                }*/
 
         #region MonoBehaviour events
 
@@ -160,6 +158,6 @@ namespace Bitgem.VFX.StylisedWater
 
         #endregion
 
-       
+
     }
 }

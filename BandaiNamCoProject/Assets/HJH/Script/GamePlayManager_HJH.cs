@@ -91,6 +91,32 @@ public class GamePlayManager_HJH : ManagerBase
 
     }
 
+    //아이템 먹은 후, 플레이어에게 나타날 효과를 switch문으로 정리
+    //아이템 먹었을 때 : start = true
+    //아이템 효과 끝날 때 : start = false
+    public override void ItemEffect(ItemType itemType, bool start)
+    {
+        switch (itemType)
+        {
+            case ItemType.Wave:
+                SetPlayerGravity(!start);
+                break;
+        }
+
+        base.ItemEffect(itemType, start);
+    }
+
+    private void SetPlayerGravity(bool hasGravity)
+    {
+        characterMovement2D.SetGravity(hasGravity);
+    }
+    
+
+    public override void BackgroundEffect(ItemType itemType, bool start)
+    {
+        base.BackgroundEffect(itemType, start);
+    }
+
 
 
     /*    public void GameOver()

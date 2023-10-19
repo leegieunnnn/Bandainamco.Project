@@ -10,6 +10,7 @@ public enum MainState
 public class WorldManager : MonoBehaviour
 {
     public static WorldManager Instance;
+    private List<ManagerBase> managers;
 
     private MainState mainState;
 
@@ -40,10 +41,27 @@ public class WorldManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
+        managers = new List<ManagerBase>();
         foreach (var manager in GetComponentsInChildren<ManagerBase>())
         {
             manager.Init();
+            managers.Add(manager);
+        }
+    }
+
+    public void NotifyItemEffect(ItemType itemType, bool start)
+    {
+        foreach(var m in managers)
+        {
+            m.ItemEffect(itemType, start);
+        }
+    }
+
+    public void NotifyBackgroundEffect(ItemType itemType, bool start)
+    {
+        foreach(var m in managers)
+        {
+            m.BackgroundEffect(itemType, start);
         }
     }
 }

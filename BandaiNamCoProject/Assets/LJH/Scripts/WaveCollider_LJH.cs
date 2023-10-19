@@ -18,6 +18,8 @@ public class WaveCollider_LJH : MonoBehaviour
         if (collision.collider.transform.CompareTag(TagStrings.PlayerTag))
         {
             Debug.Log("Wave Collision : " + collision.collider.name);
+            parentWater.FinishWave();
+            WorldManager.Instance.NotifyItemEffect(ItemType.Wave, false);
             //if (!parentWater.isFinished)
             //   parentWater.SendFinishWave();
         }
