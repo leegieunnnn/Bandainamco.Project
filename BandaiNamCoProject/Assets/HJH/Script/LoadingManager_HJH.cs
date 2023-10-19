@@ -15,6 +15,7 @@ public class LoadingManager_HJH : MonoBehaviour
     public static void LoadScene(string sceneName)
     {
         nextScene = sceneName;
+        Time.timeScale = 1f;
         SceneManager.LoadScene("LoadingScene");
 
     }

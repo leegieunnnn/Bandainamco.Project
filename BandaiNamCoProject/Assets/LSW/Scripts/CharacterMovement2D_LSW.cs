@@ -31,7 +31,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponentInChildren<Rigidbody2D>();
         ani =GetComponentInChildren<Animator>();
         minBoundary = new Vector2(-(itemManager.bgSize.x / 2) , -(itemManager.bgSize.y / 2));
         maxBoundary = new Vector2((itemManager.bgSize.x / 2), (itemManager.bgSize.y / 2));
@@ -53,7 +53,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             }
             if(dir!= Vector2.zero)
             {
-                rb.AddForce(dir * jumpPower,ForceMode2D.Force);
+                rb.AddForce(dir * jumpPower,ForceMode2D.Impulse);
                                 
             }
             jumpIcon.fillAmount = 0;
@@ -117,7 +117,10 @@ public class CharacterMovement2D_LSW : MonoBehaviour
         jumpReady = true;
     }
 
-    
+    public void SetGravity(bool hasGravity)
+    {
+        rb.gravityScale = hasGravity == true ? 1 : 0;
+    }
 
     
 

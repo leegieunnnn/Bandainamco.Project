@@ -17,20 +17,65 @@ public class StageCamera_HJH : MonoBehaviour
 
     public GameObject background;
     public Vector3 backgroundSize;
+
+    #region ÄÆ¾À
+    [Header("ÄÆ¾À")]
+    public float cutSceneSpeed;
+    public float cameraSize;
+    public GameObject leftDoor;
+    public GameObject rightDoor;
+    public float doorSpeed;
+    public GameObject elevator;
+    public enum ElevatorStage
+    {
+        OpenStart,
+        Opening,
+        Opened,
+        Up,
+        Down,
+        CloseStart,
+        Closing,
+        Closed,
+    }
+    public ElevatorStage elevatorStage;
+    public Sprite[] elevatorNum;
+    public Sprite[] elevatorUpDown;
+    public SpriteRenderer elevatorNumSprite;
+    public SpriteRenderer elevatorUpDownSprite;
+    public int eleNum;
+    float elevatorTime;
+    public GameObject quitPopUp;
+    public GameObject elevatorLight;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
-        Vector2 bgSpriteSize = background.GetComponent<SpriteRenderer>().sprite.rect.size;
-        Vector2 localBGSize = bgSpriteSize / background.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
-        backgroundSize = localBGSize;
-        backgroundSize.x *= background.transform.lossyScale.x;
-        backgroundSize.y *= background.transform.lossyScale.y;
-
-        float cameraWidth = Camera.main.orthographicSize * Screen.width / Screen.height;
-        startPoint = background.transform.position.x - backgroundSize.x / 2.0f + cameraWidth;
-        endPoint = background.transform.position.x + backgroundSize.x / 2.0f - cameraWidth;
-
-        transform.position = new Vector3(startPoint, 0, -10);
+        StartCoroutine(StartCutScene());
+        eleNum = 8;
+        elevatorTime = 0;
+    }
+    IEnumerator StartCutScene()
+    {
+        Time.timeScale = 0f;
+        Camera cam = Camera.main;
+        float x = cameraSize - cam.orthographicSize; 
+        elevatorStage = ElevatorStage.Opened;
+        while (true)
+        {
+            cam.orthographicSize += x*(cutSceneSpeed *0.01f) ;
+            leftDoor.transform.position -= new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
+            rightDoor.transform.position += new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
+            yield return new WaitForSecondsRealtime(0.01f);
+            if(cam.orthographicSize >= cameraSize)
+            {
+                cam.orthographicSize = cameraSize;
+                leftDoor.transform.position = new Vector3(-2.6f, leftDoor.transform.position.y, 0);
+                rightDoor.transform.position = new Vector3(2.6f, rightDoor.transform.position.y, 0);
+                break;
+            }
+        }
+        Time.timeScale = 1f;
+        FirstSetting();
     }
     public void FirstSetting()
     {
@@ -42,15 +87,25 @@ public class StageCamera_HJH : MonoBehaviour
         float cameraWidth = Camera.main.orthographicSize * Screen.width / Screen.height;
         startPoint = background.transform.position.x - backgroundSize.x / 2.0f + cameraWidth;
         endPoint = background.transform.position.x + backgroundSize.x / 2.0f - cameraWidth;
-
-        transform.position = new Vector3(startPoint, 0, -10);
+        transform.position = new Vector3(0, 0, -10);
     }
 
     // Update is called once per frame
     void Update()
     {
-        float stageMove = Input.GetAxisRaw("Horizontal");
-        if (!walk && stageMove != 0)
+        float stageMove = Input.GetAxis("Horizontal");
+        if (Mathf.Abs(stageMove) < 0.5)
+        {
+            if (stageMove < 0)
+            {
+                stageMove = -0.5f;
+            }
+            else if (stageMove > 0)
+            {
+                stageMove = 0.5f;
+            }
+        }
+        if (!walk && stageMove != 0 && Time.timeScale != 0)
         {
             StartCoroutine(Walk(stageMove));
             walkCount++;
@@ -59,6 +114,73 @@ public class StageCamera_HJH : MonoBehaviour
                 walkCount = 0;
             }
         }
+        if(elevatorStage == ElevatorStage.OpenStart)
+        {
+            elevatorLight.SetActive(true);
+            StartCoroutine(ElevatorOpen());
+        }
+        else if(elevatorStage == ElevatorStage.Opened)
+        {
+            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) > 2f)
+            {
+                elevatorStage = ElevatorStage.CloseStart;
+            }
+        }
+        else if(elevatorStage == ElevatorStage.CloseStart)
+        {
+            elevatorLight.SetActive(false);
+            StartCoroutine(ElevatorClose());
+        }
+        else if(elevatorStage == ElevatorStage.Closed)
+        {
+            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) > 2f)
+            {
+                elevatorStage = ElevatorStage.Down;
+            }
+            else
+            {
+                elevatorStage = ElevatorStage.OpenStart;
+            }
+        }
+        else if(elevatorStage == ElevatorStage.Down)
+        {
+            elevatorTime += Time.deltaTime;
+            elevatorUpDownSprite.sprite = elevatorUpDown[1];
+            elevatorLight.SetActive(false);
+            if(elevatorTime > 1f && eleNum >0)
+            {
+                elevatorTime = 0;
+                eleNum--;
+                elevatorNumSprite.sprite = elevatorNum[eleNum];
+            }
+            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) < 2f)
+            {
+                elevatorTime = 0;
+                elevatorStage = ElevatorStage.Up;
+            }
+        }
+        else if(elevatorStage == ElevatorStage.Up)
+        {
+            elevatorLight.SetActive(true);
+            elevatorTime += Time.deltaTime;
+            elevatorUpDownSprite.sprite = elevatorUpDown[0];
+            if(elevatorTime > 1f && eleNum < 8)
+            {
+                elevatorTime = 0;
+                eleNum++;
+                elevatorNumSprite.sprite= elevatorNum[eleNum];
+            }
+            if(eleNum == 8)
+            {
+                elevatorTime = 0;
+                elevatorStage = ElevatorStage.OpenStart;
+            }
+        }
+
+        if(quitPopUp.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape))
+        {
+            QuitNo();
+        }
     }
     IEnumerator Walk(float stageMove)
     {
@@ -66,12 +188,12 @@ public class StageCamera_HJH : MonoBehaviour
         walkAudio[walkCount].Play();
         while (true)
         {
-            currentTime += Time.deltaTime;
+            currentTime += 0.01f;
             if(currentTime > walkTime)
             {
                 break;
             }
-            yield return null;
+            yield return new WaitForSeconds(0.01f);
             if(currentTime < walkTime / 2)
             {
                 gameObject.transform.position += new Vector3(stageMove * cameraMoverSpeed, upPower, -10);
@@ -88,5 +210,57 @@ public class StageCamera_HJH : MonoBehaviour
         walk = false;
 
     }
+    #region ¿¤¸®º£ÀÌÅÍ °ü·Ã ÇÔ¼ö
+    IEnumerator ElevatorOpen()
+    {
+        elevatorStage = ElevatorStage.Opening;
+        while (true)
+        {
+            leftDoor.transform.position -= new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
+            rightDoor.transform.position += new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
+            yield return new WaitForSecondsRealtime(0.01f);
+            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) > 2f)
+            {
+                elevatorStage = ElevatorStage.CloseStart;
+            }
+            if (leftDoor.transform.position.x < -2.6f)
+            {
+                leftDoor.transform.position = new Vector3(-2.6f, leftDoor.transform.position.y, 0);
+                rightDoor.transform.position = new Vector3(2.6f, rightDoor.transform.position.y, 0);
+                break;
+            }
+        }
+        elevatorStage = ElevatorStage.Opened;
+        quitPopUp.SetActive(true);
+        Time.timeScale = 0f;
+    }
 
+    public void QuitYes()
+    {
+        LoadingManager_HJH.LoadScene("StartScene");
+    }
+    public void QuitNo()
+    {
+        quitPopUp.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    IEnumerator ElevatorClose()
+    {
+        elevatorStage = ElevatorStage.Closing;
+        while (true)
+        {
+            leftDoor.transform.position += new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
+            rightDoor.transform.position -= new Vector3(1.7f * 0.01f * doorSpeed, 0, 0);
+            yield return new WaitForSecondsRealtime(0.01f);
+            if (leftDoor.transform.position.x > -0.9f)
+            {
+                leftDoor.transform.position = new Vector3(-0.89f, leftDoor.transform.position.y, 0);
+                rightDoor.transform.position = new Vector3(0.89f, rightDoor.transform.position.y, 0);
+                break;
+            }
+        }
+        elevatorStage = ElevatorStage.Closed;
+    }
+    #endregion
 }
