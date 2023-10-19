@@ -55,7 +55,7 @@ public class GamePlayManager_HJH : ManagerBase
     // Update is called once per frame
     void LateUpdate()
     {
-        if (gameEnd || CameraManager.Instance.currCamera != CamValues.Character) return;
+        if (gameEnd || CameraManager.Instance.currCamera == CamValues.Character) return;
 
         Vector3 pos = Camera.main.WorldToViewportPoint(player.transform.position);
         if (pos.x > Screen.width || pos.x < 0 || pos.y > Screen.height || pos.y < 0)

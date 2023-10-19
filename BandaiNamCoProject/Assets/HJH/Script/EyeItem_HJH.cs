@@ -1,30 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class EyeItem_HJH : BaseItem_LSW
+public class EyeItem_HJH : BaseItem_LJH
 {
     public float zoomOutSpeed = 1;
     public float zoomInSpeed = 1;
     public float eyeTime = 5f;
     Vector3 firstCamPos;
-    public override void ItemActivate()
-    {
-        base.ItemActivate();
-        if (itemManager.items[2].isVisited ==true)
-        {
-            gameObject.SetActive(true);
-            float size = Mathf.Min(itemManager.bgSize.x,itemManager.bgSize.y) /2;
-            Time.timeScale = 0f;
-            Camera.main.cullingMask = ~((1 << 8));
-            Camera.main.GetComponent<CamFollowe_HJH>().camFollow = false;
-            for (int i = 0; i < itemManager.zoomInOffObject.Length; i++)
-            {
-                itemManager.zoomInOffObject[i].SetActive(false);
-            }
-            StartCoroutine(CameraZoomOut(size));
-        }
 
-    }
     public override void OnTriggerEnter2D(Collider2D other)
     {
         base.OnTriggerEnter2D(other);
