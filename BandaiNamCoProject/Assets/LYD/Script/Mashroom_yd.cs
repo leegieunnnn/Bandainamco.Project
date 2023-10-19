@@ -11,7 +11,7 @@ public class Mashroom_yd : BaseItem_LJH
 
     [SerializeField] private Vector3 originalScale;
     public bool isScale = false;
-    [SerializeField] private int mashroomTrigger = 0;
+  //  [SerializeField] private int mashroomTrigger = 0;
     [SerializeField] private float mashroomTime = 0f;
     Transform tr;
     public override void OnTriggerEnter2D(Collider2D collision)
@@ -40,21 +40,23 @@ public class Mashroom_yd : BaseItem_LJH
         targetTr.localScale = targetScale;
         while (currentTime < mashroomTime)
         {
-            targetTr.localScale = Vector3.Lerp(originalScale, targetScale, currentTime / mashroomTime);
+            targetTr.localScale = Vector3.Lerp(originalScale, targetScale,  mashroomTime);
             currentTime += Time.deltaTime;
-            Debug.Log("커짐");
-            yield return null;
+            Debug.Log("커짐"); 
+          //  yield return null;
         }
+        Debug.Log("되라"); //여기까지는 찍히는데 이밑으로 안찍혀 ㅠ
+        //화면전환이 되고, 버섯프리팹이 꺼져서 다시 여기로 못넘어오는걸까??? 
         yield return new WaitForSeconds(resetTime);
         Debug.Log("유지시간");
         currentTime = 0;
 
-        // currentTime = 0;
+        //
         while (currentTime < mashroomTime)
         {
-            targetTr.localScale = Vector3.Lerp(targetScale, originalScale, currentTime / mashroomTime);
+            targetTr.localScale = Vector3.Lerp(targetScale, originalScale,mashroomTime);
             currentTime += Time.deltaTime;
-            yield return null;
+           // yield return null;
             Debug.Log("작아짐");
 
         }
