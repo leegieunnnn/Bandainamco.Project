@@ -2121,7 +2121,7 @@ MonoBehaviour:
     itemType: 3
     needWholeCam: 0
   - prefab: {fileID: 1084897196651440658, guid: 8b6fa87c60597224286e1343420484d5, type: 3}
-    itemCount: 1
+    itemCount: 10
     isVisited: 0
     zoomText: Cloud Test
     itemType: 6
@@ -5020,7 +5020,6 @@ GameObject:
   m_Component:
   - component: {fileID: 909446945}
   - component: {fileID: 909446944}
-  - component: {fileID: 909446943}
   - component: {fileID: 909446942}
   m_Layer: 0
   m_Name: Render Camera
@@ -5062,14 +5061,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!81 &909446943
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 909446941}
-  m_Enabled: 1
 --- !u!20 &909446944
 Camera:
   m_ObjectHideFlags: 0
@@ -5152,7 +5143,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 911122327}
-  m_LocalRotation: {x: 3e-45, y: 1e-45, z: -0, w: 1}
+  m_LocalRotation: {x: -1e-45, y: 1e-45, z: -0, w: 1}
   m_LocalPosition: {x: 241.1, y: -196.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9723,10 +9714,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821496f3adbf5e442802151cfa306b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 10
+  jumpPower: 25
   jumpIcon: {fileID: 513643427}
   jumpCoolText: {fileID: 1023990147}
-  coolTime: 0.5
+  coolTime: 5
   itemManager: {fileID: 465046009}
   minBoundary: {x: 0, y: 0}
   maxBoundary: {x: 0, y: 0}

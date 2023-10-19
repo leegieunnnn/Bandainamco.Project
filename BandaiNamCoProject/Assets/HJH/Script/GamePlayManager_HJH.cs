@@ -23,7 +23,7 @@ public class GamePlayManager_HJH : ManagerBase
 
     public GameObject[] endings; //임시 나중에 지울것
     private EndingType endingType;
-    private bool gameEnd;
+    private bool gameEnd = false;
 
     private void Awake()
     {
@@ -55,8 +55,10 @@ public class GamePlayManager_HJH : ManagerBase
     // Update is called once per frame
     void LateUpdate()
     {
-        if (gameEnd || CameraManager.Instance.currCamera == CamValues.Character) return;
-
+        if (gameEnd || CameraManager.Instance.currCamera != CamValues.Character)
+        {
+            return;
+        }
         Vector3 pos = Camera.main.WorldToViewportPoint(player.transform.position);
         if (pos.x > Screen.width || pos.x < 0 || pos.y > Screen.height || pos.y < 0)
         {

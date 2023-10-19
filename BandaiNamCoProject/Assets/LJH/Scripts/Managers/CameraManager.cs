@@ -23,7 +23,7 @@ public class CameraManager : ManagerBase
     private Dictionary<string, CinemachineVirtualCamera> virtualCamDic;
     public CinemachineVirtualCamera virtualCamera;
     public float orthographicSizeWhole;
-    public string currCamera;
+    public string currCamera = CamValues.Character;
 
     public override void Init()
     {
