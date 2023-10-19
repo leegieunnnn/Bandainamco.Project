@@ -21,10 +21,7 @@ public class BaseItem_LJH : MonoBehaviour
 
             if (myItem.needWholeCam)
             {
-                if (myItem.isVisited)
-                    CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), false);
-                else
-                    CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), true);
+                CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), true);
             }
             else
             {
