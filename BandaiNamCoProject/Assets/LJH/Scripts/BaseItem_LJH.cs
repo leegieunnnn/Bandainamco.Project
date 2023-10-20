@@ -19,19 +19,21 @@ public class BaseItem_LJH : MonoBehaviour
         {
             ItemManager_LJH.Instance.itemCount += 1;
             ItemManager_LJH.Instance.CurrItem = this;
-            WorldManager.Instance.MainState = MainState.Pause;
 
-            if (myItem.needWholeCam)
+            if (!myItem.isVisited)
             {
-                CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), true);
-            }
-            else
-            {
-                CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), false);
-            }
+                WorldManager.Instance.MainState = MainState.Pause;
+                if (myItem.needWholeCam)
+                {
+                    CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), true);
+                }
+                else
+                {
+                    CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), false);
 
+                }
+            }
             myItem.isVisited = true;
-
             gameObject.SetActive(false);
         }
     }

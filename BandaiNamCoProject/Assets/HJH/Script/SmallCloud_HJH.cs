@@ -17,20 +17,22 @@ public class SmallCloud_HJH : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-        { 
-            if(collision.transform.position.y > transform.position.y)
-            {
-                Rigidbody2D rigid = collision.transform.gameObject.GetComponent<Rigidbody2D>();
-                rigid.velocity = Vector3.zero;
-                rigid.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
-                gameObject.SetActive(false);
-            }
+        {
+            Rigidbody2D rigid = collision.transform.gameObject.GetComponent<Rigidbody2D>();
+            rigid.velocity = Vector3.zero;
+            rigid.AddForce(jumpPower * (collision.transform.position - transform.position).normalized , ForceMode2D.Impulse);
+            gameObject.SetActive(false);
+            
         }
     }
 
     IEnumerator RandomMove()
     {
         Vector2 ran = Random.insideUnitCircle * moveRange;
+        if(ran.y > 0)
+        {
+            ran = new Vector2(ran.x, -ran.y);
+        }
         float currentTime = 0;
         Vector3 current = transform.position;
         while (currentTime < moveTime)

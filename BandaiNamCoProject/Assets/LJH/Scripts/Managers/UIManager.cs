@@ -33,13 +33,22 @@ public class UIManager : ManagerBase
     [SerializeField] private TextMeshProUGUI timeText;
 
     private float currTime = 0f;
-
+    bool isCloud = false;
+    bool isFinished = false;
     private void Update()
     {
         if (isGameOver) return;
 
         currTime += Time.deltaTime;
         timeText.text = currTime.ToString();
+        if (isCloud)
+        {
+            if(Input.GetMouseButtonDown(0))
+            {
+                isCloud = false;
+                isFinished = true;
+            }
+        }
     }
 
 
@@ -77,7 +86,7 @@ public class UIManager : ManagerBase
         {
             sequence.Join(clouds[i].cloudRT.DOAnchorPos(clouds[i].endPos, 2f).SetEase(ease)).SetUpdate(true);
         }
-        bool isFinished = false;
+
 
         sequence.onComplete = (async () =>
         {
@@ -93,12 +102,12 @@ public class UIManager : ManagerBase
                 await UniTask.Yield();
                 await UniTask.Delay(100,true);
             }
-            isFinished = true;
+            isCloud = true;
         });
 
         await UniTask.WaitUntil(()=>isFinished);
         finishCallback?.Invoke();
-
+        isFinished = false;
         text.gameObject.SetActive(false);
 
         for (int i = 0; i < clouds.Length; i++)

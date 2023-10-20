@@ -124,9 +124,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4804797b7108c439954261eb92295d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemNum: 0
-  itemManager: {fileID: 0}
-  character: {fileID: 0}
+  myItem:
+    prefab: {fileID: 0}
+    itemCount: 0
+    isVisited: 0
+    zoomText: 
+    itemType: 0
+    needWholeCam: 0
   zoomOutSpeed: 50
   zoomInSpeed: 50
-  eyeTime: 1
+  eyeTime: 3

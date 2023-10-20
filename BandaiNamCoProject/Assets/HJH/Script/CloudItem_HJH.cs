@@ -10,7 +10,10 @@ public class CloudItem_HJH : BaseItem_LJH
 
     public override void OnTriggerEnter2D(Collider2D other)
     {
-        CloudItemActivate(other.gameObject);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            CloudItemActivate(other.gameObject);
+        }
         base.OnTriggerEnter2D(other);
     }
 
