@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class Mashroom_yd : BaseItem_LJH
     //크기
     public float scale = 2;
     //원래크기로 돌아오는 시간
-    public float resetTime = 2f;
+    public int resetTime = 2;
 
     [SerializeField] private Vector3 originalScale;
     public bool isScale = false;
@@ -27,12 +28,12 @@ public class Mashroom_yd : BaseItem_LJH
         //       StartCoroutine(PlayerScale(collision.transform));
         //    }
         //}
-        StartCoroutine(PlayerScale(collision.transform,scale,resetTime));
         base.OnTriggerEnter2D(collision);
-       
+        //StartCoroutine(PlayerScale(collision.transform,scale,resetTime));
+        PlayerScale(collision.transform, scale, resetTime);
     }
 
-    public IEnumerator PlayerScale(Transform targetTr, float scale, float resetTime)
+    public async void PlayerScale(Transform targetTr, float scale, int resetTime)
     {
         Vector3 originalScale = targetTr.localScale;
         Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
@@ -40,29 +41,29 @@ public class Mashroom_yd : BaseItem_LJH
         targetTr.localScale = targetScale;
         while (currentTime < mashroomTime)
         {
-            targetTr.localScale = Vector3.Lerp(originalScale, targetScale,  mashroomTime);
+            targetTr.localScale = Vector3.Lerp(originalScale, targetScale,  currentTime / mashroomTime);
             currentTime += Time.deltaTime;
-            Debug.Log("커짐"); 
-          //  yield return null;
+            Debug.Log("커짐");
+            await UniTask.Yield();
+            //yield return null;
         }
         Debug.Log("되라"); //여기까지는 찍히는데 이밑으로 안찍혀 ㅠ
         //화면전환이 되고, 버섯프리팹이 꺼져서 다시 여기로 못넘어오는걸까??? 
-        yield return new WaitForSeconds(resetTime);
+        await UniTask.Delay(resetTime * 1000);
+        //yield return new WaitForSeconds(resetTime);
         Debug.Log("유지시간");
-        currentTime = 0;
+        currentTime = 0f;
 
         //
         while (currentTime < mashroomTime)
         {
-            targetTr.localScale = Vector3.Lerp(targetScale, originalScale,mashroomTime);
+            targetTr.localScale = Vector3.Lerp(targetScale, originalScale, currentTime / mashroomTime);
             currentTime += Time.deltaTime;
-           // yield return null;
+            await UniTask.Yield();
+            //yield return null;
             Debug.Log("작아짐");
 
         }
-        targetTr.localScale = originalScale;
-
-        yield return null;
     }
     public void Scale()
     {
