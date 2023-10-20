@@ -84,7 +84,7 @@ public class UIManager : ManagerBase
             text.gameObject.SetActive(true);
             text.text = "";
             string str = "";
-            string originText = ItemManager_LJH.Instance.currItem.myItem.zoomText;
+            string originText = ItemManager_LJH.Instance.CurrItem.myItem.zoomText;
 
             for (int i = 0; i < originText.Length; i++)
             {

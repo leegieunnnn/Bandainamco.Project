@@ -14,6 +14,7 @@ public class WaveItem_LJH : BaseItem_LJH
         {
             base.OnTriggerEnter2D(other);
             ItemManager_LJH.Instance.waveObject.StartWave();
+
             WorldManager.Instance.NotifyItemEffect(myItem.itemType, true);
         }
     }

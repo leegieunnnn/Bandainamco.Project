@@ -7,22 +7,36 @@ using UnityEngine;
 
 public class ItemManager_LJH : ManagerBase
 {
-    [SerializeField] private List<GameObject> spawnItems;
+    [SerializeField] private List<BaseItem_LJH> spawnItems;
     [SerializeField] private Transform itemParent;
+    public BaseBackground_LJH[] backgrounds;
     public Item_HJH[] items;
     public float itemsDistance;
     public GameObject player;
     public int itemCount;
     public static ItemManager_LJH Instance;
 
-    public BaseItem_LJH currItem;
+    private BaseItem_LJH currItem;
+    public BaseItem_LJH CurrItem
+    {
+        get { return currItem; }
+        set
+        {
+            prevItem = currItem;
+            currItem = value;
+        }
+    }
+    public BaseItem_LJH prevItem;
 
-    [Header("Wave Related")]
+
+    public BaseBackground_LJH currBackground;
+
+    [Header("Wave")]
     public WaterVolumeTransforms waveObject;
 
     private void Awake()
     {
-        
+
     }
 
     Vector3 Return_RandomPosition()
@@ -75,11 +89,28 @@ public class ItemManager_LJH : ManagerBase
                 item.transform.position = pos;
                 item.transform.parent = itemParent;
                 item.transform.position = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.parent.position.z - 5);
-                item.GetComponent<BaseItem_LJH>().myItem = items[i];
+                BaseItem_LJH baseItem = item.GetComponent<BaseItem_LJH>();
+                baseItem.myItem = items[i];
 
-                spawnItems.Add(item);
+                spawnItems.Add(baseItem);
             }
         }
         base.Init();
+    }
+
+    public override void Reset()
+    {
+        if (prevItem != null) prevItem.Reset();
+        //if (currBackground != null) currBackground.Reset();
+        base.Reset();
+    }
+
+    public void SetActiveItems(bool isActive)
+    {
+        foreach (var i in spawnItems)
+        {
+            if (isActive && i.myItem.isVisited) continue;
+            i.gameObject.SetActive(isActive);
+        }
     }
 }

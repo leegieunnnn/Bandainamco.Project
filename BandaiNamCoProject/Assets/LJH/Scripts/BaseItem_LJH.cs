@@ -18,7 +18,7 @@ public class BaseItem_LJH : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             ItemManager_LJH.Instance.itemCount += 1;
-            ItemManager_LJH.Instance.currItem = this;
+            ItemManager_LJH.Instance.CurrItem = this;
             WorldManager.Instance.MainState = MainState.Pause;
 
             if (myItem.needWholeCam)
@@ -35,4 +35,6 @@ public class BaseItem_LJH : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    public virtual void Reset() { }
 }

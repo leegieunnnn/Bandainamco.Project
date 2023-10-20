@@ -64,4 +64,10 @@ public class WorldManager : MonoBehaviour
             m.BackgroundEffect(itemType, start);
         }
     }
+
+    public void NotifyReset()
+    {
+        foreach (var manager in managers)
+            manager.Reset();
+    }
 }

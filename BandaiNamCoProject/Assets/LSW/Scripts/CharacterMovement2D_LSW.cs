@@ -9,6 +9,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
 {
     //점프힘
     public float jumpPower = 100.0f;
+    private float firstJumpPower;
     //점프 아이콘
     public Image jumpIcon;
     public TMP_Text jumpCoolText;
@@ -37,6 +38,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
         maxBoundary = new Vector2((itemManager.bgSize.x / 2), (itemManager.bgSize.y / 2));
         lastUsedItem = null;
         firstCoolTime = coolTime;
+        firstJumpPower = jumpPower;
     }
 
     private void FixedUpdate()
@@ -122,7 +124,12 @@ public class CharacterMovement2D_LSW : MonoBehaviour
         rb.gravityScale = hasGravity == true ? 1 : 0;
     }
 
-    
+    public void Reset()
+    {
+        coolTime = firstCoolTime;
+        jumpPower = firstJumpPower;
+        SetGravity(true);
+    }
 
 
 }

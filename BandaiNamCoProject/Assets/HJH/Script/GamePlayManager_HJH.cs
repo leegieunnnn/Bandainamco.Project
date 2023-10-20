@@ -98,13 +98,31 @@ public class GamePlayManager_HJH : ManagerBase
     //아이템 효과 끝날 때 : start = false
     public override void ItemEffect(ItemType itemType, bool start)
     {
-        switch (itemType)
+        if (start)
         {
-            case ItemType.Wave:
-                SetPlayerGravity(!start);
-                break;
-        }
+            switch (itemType)
+            {
+                case ItemType.Wave:
+                    WorldManager.Instance.NotifyReset();
+                    ItemManager_LJH.Instance.SetActiveItems(false);
+                    SetPlayerGravity(false);
+                    SetPlayerJumpPower(0.6f);
+                    SetPlayerJumpCoolTime(0f);
+                    break;
+            }
 
+        }
+        else
+        {
+            switch (itemType)
+            {
+                case ItemType.Wave:
+                    ItemManager_LJH.Instance.SetActiveItems(true);
+                    SetPlayerGravity(true);
+                    break;
+            }
+
+        }
         base.ItemEffect(itemType, start);
     }
 
@@ -113,13 +131,26 @@ public class GamePlayManager_HJH : ManagerBase
         characterMovement2D.SetGravity(hasGravity);
     }
     
+    private void SetPlayerJumpPower(float multiplier)
+    {
+        characterMovement2D.jumpPower *= multiplier;
+    }
+
+    private void SetPlayerJumpCoolTime(float coolTime)
+    {
+        characterMovement2D.coolTime = coolTime;
+    }
 
     public override void BackgroundEffect(ItemType itemType, bool start)
     {
         base.BackgroundEffect(itemType, start);
     }
 
-
+    public override void Reset()
+    {
+        characterMovement2D.Reset();
+        base.Reset();
+    }
 
     /*    public void GameOver()
         {
