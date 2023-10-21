@@ -68,7 +68,15 @@ public class GamePlayManager_HJH : ManagerBase
             //Time.timeScale = 0f;
             //GameOver();
         }
-        if (ItemManager_LJH.Instance.itemCount >= ItemManager_LJH.Instance.items.Length)
+        int itemCount = 0;
+        for(int i = 0; i< ItemManager_LJH.Instance.items.Length; i++)
+        {
+            if (ItemManager_LJH.Instance.items[i].isVisited)
+            {
+                itemCount++;
+            }
+        }
+        if (itemCount >= ItemManager_LJH.Instance.items.Length)
         {
             if (currentTime > goodEndingTime)
             {

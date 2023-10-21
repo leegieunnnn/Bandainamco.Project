@@ -7,7 +7,7 @@ public class EyeBG_HJH : MonoBehaviour
     public float eyeCoolTime;
     public float eyeRemainTime;
     float currentTime;
-    public GameObject player;
+    public GameObject eyeCanvas;
     bool nowEye;
     // Start is called before the first frame update
     void Start()
@@ -18,26 +18,37 @@ public class EyeBG_HJH : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ItemManager_LJH.Instance.items[5].isVisited)
+        if (WorldManager.Instance.MainState == MainState.Play && CameraManager.Instance.currCamera == CamValues.Character)
         {
-            currentTime += Time.deltaTime;
-            if (nowEye)
+            if (ItemManager_LJH.Instance.items[4].isVisited)
             {
-                if(currentTime > eyeRemainTime)
+                currentTime += Time.deltaTime;
+                if (nowEye)
                 {
-                    nowEye = false;
-                    Camera.main.cullingMask = -1;
+                    if (currentTime > eyeRemainTime)
+                    {
+                        nowEye = false;
+                        eyeCanvas.SetActive(false);
+                        Camera.main.cullingMask = -1;
+                        currentTime = 0;
+                    }
                 }
-            }
-            else
-            {
-                if (currentTime > eyeCoolTime)
+                else
                 {
-                    nowEye = true;
-                    Camera.main.cullingMask = ~(1 << 7);
+                    if (currentTime > eyeCoolTime)
+                    {
+                        nowEye = true;
+                        eyeCanvas.SetActive(true);
+                        Camera.main.cullingMask = ~(1 << 7);
+                        currentTime = 0;
+                    }
                 }
-            }
 
+            }
+        }
+        else
+        {
+            eyeCanvas.SetActive(false);
         }
     }
 }
