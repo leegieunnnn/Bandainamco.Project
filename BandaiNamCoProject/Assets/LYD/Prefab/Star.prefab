@@ -134,5 +134,5 @@ MonoBehaviour:
   starImage: {fileID: 6722125444137186400, guid: 4c32cf75a934b2649b82ec9b1539c0bf, type: 3}
   StarMoveTime: 5
   starDistance: 30
-  resetTime: 5
+  resetTime: 10
   starTime: 1
