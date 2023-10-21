@@ -21,6 +21,7 @@ public class EyeItem_HJH : BaseItem_LJH
     async void EyeActivate()
     {
         CameraManager.Instance.SetCamera(CamValues.Whole);
+        Camera.main.cullingMask = -1;
         await UniTask.Delay(1000 * eyeTime, true);
         CameraManager.Instance.SetCamera(CamValues.Character);
     }

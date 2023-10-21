@@ -48,7 +48,9 @@ public class EyeBG_HJH : MonoBehaviour
         }
         else
         {
+            nowEye = false;
             eyeCanvas.SetActive(false);
+            currentTime = 0;
         }
     }
 }
