@@ -25,6 +25,8 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     // 마지막 아이템 확인용
     public int? lastUsedItem;
 
+    //yd
+    public ItemManager_LJH itemMan; //아이템매니저
     #region 연꽃용
     public Vector2 minBoundary;
     public Vector2 maxBoundary;
@@ -70,7 +72,9 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     void Update()
     {
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        
+       // transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        Debug.Log(transform.rotation + "회전?");
         if (Input.GetMouseButtonDown(0) && jumpReady)
         {
             jump = true;

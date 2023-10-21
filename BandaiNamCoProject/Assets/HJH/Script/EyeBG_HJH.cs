@@ -18,7 +18,7 @@ public class EyeBG_HJH : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ItemManager_LJH.Instance.items[5].isVisited)
+        if (ItemManager_LJH.Instance.items[4].isVisited)
         {
             currentTime += Time.deltaTime;
             if (nowEye)
