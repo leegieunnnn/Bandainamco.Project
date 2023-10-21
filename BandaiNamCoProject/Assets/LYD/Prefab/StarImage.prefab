@@ -186,7 +186,7 @@ MonoBehaviour:
   rotionSpeed: 500
   isOn: 0
   starSpeed: 30
-  moveSpeed: 5
+  moveSpeed: 10
 --- !u!61 &7427573532604915980
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -8,11 +8,17 @@ public class EyeBG_HJH : MonoBehaviour
     public float eyeRemainTime;
     float currentTime;
     public GameObject eyeCanvas;
+    public GameObject[] eyes;
+    Vector3[] eyeTrasform;
     bool nowEye;
     // Start is called before the first frame update
     void Start()
     {
-        
+        eyeTrasform = new Vector3[eyes.Length];
+        for(int i =0; i<eyes.Length; i++)
+        {
+            eyeTrasform[i] = eyes[i].transform.position;
+        }
     }
 
     // Update is called once per frame
@@ -37,6 +43,10 @@ public class EyeBG_HJH : MonoBehaviour
                 {
                     if (currentTime > eyeCoolTime)
                     {
+                        for(int i =0; i< eyes.Length; i++)
+                        {
+                            eyes[i].transform.position = eyeTrasform[i];
+                        }
                         nowEye = true;
                         eyeCanvas.SetActive(true);
                         Camera.main.cullingMask = ~(1 << 7);
