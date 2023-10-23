@@ -41,8 +41,8 @@ public class ItemManager_LJH : ManagerBase
 
     Vector3 Return_RandomPosition()
     {
-        float x = UnityEngine.Random.Range(-DataManager.Instance.bgSize.x / 2, DataManager.Instance.bgSize.x / 2);
-        float y = UnityEngine.Random.Range(-DataManager.Instance.bgSize.y / 2, DataManager.Instance.bgSize.y / 2);
+        float x = UnityEngine.Random.Range(-DataManager.Instance.bgSize.x / 2 + itemsDistance, DataManager.Instance.bgSize.x / 2 - itemsDistance);
+        float y = UnityEngine.Random.Range(-DataManager.Instance.bgSize.y / 2 + itemsDistance, DataManager.Instance.bgSize.y / 2 - itemsDistance);
         Vector3 randomPostion = new Vector3(x, y, 0);
         return randomPostion;
     }
@@ -72,15 +72,15 @@ public class ItemManager_LJH : ManagerBase
                             restart = true;
                             break;
                         }
-                    }
+                    } // 다른 아이템이랑 너무 가까울 때
                     if ((pos - player.transform.position).magnitude < itemsDistance)
                     {
                         restart = true;
-                    }
-                    if (su > 100)
+                    } //플레이어랑 너무 가까울 때
+                    if (su > 1000)
                     {
                         restart = false;
-                    }
+                    } // 너무 많이 반복할 때
                     if (!restart)
                     {
                         break;

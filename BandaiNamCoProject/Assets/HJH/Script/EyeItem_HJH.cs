@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using UnityEngine;
 
@@ -5,12 +6,24 @@ public class EyeItem_HJH : BaseItem_LJH
 {
     public float zoomOutSpeed = 1;
     public float zoomInSpeed = 1;
-    public float eyeTime = 5f;
+    public int eyeTime = 5;
     Vector3 firstCamPos;
 
     public override void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("Player") && myItem.isVisited)
+        {
+            EyeActivate();
+        }
         base.OnTriggerEnter2D(other);
+    }
+
+    async void EyeActivate()
+    {
+        CameraManager.Instance.SetCamera(CamValues.Whole);
+        Camera.main.cullingMask = -1;
+        await UniTask.Delay(1000 * eyeTime, true);
+        CameraManager.Instance.SetCamera(CamValues.Character);
     }
     IEnumerator CameraZoomOut(float camSize)
     {

@@ -25,9 +25,15 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     // 마지막 아이템 확인용
     public int? lastUsedItem;
 
+    //yd
+    public ItemManager_LJH itemMan; //아이템매니저
     #region 연꽃용
     public Vector2 minBoundary;
     public Vector2 maxBoundary;
+    #endregion
+    #region 물고기용
+    public bool fish = false;
+    public float fishSpeed = 0f;
     #endregion
 
     private void Start()
@@ -50,8 +56,6 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             if(dir.y > 0)
             {
                 rb.velocity = Vector3.zero;
-                
-                
             }
             if(dir!= Vector2.zero)
             {
@@ -70,8 +74,10 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     void Update()
     {
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        if (Input.GetMouseButtonDown(0) && jumpReady)
+        
+       // transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        //Debug.Log(transform.rotation + "회전?");
+        if (Input.GetMouseButtonDown(0) && jumpReady && !fish) //점프 쿨타임이 지나고 물고기 안타고 있을 때
         {
             jump = true;
             jumpReady = false;
@@ -79,14 +85,22 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             //ani.CrossFade("Jump", 0.1f);
             StartCoroutine(JumpCoolTime());
         }
-        
-        if (lastUsedItem.HasValue && lastUsedItem.Value == 1)
+        if (fish)
         {
-            Lotus();
+            SetGravity(false);
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            transform.position += new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y, 0).normalized * Time.deltaTime * fishSpeed;
         }
-        if (lastUsedItem.HasValue && lastUsedItem.Value != 0)
+        if(ItemManager_LJH.Instance.CurrItem != null)
         {
-            coolTime = firstCoolTime;
+            if (ItemManager_LJH.Instance.CurrItem.myItem.itemType == ItemType.Lotus)
+            {
+                Lotus();
+            }
+            if (ItemManager_LJH.Instance.CurrItem.myItem.itemType != ItemType.Clock)
+            {
+                coolTime = firstCoolTime;
+            }
         }
     }
 

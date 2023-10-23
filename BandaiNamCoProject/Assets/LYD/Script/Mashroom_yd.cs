@@ -43,18 +43,14 @@ public class Mashroom_yd : BaseItem_LJH
         {
             targetTr.localScale = Vector3.Lerp(originalScale, targetScale,  currentTime / mashroomTime);
             currentTime += Time.deltaTime;
-            Debug.Log("커짐");
+            //Debug.Log("커짐");
             await UniTask.Yield();
-            //yield return null;
         }
-        Debug.Log("되라"); //여기까지는 찍히는데 이밑으로 안찍혀 ㅠ
-        //화면전환이 되고, 버섯프리팹이 꺼져서 다시 여기로 못넘어오는걸까??? 
         await UniTask.Delay(resetTime * 1000);
         //yield return new WaitForSeconds(resetTime);
-        Debug.Log("유지시간");
+        //Debug.Log("유지시간");
         currentTime = 0f;
 
-        //
         while (currentTime < mashroomTime)
         {
             targetTr.localScale = Vector3.Lerp(targetScale, originalScale, currentTime / mashroomTime);
@@ -65,20 +61,7 @@ public class Mashroom_yd : BaseItem_LJH
 
         }
     }
-    public void Scale()
-    {
-        //StartCoroutine(PlayerScale(tr));
-
-    }
-    //public IEnumerator PlayerScale(Transform targetTr)
-    //{
-    //    Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
-    //    targetTr.localScale = targetScale;
-    //    yield return new WaitForSeconds(resetTime);
-    //    targetTr.localScale = originalScale;
-    //    yield return null;
-    //    isScale = false;
-
-    //}
+   
+  
     // Start is called before the first frame update
 }

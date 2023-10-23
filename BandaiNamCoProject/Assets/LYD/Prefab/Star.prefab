@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -993404951
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 53edf4cb8a5310946bf7b920dbec3f18, type: 3}
   m_Color: {r: 0.998996, g: 1, b: 0, a: 1}
@@ -124,3 +124,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039838ae41929694d984aac92485986d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myItem:
+    prefab: {fileID: 5337970322375770073}
+    itemCount: 10
+    isVisited: 0
+    zoomText: 
+    itemType: 0
+    needWholeCam: 0
+  starImage: {fileID: 6722125444137186400, guid: 4c32cf75a934b2649b82ec9b1539c0bf, type: 3}
+  StarMoveTime: 5
+  starDistance: 30
+  resetTime: 10
+  starTime: 1

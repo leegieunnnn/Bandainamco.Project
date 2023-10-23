@@ -41,7 +41,7 @@ public class CameraManager : ManagerBase
         base.Init();
     }
 
-    private void SetCamera(string cameraName)
+    public void SetCamera(string cameraName)
     {
         foreach (var cam in virtualCams)
             cam.Priority = CamValues.priorityOff;
@@ -49,9 +49,10 @@ public class CameraManager : ManagerBase
         virtualCamDic[cameraName].Priority = CamValues.priorityOn;
     }
 
-    public async void CameraControlAfterItem(string cameraName, bool isFirst = false)
+    public async void CameraControlAfterItem(string cameraName, bool isWhole)
     {
-        if (isFirst)
+
+        if (isWhole)
         {
             SetCamera(CamValues.Whole);
         }
