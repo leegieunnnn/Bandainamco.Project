@@ -43,12 +43,12 @@ public class Mashroom_yd : BaseItem_LJH
         {
             targetTr.localScale = Vector3.Lerp(originalScale, targetScale,  currentTime / mashroomTime);
             currentTime += Time.deltaTime;
-            Debug.Log("커짐");
+            //Debug.Log("커짐");
             await UniTask.Yield();
         }
         await UniTask.Delay(resetTime * 1000);
         //yield return new WaitForSeconds(resetTime);
-        Debug.Log("유지시간");
+        //Debug.Log("유지시간");
         currentTime = 0f;
 
         while (currentTime < mashroomTime)
