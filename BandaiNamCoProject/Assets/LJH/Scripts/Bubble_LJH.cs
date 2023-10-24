@@ -6,7 +6,8 @@ public class Bubble_LJH : MonoBehaviour
 {
     [SerializeField] private float minSpeed;
     [SerializeField] private float maxSpeed;
-
+    [SerializeField] private float minScale;
+    [SerializeField] private float maxScale;
     private float mySpeed;
     private Vector3 initPosition;
     private bool isActive;
@@ -19,6 +20,8 @@ public class Bubble_LJH : MonoBehaviour
     private void Init()
     {
         mySpeed = Random.Range(minSpeed, maxSpeed);
+        float myScale = Random.Range(minScale, maxScale);
+        transform.localScale = new Vector3 (myScale, myScale, myScale);
         initPosition = transform.localPosition;
         isActive = false;
     }
@@ -44,10 +47,18 @@ public class Bubble_LJH : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Edge"))
         {
-
+            ResetBubble();
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag(TagStrings.PlayerTag))
+        {
+            GamePlayManager_HJH.Instance.characterMovement2D.jumpPower *= 0.8f;
+            ResetBubble();
+        }
+    }
 
     //플레이어 충돌은 Trigger? Collider?
 

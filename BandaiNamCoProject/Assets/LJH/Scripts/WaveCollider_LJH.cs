@@ -19,6 +19,7 @@ public class WaveCollider_LJH : MonoBehaviour
         {
             Debug.Log("Wave Collision : " + collision.collider.name);
             parentWater.FinishWave();
+            parentWater.FinishBubble();
             WorldManager.Instance.NotifyItemEffect(ItemType.Wave, false);
             //if (!parentWater.isFinished)
             //   parentWater.SendFinishWave();

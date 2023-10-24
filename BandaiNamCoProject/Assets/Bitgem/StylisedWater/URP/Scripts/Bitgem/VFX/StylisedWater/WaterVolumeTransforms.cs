@@ -18,7 +18,7 @@ namespace Bitgem.VFX.StylisedWater
         [SerializeField] private float width;
         [SerializeField] private float upPosY = 380f;
         [SerializeField] private float upTime = 120f;
-        [SerializeField] private GameObject[] bubbles
+        [SerializeField] private Bubble_LJH[] bubbles;
 
         private float currTime;
         public bool isFinished = false;
@@ -46,7 +46,7 @@ namespace Bitgem.VFX.StylisedWater
         {
             foreach(var b in bubbles)
             {
-                //b.StartBubble();
+                b.StartBubble();
             }
         }
 
@@ -54,7 +54,7 @@ namespace Bitgem.VFX.StylisedWater
         {
             foreach(var b in bubbles)
             {
-                //b.FinishBubble();
+                b.FinishBubble();
             }
         }
 
