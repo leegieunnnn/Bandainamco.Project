@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 public class Star_yd : BaseItem_LJH
 {
     [SerializeField] private GameObject starImage;
+    [SerializeField] private GameObject starEffect;
     public int StarMoveTime = 3; //별이 움직일수있는 시간
     GameObject star;
     public int starDistance = 50;
@@ -54,6 +55,9 @@ public class Star_yd : BaseItem_LJH
        // collision.transform.GetChild(0).rotation = Quaternion.Euler(0, 0, 0);
         collision.transform.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         Vector3 oriPos = collision.transform.position;
+        Vector3 starEffectPos = new Vector3(oriPos.x - 2, oriPos.y + starDistance, oriPos.z - 1);
+        GameObject effect = Instantiate(starEffect, starEffectPos, Quaternion.Euler(64, 64, 64));
+        Debug.Log(effect);
         Vector3 startPos = new Vector3(oriPos.x, oriPos.y + starDistance, oriPos.z);
 
         star = Instantiate(starImage, startPos, Quaternion.identity); //, collision.transform);
@@ -65,6 +69,7 @@ public class Star_yd : BaseItem_LJH
        // collision.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         collision.GetComponent<Rigidbody2D>().gravityScale = 1;
         Destroy(star);
+        //Destroy(starEffect);
         Debug.Log(collision.GetComponent<Rigidbody2D>().gravityScale);
 
         await UniTask.Yield();
