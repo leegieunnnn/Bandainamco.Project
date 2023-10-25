@@ -87,7 +87,13 @@ public class CharacterMovement2D_LSW : MonoBehaviour
         }
         if (fish)
         {
-            SetGravity(false);
+            if(ItemManager_LJH.Instance.CurrItem.myItem.itemType != ItemType.Fish)
+            {
+                fish = false;
+                SetGravity(true);
+                transform.GetChild(0).gameObject.SetActive(true);
+                transform.GetChild(1).gameObject.SetActive(false);
+            }
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position += new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y, 0).normalized * Time.deltaTime * fishSpeed;
         }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8203698826318060980}
   - component: {fileID: 7958703866331817634}
   - component: {fileID: 7204374633878823673}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,3 +131,4 @@ MonoBehaviour:
     zoomText: 
     itemType: 0
     needWholeCam: 0
+  fishTime: 5

@@ -10,7 +10,9 @@ public class FishItem_HJH : BaseItem_LJH
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            other.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
             other.GetComponent<CharacterMovement2D_LSW>().fish = true;
+            other.GetComponent<CharacterMovement2D_LSW>().SetGravity(false);
             other.transform.GetChild(0).gameObject.SetActive(false);
             other.transform.GetChild(1).gameObject.SetActive(true);
             Fish(other.gameObject);
@@ -22,9 +24,14 @@ public class FishItem_HJH : BaseItem_LJH
     public async void Fish(GameObject player)
     {
         await UniTask.Delay((int)(fishTime * 1000));
-        player.GetComponent<CharacterMovement2D_LSW>().fish = false;
-        player.transform.GetChild(0).gameObject.SetActive(true);
-        player.transform.GetChild(1).gameObject.SetActive(false);
+        if(player.GetComponent<CharacterMovement2D_LSW>().fish)
+        {
+            player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            player.GetComponent<CharacterMovement2D_LSW>().fish = false;
+            player.GetComponent<CharacterMovement2D_LSW>().SetGravity(true);
+            player.transform.GetChild(0).gameObject.SetActive(true);
+            player.transform.GetChild(1).gameObject.SetActive(false);
+        }
 
     }
 }
