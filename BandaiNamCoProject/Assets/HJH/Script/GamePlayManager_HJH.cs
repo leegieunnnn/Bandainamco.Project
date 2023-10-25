@@ -25,6 +25,10 @@ public class GamePlayManager_HJH : ManagerBase
     private EndingType endingType;
     private bool gameEnd = false;
 
+    #region 시작부분
+
+    #endregion
+
     private void Awake()
     {
         Instance = this;
