@@ -48,15 +48,13 @@ public class Bubble_LJH : MonoBehaviour
         if (collision.gameObject.CompareTag("Edge"))
         {
             ResetBubble();
+            Debug.Log("Bubble Collided Edge");
         }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag(TagStrings.PlayerTag))
+        else if (collision.gameObject.CompareTag(TagStrings.PlayerTag))
         {
             GamePlayManager_HJH.Instance.characterMovement2D.jumpPower *= 0.8f;
             ResetBubble();
+            Debug.Log("Bubble Collided Player");
         }
     }
 

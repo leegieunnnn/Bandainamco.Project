@@ -6,6 +6,8 @@ TagManager:
   tags:
   - StartPoint
   - Item
+  - FxTemporaire
+  - Edge
   layers:
   - Default
   - TransparentFX
