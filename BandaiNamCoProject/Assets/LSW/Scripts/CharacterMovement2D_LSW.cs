@@ -9,6 +9,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
 {
     //점프힘
     public float jumpPower = 100.0f;
+    private float firstJumpPower;
     //점프 아이콘
     public Image jumpIcon;
     public TMP_Text jumpCoolText;
@@ -24,19 +25,26 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     // 마지막 아이템 확인용
     public int? lastUsedItem;
 
+    //yd
+    public ItemManager_LJH itemMan; //아이템매니저
     #region 연꽃용
     public Vector2 minBoundary;
     public Vector2 maxBoundary;
     #endregion
+    #region 물고기용
+    public bool fish = false;
+    public float fishSpeed = 0f;
+    #endregion
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponentInChildren<Rigidbody2D>();
         ani =GetComponentInChildren<Animator>();
         minBoundary = new Vector2(-(itemManager.bgSize.x / 2) , -(itemManager.bgSize.y / 2));
         maxBoundary = new Vector2((itemManager.bgSize.x / 2), (itemManager.bgSize.y / 2));
         lastUsedItem = null;
         firstCoolTime = coolTime;
+        firstJumpPower = jumpPower;
     }
 
     private void FixedUpdate()
@@ -48,12 +56,10 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             if(dir.y > 0)
             {
                 rb.velocity = Vector3.zero;
-                
-                
             }
             if(dir!= Vector2.zero)
             {
-                rb.AddForce(dir * jumpPower,ForceMode2D.Force);
+                rb.AddForce(dir * jumpPower,ForceMode2D.Impulse);
                                 
             }
             jumpIcon.fillAmount = 0;
@@ -68,8 +74,10 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     void Update()
     {
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        if (Input.GetMouseButtonDown(0) && jumpReady)
+        
+       // transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        //Debug.Log(transform.rotation + "회전?");
+        if (Input.GetMouseButtonDown(0) && jumpReady && !fish) //점프 쿨타임이 지나고 물고기 안타고 있을 때
         {
             jump = true;
             jumpReady = false;
@@ -77,14 +85,28 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             //ani.CrossFade("Jump", 0.1f);
             StartCoroutine(JumpCoolTime());
         }
-        
-        if (lastUsedItem.HasValue && lastUsedItem.Value == 1)
+        if (fish)
         {
-            Lotus();
+            if(ItemManager_LJH.Instance.CurrItem.myItem.itemType != ItemType.Fish)
+            {
+                fish = false;
+                SetGravity(true);
+                transform.GetChild(0).gameObject.SetActive(true);
+                transform.GetChild(1).gameObject.SetActive(false);
+            }
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            transform.position += new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y, 0).normalized * Time.deltaTime * fishSpeed;
         }
-        if (lastUsedItem.HasValue && lastUsedItem.Value != 0)
+        if(ItemManager_LJH.Instance.CurrItem != null)
         {
-            coolTime = firstCoolTime;
+            if (ItemManager_LJH.Instance.CurrItem.myItem.itemType == ItemType.Lotus)
+            {
+                Lotus();
+            }
+            if (ItemManager_LJH.Instance.CurrItem.myItem.itemType != ItemType.Clock)
+            {
+                coolTime = firstCoolTime;
+            }
         }
     }
 
@@ -117,9 +139,17 @@ public class CharacterMovement2D_LSW : MonoBehaviour
         jumpReady = true;
     }
 
-    
+    public void SetGravity(bool hasGravity)
+    {
+        rb.gravityScale = hasGravity == true ? 1 : 0;
+    }
 
-    
+    public void Reset()
+    {
+        coolTime = firstCoolTime;
+        jumpPower = firstJumpPower;
+        SetGravity(true);
+    }
 
 
 }

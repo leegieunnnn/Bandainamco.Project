@@ -1,17 +1,19 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mashroom_yd : BaseItem_LSW
+public class Mashroom_yd : BaseItem_LJH
 {
     //크기
     public float scale = 2;
     //원래크기로 돌아오는 시간
-    public float resetTime = 2f;
+    public int resetTime = 2;
 
     [SerializeField] private Vector3 originalScale;
     public bool isScale = false;
-    [SerializeField] private int mashroomTrigger = 0;
+  //  [SerializeField] private int mashroomTrigger = 0;
+    [SerializeField] private float mashroomTime = 0f;
     Transform tr;
     public override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -26,34 +28,40 @@ public class Mashroom_yd : BaseItem_LSW
         //       StartCoroutine(PlayerScale(collision.transform));
         //    }
         //}
-        itemManager.StartCoroutine(itemManager.PlayerScale(collision.transform,scale,resetTime));
         base.OnTriggerEnter2D(collision);
-       
+        //StartCoroutine(PlayerScale(collision.transform,scale,resetTime));
+        PlayerScale(collision.transform, scale, resetTime);
     }
-   public void Scale()
+
+    public async void PlayerScale(Transform targetTr, float scale, int resetTime)
     {
-        //StartCoroutine(PlayerScale(tr));
+        Vector3 originalScale = targetTr.localScale;
+        Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
+        float currentTime = 0;
+        targetTr.localScale = targetScale;
+        while (currentTime < mashroomTime)
+        {
+            targetTr.localScale = Vector3.Lerp(originalScale, targetScale,  currentTime / mashroomTime);
+            currentTime += Time.deltaTime;
+            //Debug.Log("커짐");
+            await UniTask.Yield();
+        }
+        await UniTask.Delay(resetTime * 1000);
+        //yield return new WaitForSeconds(resetTime);
+        //Debug.Log("유지시간");
+        currentTime = 0f;
 
+        while (currentTime < mashroomTime)
+        {
+            targetTr.localScale = Vector3.Lerp(targetScale, originalScale, currentTime / mashroomTime);
+            currentTime += Time.deltaTime;
+            await UniTask.Yield();
+            //yield return null;
+            Debug.Log("작아짐");
+
+        }
     }
-    //public IEnumerator PlayerScale(Transform targetTr)
-    //{
-    //    Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
-    //    targetTr.localScale = targetScale;
-    //    yield return new WaitForSeconds(resetTime);
-    //    targetTr.localScale = originalScale;
-    //    yield return null;
-    //    isScale = false;
-
-    //}
+   
+  
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
