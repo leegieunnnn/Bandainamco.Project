@@ -51,13 +51,13 @@ public class CameraManager : ManagerBase
 
     public async void CameraControlAfterItem(string cameraName, bool isWhole)
     {
-
         if (isWhole)
         {
             SetCamera(CamValues.Whole);
         }
         else
         {
+            Debug.Log("??");
             SetCamera(cameraName);
             Camera.main.cullingMask = ~((1 << 7) | (1 << 8));
         }

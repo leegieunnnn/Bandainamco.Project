@@ -6,6 +6,10 @@ public class BGCloudMove_HJH : MonoBehaviour
 {
     public float startX;
     public float endX;
+    public bool vertical;
+    bool up = true;
+    float currentTime = 0;
+    public float coolTime = 1;
     //float speed;
     // Start is called before the first frame update
     void Start()
@@ -16,10 +20,36 @@ public class BGCloudMove_HJH : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += Vector3.right * 10 * Time.deltaTime;
-        if(transform.position.x > endX)
+        if (vertical)
         {
-            transform.position = new Vector3(startX,transform.position.y,transform.position.z);
+            if (up)
+            {
+                transform.position += Vector3.up * Time.deltaTime;
+                currentTime += Time.deltaTime;
+                if(currentTime > coolTime)
+                {
+                    currentTime = 0;
+                    up = false;
+                }
+            }
+            else
+            {
+                transform.position += Vector3.down * Time.deltaTime;
+                currentTime += Time.deltaTime;
+                if (currentTime > coolTime)
+                {
+                    currentTime = 0;
+                    up = true;
+                }
+            }
+        }
+        else
+        {
+            transform.position += Vector3.right * 5 * Time.deltaTime;
+            if (transform.position.x > endX)
+            {
+                transform.position = new Vector3(startX, transform.position.y, transform.position.z);
+            }
         }
     }
 }

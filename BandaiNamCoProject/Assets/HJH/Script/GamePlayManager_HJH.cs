@@ -26,7 +26,8 @@ public class GamePlayManager_HJH : ManagerBase
     private bool gameEnd = false;
 
     #region 시작부분
-
+    public GameObject startCloud;
+    public bool start = false;
     #endregion
 
     private void Awake()
@@ -56,6 +57,19 @@ public class GamePlayManager_HJH : ManagerBase
         }
         base.GameOver();
     }
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            startCloud.SetActive(false);
+        }
+        if(player.transform.position.y < DataManager.Instance.bgSize.y / 2 && !start)
+        {
+            start = true;
+            CameraManager.Instance.SetCamera(CamValues.Character);
+        }
+    }
+
     // Update is called once per frame
     void LateUpdate()
     {
@@ -64,7 +78,7 @@ public class GamePlayManager_HJH : ManagerBase
             return;
         }
         Vector3 pos = Camera.main.WorldToViewportPoint(player.transform.position);
-        if (pos.x > Screen.width || pos.x < 0 || pos.y > Screen.height || pos.y < 0)
+        if (pos.x > 1f || pos.x < 0f || pos.y > 1f || pos.y < 0)
         {
             endingType = EndingType.Over;
             gameEnd = true;
