@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -993404951
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 53edf4cb8a5310946bf7b920dbec3f18, type: 3}
   m_Color: {r: 0, g: 0.76520824, b: 1, a: 1}
@@ -124,8 +124,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 523cb5e54a7adf34686a988a42b51173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemNum: 0
-  itemManager: {fileID: 0}
+  myItem:
+    prefab: {fileID: 0}
+    itemCount: 0
+    isVisited: 0
+    zoomText: 
+    itemType: 0
+    needWholeCam: 0
   zoomLerpSec: 3
-  zoomLerpSpeed: 2
   delayTime: 3

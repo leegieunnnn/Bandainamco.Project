@@ -79,7 +79,12 @@ public class GamePlayManager_HJH : ManagerBase
         }
         Vector3 pos = Camera.main.WorldToViewportPoint(player.transform.position);
         if (pos.x > 1f || pos.x < 0f || pos.y > 1f || pos.y < 0)
-        {
+        { 
+            if(ItemManager_LJH.Instance.CurrItem.myItem.itemType == ItemType.Lotus)
+            {
+                characterMovement2D.SetPosition(Camera.main.ViewportToWorldPoint(new Vector3(0f,0f,0f)));
+                return;
+            }
             endingType = EndingType.Over;
             gameEnd = true;
 

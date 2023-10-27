@@ -25,9 +25,12 @@ public class CameraManager : ManagerBase
     public float orthographicSizeWhole;
     public string currCamera = CamValues.Character;
 
+    public bool isReturnedToPlayer;
+
     public override void Init()
     {
         Instance = this;
+        isReturnedToPlayer = false;
         SetOrthographicSizeWhole();
 
         virtualCams = brainCam.GetComponentsInChildren<CinemachineVirtualCamera>();
@@ -51,6 +54,7 @@ public class CameraManager : ManagerBase
 
     public async void CameraControlAfterItem(string cameraName, bool isWhole)
     {
+        isReturnedToPlayer = false;
         if (isWhole)
         {
             SetCamera(CamValues.Whole);
@@ -67,6 +71,7 @@ public class CameraManager : ManagerBase
             await UniTask.Delay(1000,true);
             SetCamera(CamValues.Character);
             StartCoroutine(AfterCameraChange());
+            isReturnedToPlayer = true;
         });
         //문구 보여주기
     }

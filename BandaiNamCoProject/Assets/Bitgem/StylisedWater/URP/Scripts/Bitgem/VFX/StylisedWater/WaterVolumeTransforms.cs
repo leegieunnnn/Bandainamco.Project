@@ -19,6 +19,7 @@ namespace Bitgem.VFX.StylisedWater
         [SerializeField] private float upPosY = 380f;
         [SerializeField] private float upTime = 120f;
         [SerializeField] private Bubble_LJH[] bubbles;
+        [SerializeField] private GameObject parent;
 
         private float currTime;
         public bool isFinished = false;
@@ -60,6 +61,10 @@ namespace Bitgem.VFX.StylisedWater
 
         public async void StartWave()
         {
+            parent.SetActive(true);
+
+            await UniTask.WaitUntil(() => CameraManager.Instance.isReturnedToPlayer);
+
             float elapsedTime = 0f;
             while (elapsedTime < upTime)
             {
@@ -76,15 +81,18 @@ namespace Bitgem.VFX.StylisedWater
 
         public async void FinishWave()
         {
+            parent.SetActive(false);
+
             isFinished = true;
 
             float elapsedTime = 0f;
+            float downTime = upTime / 2f;
             float currY = transform.position.y;
-            while (elapsedTime < upTime)
+            while (elapsedTime < downTime)
             {
-                float lerpY = Mathf.Lerp(currY, originY, elapsedTime / upTime);
+                float lerpY = Mathf.Lerp(currY, originY, elapsedTime / downTime);
                 transform.position = new Vector3(transform.position.x, lerpY, transform.position.z);
-                elapsedTime += Time.deltaTime;
+                elapsedTime += Time.unscaledDeltaTime;
                 await UniTask.Yield();
             }
 

@@ -99,10 +99,10 @@ public class CharacterMovement2D_LSW : MonoBehaviour
         }
         if(ItemManager_LJH.Instance.CurrItem != null)
         {
-            if (ItemManager_LJH.Instance.CurrItem.myItem.itemType == ItemType.Lotus)
+            /*if (ItemManager_LJH.Instance.CurrItem.myItem.itemType == ItemType.Lotus)
             {
                 Lotus();
-            }
+            }*/
             if (ItemManager_LJH.Instance.CurrItem.myItem.itemType != ItemType.Clock)
             {
                 coolTime = firstCoolTime;
@@ -151,5 +151,9 @@ public class CharacterMovement2D_LSW : MonoBehaviour
         SetGravity(true);
     }
 
+    public void SetPosition(Vector3 pos)
+    {
+        transform.position = pos;
+    }
 
 }
