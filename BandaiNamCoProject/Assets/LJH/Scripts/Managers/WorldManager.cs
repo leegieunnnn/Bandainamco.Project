@@ -42,6 +42,7 @@ public class WorldManager : MonoBehaviour
     {
         Instance = this;
         managers = new List<ManagerBase>();
+        MainState = MainState.Play;
         foreach (var manager in GetComponentsInChildren<ManagerBase>())
         {
             manager.Init();
