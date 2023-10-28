@@ -82,7 +82,7 @@ public class GamePlayManager_HJH : ManagerBase
         { 
             if(ItemManager_LJH.Instance.CurrItem.myItem.itemType == ItemType.Lotus)
             {
-                characterMovement2D.SetPosition(Camera.main.ViewportToWorldPoint(new Vector3(0f,0f,0f)));
+                characterMovement2D.SetPosition(Camera.main.ViewportToWorldPoint(new Vector2(0.5f,0.5f)));
                 return;
             }
             endingType = EndingType.Over;
