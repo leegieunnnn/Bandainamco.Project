@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1993416602313422109}
   - component: {fileID: 1941738511787033583}
   - component: {fileID: 8798942607527898631}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rabbit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,6 +105,10 @@ MonoBehaviour:
     zoomText: 
     itemType: 0
     needWholeCam: 0
+  end: 0
+  player: {fileID: 0}
+  smallRabbit: {fileID: 0}
+  duringTime: 7
 --- !u!61 &8798942607527898631
 BoxCollider2D:
   m_ObjectHideFlags: 0

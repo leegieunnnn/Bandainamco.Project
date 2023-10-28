@@ -61,7 +61,6 @@ public class CameraManager : ManagerBase
         }
         else
         {
-            Debug.Log("??");
             SetCamera(cameraName);
             Camera.main.cullingMask = ~((1 << 7) | (1 << 8));
         }

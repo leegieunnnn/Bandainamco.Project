@@ -14,6 +14,7 @@ public class ItemManager_LJH : ManagerBase
     public float itemsDistance;
     public GameObject player;
     public int itemCount;
+    public float xyLine; //그림 끝이랑 너무 까깝지 않게 하기 위해서
     public static ItemManager_LJH Instance;
 
     private BaseItem_LJH currItem;
@@ -41,8 +42,8 @@ public class ItemManager_LJH : ManagerBase
 
     Vector3 Return_RandomPosition()
     {
-        float x = UnityEngine.Random.Range(-DataManager.Instance.bgSize.x / 2 + itemsDistance, DataManager.Instance.bgSize.x / 2 - itemsDistance);
-        float y = UnityEngine.Random.Range(-DataManager.Instance.bgSize.y / 2 + itemsDistance, DataManager.Instance.bgSize.y / 2 - itemsDistance);
+        float x = UnityEngine.Random.Range(-DataManager.Instance.bgSize.x / 2 + itemsDistance, DataManager.Instance.bgSize.x / 2 - xyLine);
+        float y = UnityEngine.Random.Range(-DataManager.Instance.bgSize.y / 2 + itemsDistance, DataManager.Instance.bgSize.y / 2 - xyLine);
         Vector3 randomPostion = new Vector3(x, y, 0);
         return randomPostion;
     }
@@ -79,6 +80,7 @@ public class ItemManager_LJH : ManagerBase
                     } //플레이어랑 너무 가까울 때
                     if (su > 1000)
                     {
+                        Debug.Log("ㅠㅠ");
                         restart = false;
                     } // 너무 많이 반복할 때
                     if (!restart)
