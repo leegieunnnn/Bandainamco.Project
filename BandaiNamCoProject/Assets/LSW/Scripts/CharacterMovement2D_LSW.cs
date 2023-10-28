@@ -9,7 +9,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
 {
     //점프힘
     public float jumpPower = 100.0f;
-    private float firstJumpPower;
+    public float firstJumpPower;
     //점프 아이콘
     public Image jumpIcon;
     public TMP_Text jumpCoolText;
@@ -34,6 +34,9 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     #region 물고기용
     public bool fish = false;
     public float fishSpeed = 0f;
+    #endregion
+    #region 토끼용
+
     #endregion
 
     private void Start()
@@ -106,6 +109,10 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             if (ItemManager_LJH.Instance.CurrItem.myItem.itemType != ItemType.Clock)
             {
                 coolTime = firstCoolTime;
+            }
+            if (ItemManager_LJH.Instance.CurrItem.myItem.itemType != ItemType.Rabbit)
+            {
+                jumpPower = firstJumpPower;
             }
         }
     }
