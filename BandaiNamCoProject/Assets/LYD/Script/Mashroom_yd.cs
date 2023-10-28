@@ -15,6 +15,7 @@ public class Mashroom_yd : BaseItem_LJH
   //  [SerializeField] private int mashroomTrigger = 0;
     [SerializeField] private float mashroomTime = 0f;
     Transform tr;
+    public GameObject mashroomEffect;
     public override void OnTriggerEnter2D(Collider2D collision)
     {
         //if (collision.CompareTag("Player") && !isScale)

@@ -55,13 +55,14 @@ public class Star_yd : BaseItem_LJH
        // collision.transform.GetChild(0).rotation = Quaternion.Euler(0, 0, 0);
         collision.transform.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         Vector3 oriPos = collision.transform.position;
-        Vector3 starEffectPos = new Vector3(oriPos.x - 2, oriPos.y + starDistance, oriPos.z - 1);
-        GameObject effect = Instantiate(starEffect, starEffectPos, Quaternion.Euler(64, 64, 64));
-        Debug.Log(effect);
+        Vector3 starEffectPos = new Vector3(oriPos.x, oriPos.y + starDistance +54, oriPos.z);
+
+        GameObject effect = Instantiate(starEffect, starEffectPos, Quaternion.Euler(90, 0, 0)); //Quaternion.Euler(64, 64, 64));
+        Debug.Log(starEffectPos);
+       await UniTask.Delay(1 * 1000);
         Vector3 startPos = new Vector3(oriPos.x, oriPos.y + starDistance, oriPos.z);
 
         star = Instantiate(starImage, startPos, Quaternion.identity); //, collision.transform);
-        Debug.Log(collision.transform.rotation);
 
         // collision.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         //starImage.transform.GetComponent<StarImage_yd>().isOn = true;

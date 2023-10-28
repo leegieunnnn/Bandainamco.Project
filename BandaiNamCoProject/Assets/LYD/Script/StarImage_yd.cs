@@ -11,10 +11,12 @@ public class StarImage_yd : MonoBehaviour
 
     Transform collisionTr;
     GameObject other;
+    Vector3 oriPos;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+     //   oriPos = new Vector3(oriPos.x, oriPos.y - 3, oriPos.z);    
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

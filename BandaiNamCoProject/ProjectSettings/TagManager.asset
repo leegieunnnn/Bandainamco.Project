@@ -8,6 +8,7 @@ TagManager:
   - Item
   - FxTemporaire
   - Edge
+  - Clock
   layers:
   - Default
   - TransparentFX
@@ -53,4 +54,7 @@ TagManager:
     locked: 0
   - name: Item
     uniqueID: 3301562345
+    locked: 0
+  - name: Effect
+    uniqueID: 2380511431
     locked: 0
