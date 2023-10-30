@@ -46,6 +46,17 @@ public class CameraManager : ManagerBase
 
     public void SetCamera(string cameraName)
     {
+        if(cameraName == CamValues.Whole)
+        {
+            if((GameObject.Find("BG").transform.rotation.z / 90) % 2 == 1)
+            {
+                virtualCamDic[cameraName].m_Lens.OrthographicSize = Mathf.Min(DataManager.Instance.bgSize.x,DataManager.Instance.bgSize.y)/2;
+            }
+            else
+            {
+                virtualCamDic[cameraName].m_Lens.OrthographicSize = Mathf.Max(DataManager.Instance.bgSize.x, DataManager.Instance.bgSize.y)/2;
+            }
+        }
         foreach (var cam in virtualCams)
             cam.Priority = CamValues.priorityOff;
         currCamera = cameraName;
