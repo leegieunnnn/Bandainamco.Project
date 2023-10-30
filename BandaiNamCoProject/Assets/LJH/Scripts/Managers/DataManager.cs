@@ -25,6 +25,7 @@ public class DataManager : ManagerBase
         Vector3 worldbGSize = localbGSize;
         worldbGSize.x *= bg.transform.lossyScale.x;
         worldbGSize.y *= bg.transform.lossyScale.y;
+        Debug.Log("bgSize : " + worldbGSize);
         return worldbGSize;
     }
 }
