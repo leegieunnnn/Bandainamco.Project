@@ -32,6 +32,8 @@ public class UIManager : ManagerBase
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private TextMeshProUGUI timeText;
 
+    public Animator uiani;
+
     private float currTime = 0f;
     bool isCloud = false;
     bool isFinished = false;
