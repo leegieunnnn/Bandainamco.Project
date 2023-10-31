@@ -75,38 +75,35 @@ public class UIManager : ManagerBase
 
     public async void ControlCloud(Action finishCallback = null)
     {
-        for (int i = 0; i < clouds.Length; i++)
-        {
-            clouds[i].cloudRT.anchoredPosition = clouds[i].FirstPos;
-            clouds[i].cloudRT.gameObject.SetActive(true);
-        }
+        //for (int i = 0; i < clouds.Length; i++)
+        //{
+        //    clouds[i].cloudRT.anchoredPosition = clouds[i].FirstPos;
+        //    clouds[i].cloudRT.gameObject.SetActive(true);
+        //}
 
-        DG.Tweening.Sequence sequence = DOTween.Sequence();
+        //DG.Tweening.Sequence sequence = DOTween.Sequence();
 
-        sequence.Append(clouds[0].cloudRT.DOAnchorPos(clouds[0].endPos, 2f).SetEase(ease)).SetUpdate(true);
-        for (int i = 1; i < clouds.Length; i++)
-        {
-            sequence.Join(clouds[i].cloudRT.DOAnchorPos(clouds[i].endPos, 2f).SetEase(ease)).SetUpdate(true);
-        }
+        //sequence.Append(clouds[0].cloudRT.DOAnchorPos(clouds[0].endPos, 2f).SetEase(ease)).SetUpdate(true);
+        //for (int i = 1; i < clouds.Length; i++)
+        //{
+        //    sequence.Join(clouds[i].cloudRT.DOAnchorPos(clouds[i].endPos, 2f).SetEase(ease)).SetUpdate(true);
+        //}
+        //sequence.onComplete = (async () =>
+        //{
+        //    text.gameObject.SetActive(true);
+        //    text.text = "";
+        //    string str = "";
+        //    string originText = ItemManager_LJH.Instance.CurrItem.myItem.zoomText;
 
-
-        sequence.onComplete = (async () =>
-        {
-            text.gameObject.SetActive(true);
-            text.text = "";
-            string str = "";
-            string originText = ItemManager_LJH.Instance.CurrItem.myItem.zoomText;
-
-            for (int i = 0; i < originText.Length; i++)
-            {
-                str += originText[i];
-                text.text = str;
-                await UniTask.Yield();
-                await UniTask.Delay(100,true);
-            }
-            isCloud = true;
-        });
-
+        //    for (int i = 0; i < originText.Length; i++)
+        //    {
+        //        str += originText[i];
+        //        text.text = str;
+        //        await UniTask.Yield();
+        //        await UniTask.Delay(100,true);
+        //    }
+        //});
+        isCloud = true;
         await UniTask.WaitUntil(()=>isFinished);
         finishCallback?.Invoke();
         isFinished = false;
