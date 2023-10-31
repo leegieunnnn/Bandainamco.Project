@@ -78,7 +78,8 @@ public class CameraManager : ManagerBase
         await UniTask.Delay(1000,true);
         UIManager.Instance.ControlCloud(async () =>
         {
-            await UniTask.Delay(1000,true);
+            await UniTask.Delay(1200,true);
+            UIManager.Instance.itemCanvas.SetActive(false);
             SetCamera(CamValues.Character);
             StartCoroutine(AfterCameraChange());
             isReturnedToPlayer = true;
