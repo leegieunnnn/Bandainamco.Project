@@ -100,8 +100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duringTime: 5
   jumpPowerPlus: 100
-  moveTime: 1.5
-  moveRange: 60
+  speedMax: 50
+  speedMin: 20
 --- !u!61 &3396852091539746932
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -228,8 +228,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duringTime: 5
   jumpPowerPlus: 25
-  moveTime: 1.5
-  moveRange: 60
+  speedMax: 50
+  speedMin: 20
 --- !u!61 &580559945638166121
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -356,8 +356,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duringTime: 5
   jumpPowerPlus: 75
-  moveTime: 1.5
-  moveRange: 60
+  speedMax: 50
+  speedMin: 20
 --- !u!61 &178763635470436773
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -503,7 +503,7 @@ MonoBehaviour:
     needWholeCam: 0
   end: 0
   player: {fileID: 0}
-  duringTime: 7
+  duringTime: 10
   makeTime: 1
 --- !u!61 &8798942607527898631
 BoxCollider2D:
@@ -631,8 +631,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duringTime: 5
   jumpPowerPlus: 50
-  moveTime: 1.5
-  moveRange: 60
+  speedMax: 50
+  speedMin: 20
 --- !u!61 &1787108625147516599
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -759,8 +759,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duringTime: 5
   jumpPowerPlus: 75
-  moveTime: 1.5
-  moveRange: 60
+  speedMax: 50
+  speedMin: 20
 --- !u!61 &3166880348736676220
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -887,8 +887,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duringTime: 5
   jumpPowerPlus: 25
-  moveTime: 1.5
-  moveRange: 60
+  speedMax: 50
+  speedMin: 20
 --- !u!61 &7107692599635998344
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1015,8 +1015,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duringTime: 5
   jumpPowerPlus: 50
-  moveTime: 1.5
-  moveRange: 60
+  speedMax: 50
+  speedMin: 20
 --- !u!61 &1046064738889977753
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1143,8 +1143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duringTime: 5
   jumpPowerPlus: 100
-  moveTime: 1.5
-  moveRange: 60
+  speedMax: 50
+  speedMin: 20
 --- !u!61 &512541859318230908
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1271,8 +1271,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duringTime: 5
   jumpPowerPlus: 50
-  moveTime: 1.5
-  moveRange: 60
+  speedMax: 50
+  speedMin: 20
 --- !u!61 &9166375636534195915
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1399,8 +1399,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duringTime: 5
   jumpPowerPlus: 25
-  moveTime: 1.5
-  moveRange: 60
+  speedMax: 50
+  speedMin: 20
 --- !u!61 &3213299580463810950
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1527,8 +1527,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duringTime: 5
   jumpPowerPlus: 100
-  moveTime: 1.5
-  moveRange: 60
+  speedMax: 50
+  speedMin: 20
 --- !u!61 &7057946499903637297
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1655,8 +1655,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duringTime: 5
   jumpPowerPlus: 75
-  moveTime: 1.5
-  moveRange: 60
+  speedMax: 50
+  speedMin: 20
 --- !u!61 &956457809860484628
 BoxCollider2D:
   m_ObjectHideFlags: 0
