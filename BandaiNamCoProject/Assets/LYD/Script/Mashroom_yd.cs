@@ -36,10 +36,17 @@ public class Mashroom_yd : BaseItem_LJH
 
     public async void PlayerScale(Transform targetTr, float scale, int resetTime)
     {
+        await UniTask.Delay(1);
+
         Vector3 originalScale = targetTr.localScale;
         Vector3 targetScale = new Vector3(originalScale.x * scale, originalScale.y * scale, originalScale.z * scale);
         float currentTime = 0;
         targetTr.localScale = targetScale;
+        //GameObject me = Instantiate(mashroomEffect, targetTr.transform.parent, );
+        // Vector3 newPosition = new Vector3(0, 1, -8.0f);
+        GameObject me = Instantiate(mashroomEffect, targetTr.transform);
+       // me.transform.parent = targetTr.transform;
+        Debug.Log(me.transform.position);
         while (currentTime < mashroomTime)
         {
             targetTr.localScale = Vector3.Lerp(originalScale, targetScale,  currentTime / mashroomTime);
