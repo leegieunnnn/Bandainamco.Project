@@ -49,7 +49,7 @@ public class SmallRabbit_HJH : MonoBehaviour
         while (true)
         {
             currentTime += Time.deltaTime;
-            if(currentTime > 1f)
+            if(currentTime > 0.5f)
             {
                 start = true;
             }
