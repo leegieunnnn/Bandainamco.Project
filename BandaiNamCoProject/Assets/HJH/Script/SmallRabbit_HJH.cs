@@ -7,8 +7,8 @@ public class SmallRabbit_HJH : MonoBehaviour
 {
     public float duringTime;
     public float jumpPowerPlus;
-    public float moveTime;
-    public float moveRange;
+    public float speedMax;
+    public float speedMin;
     bool start = false;
     // Start is called before the first frame update
     void Start()
@@ -42,17 +42,20 @@ public class SmallRabbit_HJH : MonoBehaviour
 
     public IEnumerator Move()
     {
-        Vector2 ran = Random.insideUnitCircle * moveRange;
+        Vector2 ran = Random.insideUnitCircle;
+        ran.Normalize();
+        float speed = Random.Range(speedMin, speedMax);
         float currentTime = 0;
-        Vector3 current = transform.position;
-        while (currentTime < moveTime)
+        while (true)
         {
             currentTime += Time.deltaTime;
-            transform.position = Vector3.Lerp(current, current + (Vector3)ran, currentTime / moveTime);
+            if(currentTime > 1f)
+            {
+                start = true;
+            }
+            transform.position += (Vector3)ran * Time.deltaTime * speed;
             yield return null;
         }
-        transform.position = current + (Vector3)ran;
-        start = true;
     }
 
     

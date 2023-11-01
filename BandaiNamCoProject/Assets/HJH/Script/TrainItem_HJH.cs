@@ -20,12 +20,12 @@ public class TrainItem_HJH : BaseItem_LJH
 
     public override void OnTriggerEnter2D(Collider2D other)
     {
+        base.OnTriggerEnter2D(other);
         if (other.gameObject.CompareTag("Player"))
         {
-            player = other.GetComponent<CharacterMovement2D_LSW>(); 
+            player = other.GetComponent<CharacterMovement2D_LSW>();
             TrainActivate();
         }
-        base.OnTriggerEnter2D(other);
     }
 
     void TrainActivate()
