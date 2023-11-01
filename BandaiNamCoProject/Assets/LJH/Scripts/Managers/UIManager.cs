@@ -106,7 +106,6 @@ public class UIManager : ManagerBase
         //});
 
         itemCanvas.SetActive(true);
-        isCloud = true;
         await UniTask.WaitUntil(()=>isFinished);
         uiani.SetTrigger("Fadeout");
 

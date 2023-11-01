@@ -26,7 +26,7 @@ public class CameraManager : ManagerBase
     public string currCamera = CamValues.Character;
 
     public bool isReturnedToPlayer;
-
+    public bool endFadeOut = false;
     public override void Init()
     {
         Instance = this;
@@ -78,7 +78,8 @@ public class CameraManager : ManagerBase
         await UniTask.Delay(1000,true);
         UIManager.Instance.ControlCloud(async () =>
         {
-            await UniTask.Delay(1200,true);
+            await UniTask.WaitUntil(() => endFadeOut == true);
+            endFadeOut = false;
             UIManager.Instance.itemCanvas.SetActive(false);
             SetCamera(CamValues.Character);
             StartCoroutine(AfterCameraChange());

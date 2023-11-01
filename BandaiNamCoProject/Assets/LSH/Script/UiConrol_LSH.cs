@@ -7,9 +7,12 @@ public class UiConrol_LSH : MonoBehaviour
     public void FadeIn()
     {
         UIManager.Instance.isCloud = true;
-        Debug.Log("rrrr");
     }
 
+    public void FadeOut()
+    {
+        CameraManager.Instance.endFadeOut = true;
+    }
     // Start is called before the first frame update
     void Start()
     {

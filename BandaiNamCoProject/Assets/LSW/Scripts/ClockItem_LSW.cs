@@ -40,8 +40,6 @@ public class ClockItem_LSW : BaseItem_LJH
 
         GamePlayManager_HJH.Instance.characterMovement2D.coolTime -= coolTimeReduce;
 
-        Debug.Log("ÄğÅ¸ÀÓÁÙ¾îµë");
-
     }
     
 
