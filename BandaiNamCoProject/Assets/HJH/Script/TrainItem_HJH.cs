@@ -20,9 +20,25 @@ public class TrainItem_HJH : BaseItem_LJH
 
     public override void OnTriggerEnter2D(Collider2D other)
     {
-        base.OnTriggerEnter2D(other);
         if (other.gameObject.CompareTag("Player"))
         {
+            ItemManager_LJH.Instance.itemCount += 1;
+            ItemManager_LJH.Instance.CurrItem = this;
+
+            if (!myItem.isVisited)
+            {
+                WorldManager.Instance.MainState = MainState.Pause;
+                if (myItem.needWholeCam)
+                {
+                    CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), true);
+                }
+                else
+                {
+                    CameraManager.Instance.CameraControlAfterItem(myItem.itemType.ToString(), false);
+
+                }
+            }
+            myItem.isVisited = true;
             player = other.GetComponent<CharacterMovement2D_LSW>();
             TrainActivate();
         }
@@ -32,6 +48,7 @@ public class TrainItem_HJH : BaseItem_LJH
     {
         int ran = Random.Range(0, 2);
         trainStart = true;
+        
         player.gameObject.tag = "Untagged";
         player.SetGravity(false);
         trainRail.gameObject.SetActive(true);

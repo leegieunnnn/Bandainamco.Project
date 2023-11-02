@@ -80,7 +80,6 @@ public class ItemManager_LJH : ManagerBase
                     } //플레이어랑 너무 가까울 때
                     if (su > 1000)
                     {
-                        Debug.Log("ㅠㅠ");
                         restart = false;
                     } // 너무 많이 반복할 때
                     if (!restart)
