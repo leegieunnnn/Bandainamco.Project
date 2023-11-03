@@ -33,9 +33,10 @@ public class UIManager : ManagerBase
     [SerializeField] private TextMeshProUGUI timeText;
 
     public Animator uiani;
+    public GameObject itemCanvas;
 
     private float currTime = 0f;
-    bool isCloud = false;
+    public bool isCloud = false;
     bool isFinished = false;
     private void Update()
     {
@@ -103,8 +104,11 @@ public class UIManager : ManagerBase
         //        await UniTask.Delay(100,true);
         //    }
         //});
-        isCloud = true;
+
+        itemCanvas.SetActive(true);
         await UniTask.WaitUntil(()=>isFinished);
+        uiani.SetTrigger("Fadeout");
+
         finishCallback?.Invoke();
         isFinished = false;
         text.gameObject.SetActive(false);
