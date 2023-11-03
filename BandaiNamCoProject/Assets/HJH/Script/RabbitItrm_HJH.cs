@@ -41,6 +41,11 @@ public class RabbitItrm_HJH : BaseItem_LJH
 
                     }
                 }
+                Animator bubbleAni;
+                if (bubble.TryGetComponent<Animator>(out bubbleAni))
+                {
+                    bubbleAni.SetTrigger("Pop");
+                }
                 myItem.isVisited = true;
                 RabbitAni();
                 not = false;

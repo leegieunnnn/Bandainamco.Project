@@ -38,6 +38,11 @@ public class TrainItem_HJH : BaseItem_LJH
 
                 }
             }
+            Animator bubbleAni;
+            if (bubble.TryGetComponent<Animator>(out bubbleAni))
+            {
+                bubbleAni.SetTrigger("Pop");
+            }
             myItem.isVisited = true;
             player = other.GetComponent<CharacterMovement2D_LSW>();
             TrainActivate();
