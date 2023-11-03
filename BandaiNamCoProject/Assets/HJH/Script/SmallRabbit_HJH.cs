@@ -30,7 +30,7 @@ public class SmallRabbit_HJH : MonoBehaviour
             if (collision.gameObject.CompareTag("Player"))
             {
                 collision.GetComponent<CharacterMovement2D_LSW>().Rabbit(jumpPowerPlus,duringTime);
-                transform.parent.gameObject.SetActive(false);
+                transform.parent.GetComponent<RabbitItrm_HJH>().end = true;
             }
         }
     }

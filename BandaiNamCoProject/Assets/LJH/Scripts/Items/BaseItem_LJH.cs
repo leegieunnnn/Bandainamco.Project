@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine;
 public class BaseItem_LJH : MonoBehaviour
 {
     public Item_HJH myItem;
-
+    public GameObject bubble;
     public void Init(Item_HJH item)
     {
         myItem = item;
@@ -34,8 +35,18 @@ public class BaseItem_LJH : MonoBehaviour
                 }
             }
             myItem.isVisited = true;
-            gameObject.SetActive(false);
+            Animator bubbleAni;
+            if (bubble.TryGetComponent<Animator>(out bubbleAni))
+            {
+                bubbleAni.SetTrigger("Pop");
+            }
+            ActiveFalse();
         }
+    }
+    async void ActiveFalse()
+    {
+        await UniTask.Delay(1000);
+        gameObject.SetActive(false);
     }
 
     public virtual void Reset() { }
