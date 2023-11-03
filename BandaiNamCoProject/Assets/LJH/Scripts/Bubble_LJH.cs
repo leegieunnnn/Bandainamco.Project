@@ -39,7 +39,7 @@ public class Bubble_LJH : MonoBehaviour
         isActive = false;
     }
 
-    public void ResetBubble()
+    private void ResetBubble()
     {
         transform.localPosition = initPosition;
     }

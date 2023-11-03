@@ -1,5 +1,6 @@
 using Bitgem.VFX.StylisedWater;
 using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -34,7 +35,9 @@ public class ItemManager_LJH : ManagerBase
     public BaseBackground_LJH currBackground;
 
     [Header("Wave")]
-    public WaterVolumeTransforms waveObject;
+    public ImagePlayer wavePlayer;
+    public Transform bubbleParent;
+    private List<Bubble_LJH> bubbles;
 
     private void Awake()
     {
@@ -54,6 +57,9 @@ public class ItemManager_LJH : ManagerBase
         await UniTask.WaitUntil(() => DataManager.Instance.isInit);
 
         Instance = this;
+
+        bubbles = new List<Bubble_LJH>();
+        bubbles.AddRange(bubbleParent.GetComponentsInChildren<Bubble_LJH>(true));
 
         for (int i = 0; i < items.Length; i++)
         {
@@ -117,6 +123,25 @@ public class ItemManager_LJH : ManagerBase
         {
             if (isActive && i.myItem.isVisited) continue;
             i.gameObject.SetActive(isActive);
+        }
+    }
+
+    public void SetWave(Action callback = null)
+    {
+        wavePlayer.PlayImages(callback);
+    }
+
+    public void SetBubble(bool isSet)
+    {
+        if (isSet)
+        {
+            foreach (var bubble in bubbles)
+                bubble.StartBubble();
+        }
+        else
+        {
+            foreach (var bubble in bubbles)
+                bubble.FinishBubble();
         }
     }
 }
