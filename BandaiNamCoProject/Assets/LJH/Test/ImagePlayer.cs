@@ -17,12 +17,37 @@ public class ImagePlayer : MonoBehaviour
     private bool stop = false;
 
 
-    private async void PlayImages(bool isActive)
+    public async void PlayImages(Action callback = null)
+    {
+        target.gameObject.SetActive(true);
+
+        for (int i = 0; i < images.Count; i++)
+        {
+            target.sprite = images[i];
+            await UniTask.Delay(TimeSpan.FromSeconds(secPer1Img), ignoreTimeScale: false); //10 s
+            await UniTask.Yield();
+        }
+
+
+        for (int i = images.Count - 1; i >= 0; i--)
+        {
+            target.sprite = images[i];
+            await UniTask.Delay(TimeSpan.FromSeconds(secPer1Img), ignoreTimeScale: false); //10 s
+            await UniTask.Yield();
+        }
+
+        target.gameObject.SetActive(false);
+
+        callback?.Invoke();
+    }
+
+    private async UniTask PlayImages(bool isActive, Action callback = null)
     {
         if (isActive)
         {
+            target.gameObject.SetActive(isActive);
 
-            for(int i=0;i < images.Count; i++)
+            for (int i = 0; i < images.Count; i++)
             {
                 if (stop) break;
                 currIndex = i;
@@ -35,7 +60,7 @@ public class ImagePlayer : MonoBehaviour
         {
             stop = true;
 
-            for(int i= currIndex; i>=0; i--)
+            for (int i = currIndex; i >= 0; i--)
             {
                 target.sprite = images[i];
                 await UniTask.Delay(TimeSpan.FromSeconds(secPer1Img), ignoreTimeScale: false); //10 s
@@ -43,9 +68,15 @@ public class ImagePlayer : MonoBehaviour
             }
 
             stop = false;
+            target.gameObject.SetActive(isActive);
         }
+
+        callback?.Invoke();
     }
 
+
+
+    #region TEST
     public void Play()
     {
         PlayImages(true);
@@ -55,4 +86,5 @@ public class ImagePlayer : MonoBehaviour
     {
         PlayImages(false);
     }
+    #endregion
 }
