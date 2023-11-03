@@ -41,13 +41,13 @@ public class GameUI_HJH : MonoBehaviour
     }
     public void PauseOnButton()
     {
-        Time.timeScale = 0f;
+        WorldManager.Instance.MainState = MainState.Pause;
         pauseCanvas.SetActive(true);
     }
 
     public void PauseOffButton()
     {
-        Time.timeScale = 1f;
+        WorldManager.Instance.MainState = MainState.Play;
         pauseCanvas.SetActive(false);
     }
 
@@ -103,7 +103,7 @@ public class GameUI_HJH : MonoBehaviour
     public void OptionOffButton()
     {
         optionCanvas.SetActive(false);
-        Time.timeScale = 1f;
+        WorldManager.Instance.MainState = MainState.Play;
     }
 
     void VolumeChange(float value)
@@ -113,7 +113,7 @@ public class GameUI_HJH : MonoBehaviour
 
     public void QuitButton()
     {
-        Time.timeScale = 1f;
+        WorldManager.Instance.MainState = MainState.Play;
         LoadingManager_HJH.LoadScene("StartScene");
     }
 }

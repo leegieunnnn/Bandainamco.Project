@@ -32,8 +32,11 @@ public class UIManager : ManagerBase
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private TextMeshProUGUI timeText;
 
+    public Animator uiani;
+    public GameObject itemCanvas;
+
     private float currTime = 0f;
-    bool isCloud = false;
+    public bool isCloud = false;
     bool isFinished = false;
     private void Update()
     {
@@ -73,39 +76,39 @@ public class UIManager : ManagerBase
 
     public async void ControlCloud(Action finishCallback = null)
     {
-        for (int i = 0; i < clouds.Length; i++)
-        {
-            clouds[i].cloudRT.anchoredPosition = clouds[i].FirstPos;
-            clouds[i].cloudRT.gameObject.SetActive(true);
-        }
+        //for (int i = 0; i < clouds.Length; i++)
+        //{
+        //    clouds[i].cloudRT.anchoredPosition = clouds[i].FirstPos;
+        //    clouds[i].cloudRT.gameObject.SetActive(true);
+        //}
 
-        DG.Tweening.Sequence sequence = DOTween.Sequence();
+        //DG.Tweening.Sequence sequence = DOTween.Sequence();
 
-        sequence.Append(clouds[0].cloudRT.DOAnchorPos(clouds[0].endPos, 2f).SetEase(ease)).SetUpdate(true);
-        for (int i = 1; i < clouds.Length; i++)
-        {
-            sequence.Join(clouds[i].cloudRT.DOAnchorPos(clouds[i].endPos, 2f).SetEase(ease)).SetUpdate(true);
-        }
+        //sequence.Append(clouds[0].cloudRT.DOAnchorPos(clouds[0].endPos, 2f).SetEase(ease)).SetUpdate(true);
+        //for (int i = 1; i < clouds.Length; i++)
+        //{
+        //    sequence.Join(clouds[i].cloudRT.DOAnchorPos(clouds[i].endPos, 2f).SetEase(ease)).SetUpdate(true);
+        //}
+        //sequence.onComplete = (async () =>
+        //{
+        //    text.gameObject.SetActive(true);
+        //    text.text = "";
+        //    string str = "";
+        //    string originText = ItemManager_LJH.Instance.CurrItem.myItem.zoomText;
 
+        //    for (int i = 0; i < originText.Length; i++)
+        //    {
+        //        str += originText[i];
+        //        text.text = str;
+        //        await UniTask.Yield();
+        //        await UniTask.Delay(100,true);
+        //    }
+        //});
 
-        sequence.onComplete = (async () =>
-        {
-            text.gameObject.SetActive(true);
-            text.text = "";
-            string str = "";
-            string originText = ItemManager_LJH.Instance.CurrItem.myItem.zoomText;
-
-            for (int i = 0; i < originText.Length; i++)
-            {
-                str += originText[i];
-                text.text = str;
-                await UniTask.Yield();
-                await UniTask.Delay(100,true);
-            }
-            isCloud = true;
-        });
-
+        itemCanvas.SetActive(true);
         await UniTask.WaitUntil(()=>isFinished);
+        uiani.SetTrigger("Fadeout");
+
         finishCallback?.Invoke();
         isFinished = false;
         text.gameObject.SetActive(false);

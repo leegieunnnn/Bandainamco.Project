@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -993404951
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 53edf4cb8a5310946bf7b920dbec3f18, type: 3}
   m_Color: {r: 0.8962264, g: 0, b: 0.03447038, a: 1}
@@ -136,3 +136,4 @@ MonoBehaviour:
   originalScale: {x: 0, y: 0, z: 0}
   isScale: 0
   mashroomTime: 1
+  mashroomEffect: {fileID: 1628744458893394, guid: acbbe02a8ddc31f4286f60097bfaea9c, type: 3}

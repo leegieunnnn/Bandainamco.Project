@@ -25,6 +25,7 @@ public class Item_HJH
     //public int camSize;
     public ItemType itemType;
     public bool needWholeCam;
+    public GameObject bgObject;
 }
 
 public class ItemManager_LSW : MonoBehaviour

@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -36,7 +38,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     public float fishSpeed = 0f;
     #endregion
     #region Åä³¢¿ë
-
+    bool rabbitGoing;
     #endregion
 
     private void Start()
@@ -116,6 +118,19 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             }
         }
     }
+    public void Rabbit(float moreJump,float time)
+    {
+        jumpPower += moreJump;
+        StopCoroutine("RabbitCo");
+        StartCoroutine(RabbitCo(time));
+        
+    }
+    IEnumerator RabbitCo(float time)
+    {
+        yield return new WaitForSeconds(time);
+        jumpPower = firstJumpPower;
+    }
+
 
     void Lotus()//¿¬²É ±â´É
     {

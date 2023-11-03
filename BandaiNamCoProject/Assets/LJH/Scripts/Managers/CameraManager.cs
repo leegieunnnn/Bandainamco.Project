@@ -26,7 +26,7 @@ public class CameraManager : ManagerBase
     public string currCamera = CamValues.Character;
 
     public bool isReturnedToPlayer;
-
+    public bool endFadeOut = false;
     public override void Init()
     {
         Instance = this;
@@ -46,6 +46,17 @@ public class CameraManager : ManagerBase
 
     public void SetCamera(string cameraName)
     {
+        if(cameraName == CamValues.Whole)
+        {
+            if((GameObject.Find("BG").transform.rotation.z / 90) % 2 == 1)
+            {
+                virtualCamDic[cameraName].m_Lens.OrthographicSize = Mathf.Min(DataManager.Instance.bgSize.x,DataManager.Instance.bgSize.y)/2;
+            }
+            else
+            {
+                virtualCamDic[cameraName].m_Lens.OrthographicSize = Mathf.Max(DataManager.Instance.bgSize.x, DataManager.Instance.bgSize.y)/2;
+            }
+        }
         foreach (var cam in virtualCams)
             cam.Priority = CamValues.priorityOff;
         currCamera = cameraName;
@@ -65,14 +76,24 @@ public class CameraManager : ManagerBase
             Camera.main.cullingMask = ~((1 << 7) | (1 << 8));
         }
         await UniTask.Delay(1000,true);
+        if(ItemManager_LJH.Instance.CurrItem.myItem.bgObject != null)
+        {
+            MakeBG(ItemManager_LJH.Instance.CurrItem.myItem.bgObject); //배경에 오브젝트 생기는거 연출할 함수 일단 임의로 만들어 놓음
+        }
         UIManager.Instance.ControlCloud(async () =>
         {
-            await UniTask.Delay(1000,true);
+            await UniTask.WaitUntil(() => endFadeOut == true);
+            endFadeOut = false;
+            UIManager.Instance.itemCanvas.SetActive(false);
             SetCamera(CamValues.Character);
             StartCoroutine(AfterCameraChange());
             isReturnedToPlayer = true;
         });
-        //문구 보여주기
+    }
+
+    public void MakeBG(GameObject bgObject)
+    {
+        bgObject.SetActive(true);
     }
 
     IEnumerator AfterCameraChange()
