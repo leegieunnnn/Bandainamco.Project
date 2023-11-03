@@ -26,6 +26,8 @@ public class Item_HJH
     public ItemType itemType;
     public bool needWholeCam;
     public GameObject bgObject;
+    [HideInInspector] public List<SpriteRenderer> renderers = null;
+    [HideInInspector] public bool isShown = false;
 }
 
 public class ItemManager_LSW : MonoBehaviour
