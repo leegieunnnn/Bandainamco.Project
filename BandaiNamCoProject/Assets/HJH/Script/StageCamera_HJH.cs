@@ -45,7 +45,6 @@ public class StageCamera_HJH : MonoBehaviour
     public int eleNum;
     float elevatorTime;
     public GameObject quitPopUp;
-    public GameObject elevatorLight;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -114,74 +113,15 @@ public class StageCamera_HJH : MonoBehaviour
                 walkCount = 0;
             }
         }
-        if(elevatorStage == ElevatorStage.OpenStart)
-        {
-            elevatorLight.SetActive(true);
-            StartCoroutine(ElevatorOpen());
-        }
-        else if(elevatorStage == ElevatorStage.Opened)
-        {
-            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) > 2f)
-            {
-                elevatorStage = ElevatorStage.CloseStart;
-            }
-        }
-        else if(elevatorStage == ElevatorStage.CloseStart)
-        {
-            elevatorLight.SetActive(false);
-            StartCoroutine(ElevatorClose());
-        }
-        else if(elevatorStage == ElevatorStage.Closed)
-        {
-            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) > 2f)
-            {
-                elevatorStage = ElevatorStage.Down;
-            }
-            else
-            {
-                elevatorStage = ElevatorStage.OpenStart;
-            }
-        }
-        else if(elevatorStage == ElevatorStage.Down)
-        {
-            elevatorTime += Time.deltaTime;
-            elevatorUpDownSprite.sprite = elevatorUpDown[1];
-            elevatorLight.SetActive(false);
-            if(elevatorTime > 1f && eleNum >0)
-            {
-                elevatorTime = 0;
-                eleNum--;
-                elevatorNumSprite.sprite = elevatorNum[eleNum];
-            }
-            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) < 2f)
-            {
-                elevatorTime = 0;
-                elevatorStage = ElevatorStage.Up;
-            }
-        }
-        else if(elevatorStage == ElevatorStage.Up)
-        {
-            elevatorLight.SetActive(true);
-            elevatorTime += Time.deltaTime;
-            elevatorUpDownSprite.sprite = elevatorUpDown[0];
-            if(elevatorTime > 1f && eleNum < 8)
-            {
-                elevatorTime = 0;
-                eleNum++;
-                elevatorNumSprite.sprite= elevatorNum[eleNum];
-            }
-            if(eleNum == 8)
-            {
-                elevatorTime = 0;
-                elevatorStage = ElevatorStage.OpenStart;
-            }
-        }
+        Elevator();
 
         if(quitPopUp.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape))
         {
             QuitNo();
         }
     }
+
+
     IEnumerator Walk(float stageMove)
     {
         walk = true;
@@ -211,6 +151,72 @@ public class StageCamera_HJH : MonoBehaviour
 
     }
     #region 엘리베이터 관련 함수
+    public void Elevator()
+    {
+        if (elevatorStage == ElevatorStage.OpenStart)
+        {
+            StartCoroutine(ElevatorOpen());
+        }
+        else if (elevatorStage == ElevatorStage.Opened)
+        {
+            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) > 2f)
+            {
+                elevatorStage = ElevatorStage.CloseStart;
+            }
+        }
+        else if (elevatorStage == ElevatorStage.CloseStart)
+        {
+            StartCoroutine(ElevatorClose());
+        }
+        else if (elevatorStage == ElevatorStage.Closed)
+        {
+            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) > 2f)
+            {
+                elevatorStage = ElevatorStage.Down;
+            }
+            else
+            {
+                elevatorStage = ElevatorStage.OpenStart;
+            }
+        }
+        else if (elevatorStage == ElevatorStage.Down)
+        {
+            elevatorTime += Time.deltaTime;
+            elevatorUpDownSprite.sprite = elevatorUpDown[1];
+            if (elevatorTime > 1f && eleNum > 0)
+            {
+                elevatorTime = 0;
+                eleNum--;
+                elevatorNumSprite.sprite = elevatorNum[eleNum];
+            }
+            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) < 2f)
+            {
+                elevatorTime = 0;
+                elevatorStage = ElevatorStage.Up;
+            }
+        }
+        else if (elevatorStage == ElevatorStage.Up)
+        {
+            elevatorTime += Time.deltaTime;
+            elevatorUpDownSprite.sprite = elevatorUpDown[0];
+            if (elevatorTime > 1f && eleNum < 8)
+            {
+                elevatorTime = 0;
+                eleNum++;
+                elevatorNumSprite.sprite = elevatorNum[eleNum];
+            }
+            if (eleNum == 8)
+            {
+                elevatorTime = 0;
+                elevatorStage = ElevatorStage.OpenStart;
+            }
+            if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) > 2f)
+            {
+                elevatorTime = 0;
+                elevatorStage = ElevatorStage.Down;
+            }
+        }
+    }
     IEnumerator ElevatorOpen()
     {
         elevatorStage = ElevatorStage.Opening;
@@ -222,6 +228,7 @@ public class StageCamera_HJH : MonoBehaviour
             if (Mathf.Abs(elevator.transform.position.x - Camera.main.transform.position.x) > 2f)
             {
                 elevatorStage = ElevatorStage.CloseStart;
+                break;
             }
             if (leftDoor.transform.position.x < -2.6f)
             {
@@ -230,9 +237,13 @@ public class StageCamera_HJH : MonoBehaviour
                 break;
             }
         }
-        elevatorStage = ElevatorStage.Opened;
-        quitPopUp.SetActive(true);
-        Time.timeScale = 0f;
+        if (elevatorStage == ElevatorStage.Opening)
+        {
+            elevatorStage = ElevatorStage.Opened;
+            quitPopUp.SetActive(true);
+            Time.timeScale = 0f;
+        }
+
     }
 
     public void QuitYes()

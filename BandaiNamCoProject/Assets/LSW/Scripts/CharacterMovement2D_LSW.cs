@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CharacterMovement2D_LSW : MonoBehaviour
@@ -79,16 +80,20 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     void Update()
     {
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
-        
-       // transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+
+        // transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         //Debug.Log(transform.rotation + "회전?");
-        if (Input.GetMouseButtonDown(0) && jumpReady && !fish) //점프 쿨타임이 지나고 물고기 안타고 있을 때
+
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            jump = true;
-            jumpReady = false;
-            ani.SetBool("jump",true);
-            //ani.CrossFade("Jump", 0.1f);
-            StartCoroutine(JumpCoolTime());
+            if (Input.GetMouseButtonDown(0) && jumpReady && !fish) //점프 쿨타임이 지나고 물고기 안타고 있을 때
+            {
+                jump = true;
+                jumpReady = false;
+                ani.SetBool("jump", true);
+                //ani.CrossFade("Jump", 0.1f);
+                StartCoroutine(JumpCoolTime());
+            }
         }
         if (fish)
         {
