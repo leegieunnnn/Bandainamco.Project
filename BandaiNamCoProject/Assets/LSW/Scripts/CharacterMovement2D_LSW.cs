@@ -44,7 +44,9 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     #region 버섯 배경
     public bool mashroom, mashroomBach;
     #endregion
-
+    #region 별
+    public List<GameObject> starItem = new List<GameObject>();
+    #endregion
     private void Start()
     {
         rb = GetComponentInChildren<Rigidbody2D>();
@@ -178,10 +180,34 @@ public class CharacterMovement2D_LSW : MonoBehaviour
                 }
 
             }
+            if (ItemManager_LJH.Instance.CurrItem.myItem.itemType == ItemType.Star)
+            {
+                if (starItem.Count > 1)
+                {
+                    int itemsToRemove = starItem.Count - 1; // 남겨둘 아이템 개수 계산
+
+                    for (int i = 0; i < itemsToRemove; i++)
+                    {
+                        Destroy(starItem[i]);
+                        starItem.RemoveAt(i);
+                    }
+                }
+
+            }
 
         }
        
     }
+    public void AddStar(GameObject obj)
+    {
+        starItem.Add(obj);
+    }
+    public void RemoveStar()
+    {
+        if(starItem.Count>1)
+        starItem.RemoveAt(0);
+    }
+    
     public void Rabbit(float moreJump,float time)
     {
         jumpPower += moreJump;
