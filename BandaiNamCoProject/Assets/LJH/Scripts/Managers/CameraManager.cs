@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
+using UnityEngine.Video;
+
 public class CamValues
 {
     public const string Character = "Character";
@@ -18,7 +21,7 @@ public class CameraManager : ManagerBase
     public static CameraManager Instance;
     [SerializeField] private SpriteRenderer bgSprite;
     [SerializeField] private CinemachineBrain brainCam;
-
+    [SerializeField] private float dissolveSec;
     private CinemachineVirtualCamera[] virtualCams;
     private Dictionary<string, CinemachineVirtualCamera> virtualCamDic;
     public CinemachineVirtualCamera virtualCamera;
@@ -26,7 +29,7 @@ public class CameraManager : ManagerBase
     public string currCamera = CamValues.Character;
 
     public bool isReturnedToPlayer;
-
+    public bool endFadeOut = false;
     public override void Init()
     {
         Instance = this;
@@ -46,15 +49,15 @@ public class CameraManager : ManagerBase
 
     public void SetCamera(string cameraName)
     {
-        if(cameraName == CamValues.Whole)
+        if (cameraName == CamValues.Whole)
         {
-            if((GameObject.Find("BG").transform.rotation.z / 90) % 2 == 1)
+            if ((GameObject.Find("BG").transform.rotation.z / 90) % 2 == 1)
             {
-                virtualCamDic[cameraName].m_Lens.OrthographicSize = Mathf.Min(DataManager.Instance.bgSize.x,DataManager.Instance.bgSize.y)/2;
+                virtualCamDic[cameraName].m_Lens.OrthographicSize = Mathf.Min(DataManager.Instance.bgSize.x, DataManager.Instance.bgSize.y) / 2;
             }
             else
             {
-                virtualCamDic[cameraName].m_Lens.OrthographicSize = Mathf.Max(DataManager.Instance.bgSize.x, DataManager.Instance.bgSize.y)/2;
+                virtualCamDic[cameraName].m_Lens.OrthographicSize = Mathf.Max(DataManager.Instance.bgSize.x, DataManager.Instance.bgSize.y) / 2;
             }
         }
         foreach (var cam in virtualCams)
@@ -75,15 +78,66 @@ public class CameraManager : ManagerBase
             SetCamera(cameraName);
             Camera.main.cullingMask = ~((1 << 7) | (1 << 8));
         }
-        await UniTask.Delay(1000,true);
+        await UniTask.Delay(1000, true);
+        if (ItemManager_LJH.Instance.CurrItem.myItem.bgObject != null)
+        {
+            MakeBG(ItemManager_LJH.Instance.CurrItem.myItem); //배경에 오브젝트 생기는거 연출할 함수 일단 임의로 만들어 놓음
+        }
         UIManager.Instance.ControlCloud(async () =>
         {
-            await UniTask.Delay(1000,true);
+            await UniTask.WaitUntil(() => endFadeOut == true);
+            endFadeOut = false;
+            UIManager.Instance.itemCanvas.SetActive(false);
             SetCamera(CamValues.Character);
             StartCoroutine(AfterCameraChange());
             isReturnedToPlayer = true;
         });
-        //문구 보여주기
+    }
+
+    public async void MakeBG(Item_HJH item)
+    {
+        if (item.isShown) return;
+
+        item.bgObject.SetActive(true);
+
+        item.renderers = new List<SpriteRenderer>();
+        item.renderers.AddRange(item.bgObject.GetComponentsInChildren<SpriteRenderer>(true));
+
+        float elapsedTime = 0f;
+        while (elapsedTime < dissolveSec)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            float progress = Mathf.Lerp(0f, 1f, elapsedTime / dissolveSec);
+            foreach (var r in item.renderers)
+            {
+                r.sharedMaterial.SetFloat("_Progress", progress);
+            }
+            await UniTask.Yield();
+        }
+
+        item.isShown = true;
+        //if (item.isShown) return;
+
+        //item.bgObject.SetActive(true);
+
+        //if (item.renderers == null)
+        //{
+        //    item.renderers = new List<Renderer>();
+        //    item.renderers.AddRange(item.bgObject.GetComponentsInChildren<Renderer>(true));
+        //}
+
+        //float elapsedTime = 0f;
+        //while (elapsedTime < dissolveSec)
+        //{
+        //    elapsedTime += Time.unscaledDeltaTime;
+        //    float progress = Mathf.Lerp(0f, 1f, elapsedTime / dissolveSec);
+        //    foreach (var r in item.renderers)
+        //    {
+        //        r.sharedMaterial.SetFloat("_Progress", progress);
+        //    }
+        //    await UniTask.Yield();
+        //}
+        //item.isShown = true;
     }
 
     IEnumerator AfterCameraChange()

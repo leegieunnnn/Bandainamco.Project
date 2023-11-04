@@ -63,13 +63,16 @@ public class Star_yd : BaseItem_LJH
         Vector3 startPos = new Vector3(oriPos.x, oriPos.y + starDistance, oriPos.z);
 
         star = Instantiate(starImage, startPos, Quaternion.identity); //, collision.transform);
-
+        collision.GetComponent<CharacterMovement2D_LSW>().AddStar(star);
         // collision.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         //starImage.transform.GetComponent<StarImage_yd>().isOn = true;
         await UniTask.Delay(resetTime * 1000);
        // collision.transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         collision.GetComponent<Rigidbody2D>().gravityScale = 1;
+        if(star != null)
         Destroy(star);
+        collision.GetComponent<CharacterMovement2D_LSW>().RemoveStar();
+
         //Destroy(starEffect);
         Debug.Log(collision.GetComponent<Rigidbody2D>().gravityScale);
 

@@ -1,5 +1,6 @@
 using Bitgem.VFX.StylisedWater;
 using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,6 +17,7 @@ public class ItemManager_LJH : ManagerBase
     public int itemCount;
     public float xyLine; //그림 끝이랑 너무 까깝지 않게 하기 위해서
     public static ItemManager_LJH Instance;
+    public GameObject bubble;
 
     private BaseItem_LJH currItem;
     public BaseItem_LJH CurrItem
@@ -33,7 +35,9 @@ public class ItemManager_LJH : ManagerBase
     public BaseBackground_LJH currBackground;
 
     [Header("Wave")]
-    public WaterVolumeTransforms waveObject;
+    public ImagePlayer wavePlayer;
+    public Transform bubbleParent;
+    private List<Bubble_LJH> bubbles;
 
     private void Awake()
     {
@@ -54,11 +58,15 @@ public class ItemManager_LJH : ManagerBase
 
         Instance = this;
 
+        bubbles = new List<Bubble_LJH>();
+        bubbles.AddRange(bubbleParent.GetComponentsInChildren<Bubble_LJH>(true));
+
         for (int i = 0; i < items.Length; i++)
         {
             for (int j = 0; j < items[i].itemCount; j++)
             {
                 GameObject item = Instantiate(items[i].prefab);
+                GameObject bub = Instantiate(bubble);
                 Vector3 pos;
                 int su = 0; //무한루프 방지용
                 while (true)
@@ -80,7 +88,6 @@ public class ItemManager_LJH : ManagerBase
                     } //플레이어랑 너무 가까울 때
                     if (su > 1000)
                     {
-                        Debug.Log("ㅠㅠ");
                         restart = false;
                     } // 너무 많이 반복할 때
                     if (!restart)
@@ -91,7 +98,10 @@ public class ItemManager_LJH : ManagerBase
                 item.transform.position = pos;
                 item.transform.parent = itemParent;
                 item.transform.position = new Vector3(item.transform.position.x, item.transform.position.y, item.transform.parent.position.z - 5);
+                bub.transform.position = item.transform.position;
+                bub.transform.parent = item.transform;
                 BaseItem_LJH baseItem = item.GetComponent<BaseItem_LJH>();
+                baseItem.bubble = bub;
                 baseItem.myItem = items[i];
 
                 spawnItems.Add(baseItem);
@@ -113,6 +123,25 @@ public class ItemManager_LJH : ManagerBase
         {
             if (isActive && i.myItem.isVisited) continue;
             i.gameObject.SetActive(isActive);
+        }
+    }
+
+    public void SetWave(Action callback = null)
+    {
+        wavePlayer.PlayImages(callback);
+    }
+
+    public void SetBubble(bool isSet)
+    {
+        if (isSet)
+        {
+            foreach (var bubble in bubbles)
+                bubble.StartBubble();
+        }
+        else
+        {
+            foreach (var bubble in bubbles)
+                bubble.FinishBubble();
         }
     }
 }

@@ -25,6 +25,9 @@ public class Item_HJH
     //public int camSize;
     public ItemType itemType;
     public bool needWholeCam;
+    public GameObject bgObject;
+    [HideInInspector] public List<SpriteRenderer> renderers = null;
+    [HideInInspector] public bool isShown = false;
 }
 
 public class ItemManager_LSW : MonoBehaviour
@@ -49,7 +52,8 @@ public class ItemManager_LSW : MonoBehaviour
     Vector3 firstCamPos;
     public Vector3 bgSize;
     public GameObject[] zoomInOffObject;// 카메라 줌인줌아웃할때 꺼지는 오브젝트들
-                                        // Start is called before the first frame update
+    public GameObject bubble;
+    // Start is called before the first frame update
     #region 일단 구름 테스트
     public GameObject zoomCanvas;
     public float fadeSpeed;
