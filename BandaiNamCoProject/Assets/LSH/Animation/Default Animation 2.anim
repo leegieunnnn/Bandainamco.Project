@@ -27,8 +27,8 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.93333334
-        value: {x: 0, y: 0, z: 3.26}
+        time: 0.98333335
+        value: {x: 0, y: 0, z: 2.25}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -401,15 +401,6 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.7
-        value: 0.8
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
         time: 2
         value: 0
         inSlope: 0
@@ -438,15 +429,6 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.7
-        value: 0.78
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
         time: 2
         value: 0
         inSlope: 0
@@ -468,6 +450,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 0
         value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1.1333333
+        value: 0.45
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1041,14 +1032,7 @@ AnimationClip:
       isPPtrCurve: 0
     - serializedVersion: 2
       path: 554718933
-      attribute: 1460864421
-      script: {fileID: 0}
-      typeID: 224
-      customType: 28
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 554718933
-      attribute: 538195251
+      attribute: 3640387206
       script: {fileID: 0}
       typeID: 224
       customType: 28
@@ -1083,7 +1067,14 @@ AnimationClip:
       isPPtrCurve: 0
     - serializedVersion: 2
       path: 554718933
-      attribute: 3640387206
+      attribute: 1460864421
+      script: {fileID: 0}
+      typeID: 224
+      customType: 28
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 554718933
+      attribute: 538195251
       script: {fileID: 0}
       typeID: 224
       customType: 28
@@ -1291,8 +1282,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.93333334
-        value: 3.26
+        time: 0.98333335
+        value: 2.25
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1783,15 +1774,6 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.7
-        value: 0.8
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
         time: 2
         value: 0
         inSlope: 0
@@ -1820,15 +1802,6 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.7
-        value: 0.78
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
         time: 2
         value: 0
         inSlope: 0
@@ -1850,6 +1823,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 0
         value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1.1333333
+        value: 0.45
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2395,7 +2377,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: "\uC544\uC774\uD15C \uBB38\uAD6C \uC885\uC7743"
+    path: "\uC544\uC774\uD15C \uBB38\uAD6C \uC885\uC7742"
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -2405,17 +2387,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: "\uC544\uC774\uD15C \uBB38\uAD6C \uC885\uC7743"
-    classID: 224
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: "\uC544\uC774\uD15C \uBB38\uAD6C \uC885\uC7743"
+    path: "\uC544\uC774\uD15C \uBB38\uAD6C \uC885\uC7742"
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -2434,8 +2406,18 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: "\uC544\uC774\uD15C \uBB38\uAD6C \uC885\uC7743"
+    classID: 224
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: "\uC544\uC774\uD15C \uBB38\uAD6C \uC885\uC7742"
+    path: "\uC544\uC774\uD15C \uBB38\uAD6C \uC885\uC7743"
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -2445,7 +2427,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: "\uC544\uC774\uD15C \uBB38\uAD6C \uC885\uC7742"
+    path: "\uC544\uC774\uD15C \uBB38\uAD6C \uC885\uC7743"
     classID: 224
     script: {fileID: 0}
   m_HasGenericRootTransform: 0

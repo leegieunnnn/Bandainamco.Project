@@ -74,7 +74,6 @@ public class CharacterMovement2D_LSW : MonoBehaviour
                 rb.AddForce(dir * jumpPower,ForceMode2D.Impulse);
                                 
             }
-            Debug.Log("ddddddd");
             jumpIcon.fillAmount = 0;
             jumpCoolText.gameObject.SetActive(true);
             jump = false;

@@ -20,9 +20,8 @@ public class SmallCloud_HJH : MonoBehaviour
         {
             Rigidbody2D rigid = collision.transform.gameObject.GetComponent<Rigidbody2D>();
             rigid.velocity = Vector3.zero;
-            rigid.AddForce(jumpPower * (collision.transform.position - transform.position).normalized , ForceMode2D.Impulse);
+            rigid.AddForce(jumpPower * (Vector2)((collision.transform.position - transform.position).normalized) , ForceMode2D.Impulse);
             gameObject.SetActive(false);
-            
         }
     }
 
