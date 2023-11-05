@@ -107,6 +107,7 @@ public class UIManager : ManagerBase
         //});
 
         itemCanvas.SetActive(true);
+        text.text = ItemManager_LJH.Instance.CurrItem.myItem.zoomText;
         await UniTask.WaitUntil(()=>isFinished);
         uiani.SetTrigger("Fadeout");
 
