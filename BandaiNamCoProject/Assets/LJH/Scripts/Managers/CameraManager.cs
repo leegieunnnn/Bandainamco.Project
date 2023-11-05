@@ -144,7 +144,10 @@ public class CameraManager : ManagerBase
     {
         yield return new WaitForSecondsRealtime(2f);
         Camera.main.cullingMask = -1;
-        WorldManager.Instance.MainState = MainState.Play;
+        if(WorldManager.Instance.MainState != MainState.UiOn)
+        {
+            WorldManager.Instance.MainState = MainState.Play;
+        }
     }
 
     private void SetOrthographicSizeWhole()

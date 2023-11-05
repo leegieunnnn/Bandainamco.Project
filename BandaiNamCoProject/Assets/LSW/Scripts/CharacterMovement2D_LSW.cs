@@ -126,7 +126,6 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             {
                 if(!mashroom) //버섯배경아닐때 추가
                 {
-                    Debug.Log("클릭");
                     jump = true;
                     jumpReady = false;
                     ani.SetBool("jump", true);

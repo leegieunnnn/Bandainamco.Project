@@ -10,6 +10,7 @@ public class GameUI_HJH : MonoBehaviour
     public GameObject pauseCanvas;
     public GameObject optionCanvas;
     public Slider volumeSlider;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +30,7 @@ public class GameUI_HJH : MonoBehaviour
             {
                 OptionOffButton();
             }
-            else if (!pauseCanvas.activeInHierarchy && Time.timeScale != 0f)
+            else if (!pauseCanvas.activeInHierarchy && WorldManager.Instance.MainState != MainState.UiOn)
             {
                 PauseOnButton();
             }
@@ -41,13 +42,20 @@ public class GameUI_HJH : MonoBehaviour
     }
     public void PauseOnButton()
     {
-        WorldManager.Instance.MainState = MainState.Pause;
+        WorldManager.Instance.MainState = MainState.UiOn;
         pauseCanvas.SetActive(true);
     }
 
     public void PauseOffButton()
     {
-        WorldManager.Instance.MainState = MainState.Play;
+        if (CameraManager.Instance.currCamera == CamValues.Character || GamePlayManager_HJH.Instance.start == false)
+        {
+            WorldManager.Instance.MainState = MainState.Play;
+        }
+        else
+        {
+            WorldManager.Instance.MainState =MainState.Pause;
+        }
         pauseCanvas.SetActive(false);
     }
 
@@ -103,7 +111,14 @@ public class GameUI_HJH : MonoBehaviour
     public void OptionOffButton()
     {
         optionCanvas.SetActive(false);
-        WorldManager.Instance.MainState = MainState.Play;
+        if (CameraManager.Instance.currCamera == CamValues.Character || GamePlayManager_HJH.Instance.start == false)
+        {
+            WorldManager.Instance.MainState = MainState.Play;
+        }
+        else
+        {
+            WorldManager.Instance.MainState = MainState.Pause;
+        }
     }
 
     void VolumeChange(float value)
@@ -114,6 +129,7 @@ public class GameUI_HJH : MonoBehaviour
     public void QuitButton()
     {
         WorldManager.Instance.MainState = MainState.Play;
+        
         LoadingManager_HJH.LoadScene("StartScene");
     }
 }
