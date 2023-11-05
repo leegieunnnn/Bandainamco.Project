@@ -40,10 +40,7 @@ public class FishBG_HJH : MonoBehaviour
         currentTime = 0;
         start = false;
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
-    }
+
     public void MakeFish()
     {
         GameObject fish = Instantiate(smallFish);
