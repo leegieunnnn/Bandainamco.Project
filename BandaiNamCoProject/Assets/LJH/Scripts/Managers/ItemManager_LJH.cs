@@ -121,7 +121,6 @@ public class ItemManager_LJH : ManagerBase
     {
         foreach (var i in spawnItems)
         {
-            if (isActive && i.myItem.isVisited) continue;
             i.gameObject.SetActive(isActive);
         }
     }

@@ -14,10 +14,12 @@ public class WaveItem_LJH : BaseItem_LJH
         {
             base.OnTriggerEnter2D(other);
             //직접적인 아이템 기능
-            ItemManager_LJH.Instance.SetWave(() => { 
+            ItemManager_LJH.Instance.SetWave(() =>
+            {
                 //Wave Finish callback
                 ItemManager_LJH.Instance.SetBubble(false);
                 WorldManager.Instance.NotifyItemEffect(ItemType.Wave, false);
+                gameObject.SetActive(false);
             });
             ItemManager_LJH.Instance.SetBubble(true);
 
