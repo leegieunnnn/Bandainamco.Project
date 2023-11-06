@@ -20,6 +20,7 @@ public class BaseItem_LJH : MonoBehaviour
         {
             ItemManager_LJH.Instance.itemCount += 1;
             ItemManager_LJH.Instance.CurrItem = this;
+            GamePlayManager_HJH.Instance.AddConsumedItem(this);
 
             if (!myItem.isVisited)
             {

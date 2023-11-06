@@ -17,9 +17,9 @@ public class WaveItem_LJH : BaseItem_LJH
             ItemManager_LJH.Instance.SetWave(() =>
             {
                 //Wave Finish callback
-                ItemManager_LJH.Instance.SetBubble(false);
-                WorldManager.Instance.NotifyItemEffect(ItemType.Wave, false);
-                gameObject.SetActive(false);
+                //ItemManager_LJH.Instance.SetBubble(false);
+                //WorldManager.Instance.NotifyItemEffect(ItemType.Wave, false);
+                //gameObject.SetActive(false);
             });
             ItemManager_LJH.Instance.SetBubble(true);
 
