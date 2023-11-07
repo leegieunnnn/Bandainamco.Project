@@ -9,6 +9,7 @@ using TMPro;
 using UnityEditor.Rendering.LookDev;
 using KoreanTyper;
 using Cysharp.Threading.Tasks;
+using UnityEngine.EventSystems;
 
 [Serializable]
 public class CloudInfo
@@ -44,7 +45,7 @@ public class UIManager : ManagerBase
 
         currTime += Time.deltaTime;
         timeText.text = currTime.ToString();
-        if (isCloud)
+        if (isCloud && !EventSystem.current.IsPointerOverGameObject())
         {
             if(Input.GetMouseButtonDown(0))
             {
@@ -106,6 +107,7 @@ public class UIManager : ManagerBase
         //});
 
         itemCanvas.SetActive(true);
+        text.text = ItemManager_LJH.Instance.CurrItem.myItem.zoomText;
         await UniTask.WaitUntil(()=>isFinished);
         uiani.SetTrigger("Fadeout");
 

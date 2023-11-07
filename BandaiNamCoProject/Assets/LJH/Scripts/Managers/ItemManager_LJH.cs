@@ -35,7 +35,7 @@ public class ItemManager_LJH : ManagerBase
     public BaseBackground_LJH currBackground;
 
     [Header("Wave")]
-    public ImagePlayer wavePlayer;
+    public WaveCollider_LJH wave;
     public Transform bubbleParent;
     private List<Bubble_LJH> bubbles;
 
@@ -121,14 +121,21 @@ public class ItemManager_LJH : ManagerBase
     {
         foreach (var i in spawnItems)
         {
-            if (isActive && i.myItem.isVisited) continue;
+            if (isActive)
+            {
+                if (GamePlayManager_HJH.Instance.ContainItem(i))
+                {
+                    i.gameObject.SetActive(false);
+                    continue;
+                }
+            }
             i.gameObject.SetActive(isActive);
         }
     }
 
     public void SetWave(Action callback = null)
     {
-        wavePlayer.PlayImages(callback);
+        wave.StartWave();
     }
 
     public void SetBubble(bool isSet)

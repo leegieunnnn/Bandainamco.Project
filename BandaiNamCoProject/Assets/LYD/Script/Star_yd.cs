@@ -37,7 +37,7 @@ public class Star_yd : BaseItem_LJH
         //캐릭터의 중력 없애기
         collision.GetComponent<Rigidbody2D>().gravityScale = 0;
        // collision.transform.rotation = Quaternion.Euler(0, 0, 0);
-        Debug.Log(collision.GetComponent<Rigidbody2D>().gravityScale);
+        //Debug.Log(collision.GetComponent<Rigidbody2D>().gravityScale);
        /* float currentTime = 0;
 
         while (currentTime < 1)

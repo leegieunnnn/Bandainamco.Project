@@ -24,6 +24,7 @@ public class GamePlayManager_HJH : ManagerBase
     public GameObject[] endings; //임시 나중에 지울것
     private EndingType endingType;
     private bool gameEnd = false;
+    private List<BaseItem_LJH> consumedItems;
 
     #region 시작부분
     public GameObject startCloud;
@@ -37,6 +38,7 @@ public class GamePlayManager_HJH : ManagerBase
 
     public override void Init()
     {
+        consumedItems = new List<BaseItem_LJH>();
         base.Init();
     }
 
@@ -178,6 +180,17 @@ public class GamePlayManager_HJH : ManagerBase
     public override void BackgroundEffect(ItemType itemType, bool start)
     {
         base.BackgroundEffect(itemType, start);
+    }
+
+    public void AddConsumedItem(BaseItem_LJH item)
+    {
+        if (consumedItems.Contains(item)) return;
+        consumedItems.Add(item);
+    }
+
+    public bool ContainItem(BaseItem_LJH item)
+    {
+        return consumedItems.Contains(item);
     }
 
     public override void Reset()

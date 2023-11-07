@@ -126,7 +126,6 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             {
                 if(!mashroom) //버섯배경아닐때 추가
                 {
-                    Debug.Log("클릭");
                     jump = true;
                     jumpReady = false;
                     ani.SetBool("jump", true);
@@ -254,6 +253,18 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     {
         rb.gravityScale = hasGravity == true ? 1 : 0;
     }
+
+    public void AddVelocity(Vector2 vel, bool reset = false)
+    {
+        //if (reset) ResetVelocity();
+        rb.velocity += vel;
+    }
+
+    public void ResetVelocity()
+    {
+        rb.velocity = Vector2.zero;
+    }
+
 
     public void Reset()
     {
