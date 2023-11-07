@@ -254,6 +254,18 @@ public class CharacterMovement2D_LSW : MonoBehaviour
         rb.gravityScale = hasGravity == true ? 1 : 0;
     }
 
+    public void AddVelocity(Vector2 vel, bool reset = false)
+    {
+        //if (reset) ResetVelocity();
+        rb.velocity += vel;
+    }
+
+    public void ResetVelocity()
+    {
+        rb.velocity = Vector2.zero;
+    }
+
+
     public void Reset()
     {
         coolTime = firstCoolTime;
