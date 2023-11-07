@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CharacterMovement2D_LSW : MonoBehaviour
@@ -20,7 +21,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     float firstCoolTime = 0;
     //점프가 가능한지에 대한 불값
     bool jumpReady = true;
-    bool jump = false;
+   public bool jump = false;
     private Rigidbody2D rb;
     Animator ani;
     public ItemManager_LSW itemManager;
@@ -40,7 +41,12 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     #region 토끼용
     bool rabbitGoing;
     #endregion
-
+    #region 버섯 배경
+    public bool mashroom, mashroomBach;
+    #endregion
+    #region 별
+    public List<GameObject> starItem = new List<GameObject>();
+    #endregion
     private void Start()
     {
         rb = GetComponentInChildren<Rigidbody2D>();
@@ -57,6 +63,7 @@ public class CharacterMovement2D_LSW : MonoBehaviour
         if (jump)
         {
             Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            
             dir.Normalize();
             if(dir.y > 0)
             {
@@ -73,22 +80,68 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             ani.SetBool("jump",false);
             //ani.CrossFade("Fly", 0.1f);
         }
-        
+      if(mashroom)
+        {
+            if(mashroomBach)
+            {
+                Debug.Log("버섯");
+                Vector2 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+                //  Vector2 direction = dir - (Vector2)transform.position;
+                //  direction = -direction;
+               // dir = -dir;
+                dir.Normalize();
+                // 점프 방향을 반대로 바꾸기
+
+                if (dir.y > 0)
+                {
+                    rb.velocity = Vector2.zero;
+                }
+
+                if (dir != Vector2.zero)
+                {
+                    rb.AddForce(-dir * jumpPower, ForceMode2D.Impulse);
+                }
+                jumpIcon.fillAmount = 0;
+                jumpCoolText.gameObject.SetActive(true);
+                mashroomBach = false;
+                ani.SetBool("jump", false);
+                mashroomBach = false;
+            }
+           
+
+
+        }
     }
 
     void Update()
     {
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
-        
-       // transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+
+        // transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         //Debug.Log(transform.rotation + "회전?");
-        if (Input.GetMouseButtonDown(0) && jumpReady && !fish) //점프 쿨타임이 지나고 물고기 안타고 있을 때
+
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            jump = true;
-            jumpReady = false;
-            ani.SetBool("jump",true);
-            //ani.CrossFade("Jump", 0.1f);
-            StartCoroutine(JumpCoolTime());
+            if (Input.GetMouseButtonDown(0) && jumpReady && !fish) //점프 쿨타임이 지나고 물고기 안타고 있을 때
+            {
+                if(!mashroom) //버섯배경아닐때 추가
+                {
+                    jump = true;
+                    jumpReady = false;
+                    ani.SetBool("jump", true);
+                    //ani.CrossFade("Jump", 0.1f);
+                    StartCoroutine(JumpCoolTime());
+                }
+                
+            }
+            if(Input.GetMouseButton(0) && mashroom)
+            {
+                mashroomBach = true;
+                jumpReady = false;
+                ani.SetBool("jump", true);
+                StartCoroutine(JumpCoolTime());
+
+            }
         }
         if (fish)
         {
@@ -116,8 +169,43 @@ public class CharacterMovement2D_LSW : MonoBehaviour
             {
                 jumpPower = firstJumpPower;
             }
+            if (ItemManager_LJH.Instance.CurrItem.myItem.itemType != ItemType.Star)
+            {
+                if(GameObject.FindWithTag("StarItemPre"))
+                 {
+                    GameObject ob = GameObject.FindWithTag("StarItemPre").gameObject;
+                    Destroy(ob);
+                }
+
+            }
+            if (ItemManager_LJH.Instance.CurrItem.myItem.itemType == ItemType.Star)
+            {
+                if (starItem.Count > 1)
+                {
+                    int itemsToRemove = starItem.Count - 1; // 남겨둘 아이템 개수 계산
+
+                    for (int i = 0; i < itemsToRemove; i++)
+                    {
+                        Destroy(starItem[i]);
+                        starItem.RemoveAt(i);
+                    }
+                }
+
+            }
+
         }
+       
     }
+    public void AddStar(GameObject obj)
+    {
+        starItem.Add(obj);
+    }
+    public void RemoveStar()
+    {
+        if(starItem.Count>1)
+        starItem.RemoveAt(0);
+    }
+    
     public void Rabbit(float moreJump,float time)
     {
         jumpPower += moreJump;
@@ -165,6 +253,18 @@ public class CharacterMovement2D_LSW : MonoBehaviour
     {
         rb.gravityScale = hasGravity == true ? 1 : 0;
     }
+
+    public void AddVelocity(Vector2 vel, bool reset = false)
+    {
+        //if (reset) ResetVelocity();
+        rb.velocity += vel;
+    }
+
+    public void ResetVelocity()
+    {
+        rb.velocity = Vector2.zero;
+    }
+
 
     public void Reset()
     {

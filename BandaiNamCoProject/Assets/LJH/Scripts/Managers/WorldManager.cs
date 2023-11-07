@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum MainState
 {
-    Pause, Play, GameFinish
+    Pause, Play, GameFinish, UiOn
 }
 
 public class WorldManager : MonoBehaviour
@@ -32,6 +31,9 @@ public class WorldManager : MonoBehaviour
                     foreach (var manager in GetComponentsInChildren<ManagerBase>())
                         manager.GameOver();
                     break;
+                case MainState.UiOn:
+                    Time.timeScale = 0f;
+                    break;
             }
             mainState = value;
         }
@@ -52,7 +54,7 @@ public class WorldManager : MonoBehaviour
 
     public void NotifyItemEffect(ItemType itemType, bool start)
     {
-        foreach(var m in managers)
+        foreach (var m in managers)
         {
             m.ItemEffect(itemType, start);
         }
@@ -60,7 +62,7 @@ public class WorldManager : MonoBehaviour
 
     public void NotifyBackgroundEffect(ItemType itemType, bool start)
     {
-        foreach(var m in managers)
+        foreach (var m in managers)
         {
             m.BackgroundEffect(itemType, start);
         }

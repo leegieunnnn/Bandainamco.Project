@@ -9,6 +9,7 @@ TagManager:
   - FxTemporaire
   - Edge
   - Clock
+  - StarItemPre
   layers:
   - Default
   - TransparentFX

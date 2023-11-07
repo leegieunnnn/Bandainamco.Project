@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -993404951
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: b9814f09ea4fe5743848d787f20b5697, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -105,9 +105,13 @@ MonoBehaviour:
     zoomText: 
     itemType: 0
     needWholeCam: 0
+    bgObject: {fileID: 0}
+    renderers: []
+    isShown: 0
+  bubble: {fileID: 0}
   smallCloud: {fileID: 1084897196651440658, guid: ae598d68a579ab545919eb2e98972de2, type: 3}
   cloudNum: 5
-  jumpPower: 30
+  jumpPower: 20
 --- !u!61 &1603607676445632639
 BoxCollider2D:
   m_ObjectHideFlags: 0
